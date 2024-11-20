@@ -1,0 +1,20 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+skinparam style strictuml
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+hide enum methods
+
+
+package src{
+    package controller{}
+    package helpers{
+        class ImageHelper{} 
+    }
+    package model{}
+    package view{}
+
+}
+
+@enduml

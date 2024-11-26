@@ -14,6 +14,8 @@
 12) Touche de l'herbe
 13) Est un contact humain (touche un autre joueur)
 14) Jouer au Echec contre H
+15) Machine a cafe
+16) S'incruster en salle des profs
 
 
 ## Objectifs bonus

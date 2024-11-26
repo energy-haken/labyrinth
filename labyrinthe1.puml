@@ -8,12 +8,65 @@ hide enum methods
 
 
 package src{
-    package controller{}
-    package helpers{
-        class ImageHelper{} 
+    class LabyrintheApp{
+        static main()
     }
-    package model{}
-    package view{}
+
+    package controller{
+        class LabyrintheController{
+        + bougerLigne(plateau : Plateau)
+        }
+        class Background{
+        + lancementJeu() : Boolean
+        }
+    }
+    package helpers{
+        class ImageHelper{
+
+        }
+    }
+    package model{
+        class Plateau{
+
+            + pousserTuile(tuilePousse : Tuile , direction : String) : Tuile
+        }
+        abstract class Tuile <<abstract>>{
+        - m_fixe : Boolean
+        - m_pattern : Pattern
+        }
+        enum Pattern{
+        ANGLE
+        T
+        DROIT
+        }
+        class TuileObjectifs extends Tuile{
+
+        }
+        class TuileLibre extends Tuile{}
+        class LabyrintheObserver{
+        }
+        enum Objectifs <<enumeration>>{
+            PORTE_AMICALE
+            W
+            BARBEDEZ
+            MACHINEACAFE
+            LEOEXAM
+        }
+
+        class Joueur{
+            m_objectifRestant : Integer
+            m_objectifRecup : Integer
+        }
+        TuileObjectifs -> "m_objectifAssocie" Objectifs : > is One
+        Joueur o-> "m_listeObjectifs" Objectifs : > has several
+        Tuile -> "m_pattern" Pattern : > is type
+        Plateau -> Tuile :  <<use>>
+
+    }
+    package view{
+        class LabyrintheWindows{}
+
+    }
 
 }
 

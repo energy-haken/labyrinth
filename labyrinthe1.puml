@@ -83,7 +83,8 @@ package src{
         Joueur o-> "m_listeObjectifs" Objectifs : > has several
         Joueur o-> "m_tuile \n 1" Tuile : > Is on
         Tuile -> "m_pattern" Pattern : > is type
-        Plateau -> Tuile :  <<use>>
+        Plateau -> "m_tuile \n 50" Tuile :  > Have 50
+        Plateau -> "m_joueur \n 4" Joueur : < On It
 
     }
     package view{

@@ -8,6 +8,11 @@ public class Joueur {
     private int m_objectifRecup;
     private Tuile m_tuile;
 
+    /**
+     * Creation d'un Joueur
+     * @param tuile La tuile sur lequel le Joueur va être positionné
+     * @param listeObjectifs La liste des objectifs que le Joueur devra effectuer pour gagner
+     */
     public Joueur(Tuile tuile , ArrayList<Objectifs> listeObjectifs){
         m_tuile = tuile;
         m_listeObjectifs = listeObjectifs ; // Est ce que plusieurs joueurs peuvent avoir le même objectif ? Réponse du prof : NON
@@ -27,4 +32,41 @@ public class Joueur {
         }
         return false;
     }
+
+    public void validationObjectif(){
+        if(verifObjectif()){
+            m_listeObjectifs.remove(0);
+            m_objectifRestant -= 1 ;
+            m_objectifRecup += 1 ;
+        }
+        else{
+
+        }
+    }
+
+    /**
+     * Recuperer le nombre d'objectifs qu'il reste au joueur a faire
+     * @return le nombre d'objectifs restant
+     */
+    public int getObjectifRestant() {
+        return m_objectifRestant;
+    }
+
+    /**
+     * Recuper le nombre d'objectifs déja réalisé
+     * @return le nombre d'objectifs déja réalisé
+     */
+    public int getObjectifRecup() {
+        return m_objectifRecup;
+    }
+
+    /**
+     *
+     * @return la tuile sur laquelle est le Joueur
+     */
+    public Tuile getTuile() {
+        return m_tuile;
+    }
+
+
 }

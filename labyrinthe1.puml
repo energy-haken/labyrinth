@@ -9,7 +9,7 @@ hide enum methods
 
 package src{
     class LabyrintheApp{
-        static main()
+        static main(args : String[])
     }
 
     package controller{
@@ -27,38 +27,61 @@ package src{
     }
     package model{
         class Plateau{
-
+            + changerTuile(tuileOriginal : Tuile , tuileNew : Tuile) : Tuile
             + pousserTuile(tuilePousse : Tuile , direction : String) : Tuile
         }
+
         abstract class Tuile <<abstract>>{
         - m_fixe : Boolean
         - m_pattern : Pattern
+        + <<create>> Tuile(fixe: Boolean , pattern : Pattern)
+        + getObjectif() : Objectifs
         }
+
         enum Pattern{
         ANGLE
         T
         DROIT
         }
-        class TuileObjectifs extends Tuile{
 
+        class TuileObjectifs extends Tuile{
+            + <<create>> TuileObjectifs(fixe : Boolean , pattern : Pattern , objectifAssocie : Objectifs)
+            + getObjectif() : Objectifs
         }
-        class TuileLibre extends Tuile{}
+        class TuileLibre extends Tuile{
+            + <<create>> TuileLibre(fixe : Boolean , pattern : Pattern)
+        }
         class LabyrintheObserver{
         }
         enum Objectifs <<enumeration>>{
             PORTE_AMICALE
             W
-            BARBEDEZ
-            MACHINEACAFE
-            LEOEXAM
+            BARBE_DE_Z
+            MACHINE_A_CAFE
+            LEO_EXAM
+            MOULINETTE
+            PPP
+            RDS
+            STAGE
+            GANZARSKI
+            ECHEC_CONTRE_H
+            HERBE
         }
 
         class Joueur{
             m_objectifRestant : Integer
             m_objectifRecup : Integer
+            + <<create>> Joueur(tuile : Tuile , objectif : Objectifs[])
+            + verifObjectif() : Boolean
+            + getObjectifRecup() : Integer
+            + getObjectifRestant() : Integer
+            + getTuile() : Tuile
+            + validationObjectif()
         }
+
         TuileObjectifs -> "m_objectifAssocie" Objectifs : > is One
         Joueur o-> "m_listeObjectifs" Objectifs : > has several
+        Joueur o-> "m_tuile \n 1" Tuile : > Is on
         Tuile -> "m_pattern" Pattern : > is type
         Plateau -> Tuile :  <<use>>
 

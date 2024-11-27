@@ -1,4 +1,4 @@
 package view;
 
-public class LabyrintheWindow {
+public class LabyrintheWindow extends javax.swing.JFrame {
 }

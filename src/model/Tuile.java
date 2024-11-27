@@ -10,7 +10,7 @@ public abstract class Tuile {
     private boolean m_fixe;
     private Pattern m_pattern;
     private ArrayList<Joueur> m_joueurs;
-    
+
 
     /**
      *
@@ -22,11 +22,7 @@ public abstract class Tuile {
         m_pattern = pattern;
     }
 
-    /**
-     *
-     * @return L'objectif associé (par defaut : null)
-     */
-    public Objectifs getObjectif(){
-        return null ;
-    }
+
+    public abstract Objectifs getObjectif() ;
+
 }

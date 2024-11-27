@@ -50,6 +50,7 @@ package src{
         }
         class TuileLibre extends Tuile{
             + <<create>> TuileLibre(fixe : Boolean , pattern : Pattern)
+            + getObjectif() : Objectifs
         }
         class LabyrintheObserver{
         }
@@ -85,6 +86,7 @@ package src{
         Tuile -> "m_pattern" Pattern : > is type
         Plateau -> "m_tuile \n 50" Tuile :  > Have 50
         Plateau -> "m_joueur \n 4" Joueur : < On It
+        
 
     }
     package view{

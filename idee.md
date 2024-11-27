@@ -42,3 +42,9 @@
 - H
 
 
+
+
+## Choses a changer
+
+- retirer la liste de Joueur sur les tuiles (sinon boucle d'appel)
+- reflechir a comment tourner les tuiles

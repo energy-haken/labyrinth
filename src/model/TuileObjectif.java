@@ -15,6 +15,10 @@ public class TuileObjectif extends Tuile {
         m_objectifAssocie = objectifAssocie;
     }
 
+    /**
+     *
+     * @return l'objectif présent
+     */
     @Override
     public Objectifs getObjectif() {
         return m_objectifAssocie;

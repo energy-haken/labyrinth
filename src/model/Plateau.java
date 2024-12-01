@@ -40,10 +40,10 @@ public class Plateau {
     /**
      *
      * @param tuile La tuile a tourné
-     * @param rotation Le degre de rotation de la tuile = 90, 180 , 270 , 0
+     * @param direction orientation de la tuile
      * @return la nouvelle tuile avec la nouvelle rotation
      */
-    public Tuile tournerTuile(Tuile tuile , int rotation){
+    public Tuile tournerTuile(Tuile tuile , Direction direction){
         return null ;
     }
 

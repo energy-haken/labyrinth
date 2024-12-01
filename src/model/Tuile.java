@@ -1,15 +1,11 @@
 package model;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import model.Objectifs ;
-
 public abstract class Tuile {
 
 
     private boolean m_fixe;
     private Pattern m_pattern;
-    private ArrayList<Joueur> m_joueurs;
+
 
 
     /**
@@ -23,16 +19,16 @@ public abstract class Tuile {
     }
 
 
-    public abstract Objectifs getObjectif() ;
+    public abstract Objectif getObjectif() ;
 
 
     /**
      *
      * @param tuile La tuile a tourné
-     * @param rotation Le degre de rotation de la tuile = 90, 180 , 270 , 0
+     * @param direction orientation de la tuile
      * @return la nouvelle tuile avec la nouvelle rotation
      */
-    public Tuile tournerTuile(Tuile tuile, int rotation) {
+    public Tuile tournerTuile(Tuile tuile, Direction direction) {
         return null;
     }
 }

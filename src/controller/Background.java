@@ -12,15 +12,15 @@ public class Background {
             if(i<4){
                 new TuileLibre(true, Pattern.ANGLE);
             } else if (4<=i && i<10) {
-                new TuileObjectif(false, Pattern.ANGLE, Objectifs.ECHEC_CONTRE_H);
+                new TuileObjectif(false, Pattern.ANGLE, Objectif.ECHEC_CONTRE_H);
             } else if (10<=i && i<20) {
                 new TuileLibre(false, Pattern.ANGLE);
             } else if (20<=i && i<32) {
                 new TuileLibre(false, Pattern.DROIT);
             } else if (32<=i && i<44) {
-                new TuileObjectif(false, Pattern.T, Objectifs.PORTE_AMICALE);
+                new TuileObjectif(false, Pattern.T, Objectif.PORTE_AMICALE);
             } else if (44<=i && i<50) {
-                new TuileObjectif(false, Pattern.T,Objectifs.HERBE);
+                new TuileObjectif(false, Pattern.T, Objectif.HERBE);
             }
         }
 

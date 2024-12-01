@@ -1,7 +1,7 @@
 package model;
 
 public class TuileObjectif extends Tuile {
-    private Objectifs m_objectifAssocie;
+    private Objectif m_objectifAssocie;
 
 
     /**
@@ -10,7 +10,7 @@ public class TuileObjectif extends Tuile {
      * @param pattern : Le style de la tuile
      * @param objectifAssocie : L'objectif présent sur la tuile
      */
-    public TuileObjectif(boolean fixe, Pattern pattern , Objectifs objectifAssocie) {
+    public TuileObjectif(boolean fixe, Pattern pattern , Objectif objectifAssocie) {
         super(fixe, pattern);
         m_objectifAssocie = objectifAssocie;
     }
@@ -20,7 +20,7 @@ public class TuileObjectif extends Tuile {
      * @return l'objectif présent
      */
     @Override
-    public Objectifs getObjectif() {
+    public Objectif getObjectif() {
         return m_objectifAssocie;
     }
 

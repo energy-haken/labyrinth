@@ -39,7 +39,7 @@ package src{
         - m_fixe : Boolean
         - m_pattern : Pattern
         + <<create>> Tuile(fixe: Boolean , pattern : Pattern)
-        + getObjectif() : Objectifs
+        + getObjectif() : Objectif
         + tournerTuile(tuile : Tuile , orientation : Integer) : Tuile
         }
 
@@ -50,17 +50,17 @@ package src{
         }
 
         class TuileObjectifs extends Tuile{
-            + <<create>> TuileObjectifs(fixe : Boolean , pattern : Pattern , objectifAssocie : Objectifs)
-            + getObjectif() : Objectifs
+            + <<create>> TuileObjectifs(fixe : Boolean , pattern : Pattern , objectifAssocie : Objectif)
+            + getObjectif() : Objectif
         }
         class TuileLibre extends Tuile{
             + <<create>> TuileLibre(fixe : Boolean , pattern : Pattern)
-            + getObjectif() : Objectifs
+            + getObjectif() : Objectif
         }
         class LabyrintheObserver{
 
         }
-        enum Objectifs <<enumeration>>{
+        enum Objectif <<enumeration>>{
             PORTE_AMICALE
             W
             BARBE_DE_Z
@@ -78,7 +78,7 @@ package src{
         class Joueur{
             m_objectifRestant : Integer
             m_objectifRecup : Integer
-            + <<create>> Joueur(tuile : Tuile , objectif : Objectifs[])
+            + <<create>> Joueur(tuile : Tuile , objectif : Objectif[])
             + verifObjectif() : Boolean
             + getObjectifRecup() : Integer
             + getObjectifRestant() : Integer
@@ -86,8 +86,8 @@ package src{
             + validationObjectif()
         }
 
-        TuileObjectifs -> "m_objectifAssocie" Objectifs : > is One
-        Joueur o-> "m_listeObjectifs" Objectifs : > has several
+        TuileObjectifs -> "m_objectifAssocie" Objectif : > is One
+        Joueur o-> "m_listeObjectifs" Objectif : > has several
         Joueur o-> "m_tuile \n 1" Tuile : > Is on
         Tuile -> "m_pattern" Pattern : > is type
         Plateau -> "m_tuile \n 50" Tuile :  > Have 50
@@ -97,10 +97,11 @@ package src{
     }
     package view{
         class LabyrintheWindows{}
-
+        class LabyrintheMainWindow{}
+        class PlateauWindow{}
     }
 
-    LabyrintheWindows -|> LabyrintheObserver
+
 
 }
 

@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 
 public class Joueur {
-    private ArrayList<Objectifs> m_listeObjectifs;
+    private ArrayList<Objectif> m_listeObjectifs;
     private int m_objectifRestant;
     private int m_objectifRecup;
     private Tuile m_tuile;
@@ -13,7 +13,7 @@ public class Joueur {
      * @param tuile La tuile sur lequel le Joueur va être positionné
      * @param listeObjectifs La liste des objectifs que le Joueur devra effectuer pour gagner
      */
-    public Joueur(Tuile tuile , ArrayList<Objectifs> listeObjectifs){
+    public Joueur(Tuile tuile , ArrayList<Objectif> listeObjectifs){
         m_tuile = tuile;
         m_listeObjectifs = listeObjectifs ; // Est ce que plusieurs joueurs peuvent avoir le même objectif ? Réponse du prof : NON
         m_objectifRecup = 0;

@@ -25,4 +25,14 @@ public abstract class Tuile {
 
     public abstract Objectifs getObjectif() ;
 
+
+    /**
+     *
+     * @param tuile La tuile a tourné
+     * @param rotation Le degre de rotation de la tuile = 90, 180 , 270 , 0
+     * @return la nouvelle tuile avec la nouvelle rotation
+     */
+    public Tuile tournerTuile(Tuile tuile, int rotation) {
+        return null;
+    }
 }

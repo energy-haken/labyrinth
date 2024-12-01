@@ -33,7 +33,18 @@ public class Plateau {
      * @return La tuille nouvellement remplacé
      */
     // PAS FINI
-    private Tuile changerTuile(Tuile tuileOriginal , Tuile tuileNew) {
+    public Tuile changerTuile(Tuile tuileOriginal , Tuile tuileNew) {
         return tuileOriginal = tuileNew ;
     }
+
+    /**
+     *
+     * @param tuile La tuile a tourné
+     * @param rotation Le degre de rotation de la tuile = 90, 180 , 270 , 0
+     * @return la nouvelle tuile avec la nouvelle rotation
+     */
+    public Tuile tournerTuile(Tuile tuile , int rotation){
+        return null ;
+    }
+
 }

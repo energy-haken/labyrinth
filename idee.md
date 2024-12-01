@@ -48,3 +48,10 @@
 
 - retirer la liste de Joueur sur les tuiles (sinon boucle d'appel)
 - reflechir a comment tourner les tuiles
+
+
+
+- Orientation : 
+Methode dans tuile + plateau 
+Tuile -> Paramêtre = Tuile , Joueurs , Orientation)
+- Le but est de "récreer" la tuile avec une orientation différente

@@ -22,13 +22,17 @@ package src{
     }
     package helpers{
         class ImageHelper{
-
+            + static merge(backgroundPath : String, foregroundPaths : String) : BufferedImage
+            + static rotate(original : BufferedImage,angle : double) : BufferedImage
+            + static rotateClockwise(original : BufferedImage ) : BufferedImage
+            + static rotateCounterClockwise(original : BufferedImage ) : BufferedImage
         }
     }
     package model{
         class Plateau{
             + changerTuile(tuileOriginal : Tuile , tuileNew : Tuile) : Tuile
             + pousserTuile(tuilePousse : Tuile , direction : String) : Tuile
+            + tournerTuile(tuileTourne : Tuile , rotation : Integer) : Tuile
         }
 
         abstract class Tuile <<abstract>>{
@@ -36,6 +40,7 @@ package src{
         - m_pattern : Pattern
         + <<create>> Tuile(fixe: Boolean , pattern : Pattern)
         + getObjectif() : Objectifs
+        + tournerTuile(tuile : Tuile , orientation : Integer) : Tuile
         }
 
         enum Pattern{
@@ -53,6 +58,7 @@ package src{
             + getObjectif() : Objectifs
         }
         class LabyrintheObserver{
+
         }
         enum Objectifs <<enumeration>>{
             PORTE_AMICALE
@@ -86,13 +92,15 @@ package src{
         Tuile -> "m_pattern" Pattern : > is type
         Plateau -> "m_tuile \n 50" Tuile :  > Have 50
         Plateau -> "m_joueur \n 4" Joueur : < On It
-        
+
 
     }
     package view{
         class LabyrintheWindows{}
 
     }
+
+    LabyrintheWindows -|> LabyrintheObserver
 
 }
 

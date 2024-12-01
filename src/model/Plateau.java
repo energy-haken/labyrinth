@@ -1,25 +1,34 @@
 package model;
 
+import view.PlateauWindow;
+
 import java.util.ArrayList;
 
 public class Plateau {
-    private ArrayList<ArrayList<Tuile>> m_tuiles;
+    private ArrayList<ArrayList<Tuile>> m_plateau;
     private ArrayList<Joueur> m_joueurs;
 
+    private Tuile m_tuile;
+
+
+    public Plateau(ArrayList<Joueur> joueurs, ArrayList<ArrayList<Tuile>> plateau, Tuile tuile){
+        m_joueurs = joueurs;
+        m_plateau = plateau;
+        m_tuile = tuile;
+    }
 
     /**
      * Pousse une tuile sur le plateau
-     * @param tuilePousse la tuile poussé a un endroit sur le plateau
      * @param direction : la direction dans laquelle la ligne va être décalé (NORTH, SOUTH, EAST , WEST)
      * @return
      */
 
     // PAS FINI
-    public Tuile pousserTuile(Tuile tuilePousse, Direction direction){
-        for(int i = 0; i < m_tuiles.size(); i++){
-            for(int j = 0; j < m_tuiles.get(i).size(); j++){
-                if(m_tuiles.get(i).get(j).equals(tuilePousse)){
-                   // m_tuiles.get(i).get(j+1) = this.changerTuile(m_tuiles.get(i).get(j+1) , m_tuiles.get(i).get(j)) ;
+    public Tuile pousserTuile(Direction direction){
+        for(int i = 0; i < m_plateau.size(); i++){
+            for(int j = 0; j < m_plateau.get(i).size(); j++){
+                if(m_plateau.get(i).get(j).equals(m_tuile)){
+                   // m_plateau.get(i).get(j+1) = this.changerTuile(m_plateau.get(i).get(j+1) , m_plateau.get(i).get(j)) ;
                 }
             }
         }
@@ -39,11 +48,10 @@ public class Plateau {
 
     /**
      *
-     * @param tuile La tuile a tourné
      * @param direction orientation de la tuile
      * @return la nouvelle tuile avec la nouvelle rotation
      */
-    public Tuile tournerTuile(Tuile tuile , Direction direction){
+    public Tuile tournerTuile( Direction direction){
         return null ;
     }
 

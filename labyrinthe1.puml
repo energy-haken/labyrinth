@@ -30,9 +30,10 @@ package src{
     }
     package model{
         class Plateau{
+            + <<create>> Plateau(tuiles : tuile[][] , joueur : joueur[])
             + changerTuile(tuileOriginal : Tuile , tuileNew : Tuile) : Tuile
-            + pousserTuile(tuilePousse : Tuile , direction : String) : Tuile
-            + tournerTuile(tuileTourne : Tuile , rotation : Integer) : Tuile
+            + pousserTuile( direction : String) : Tuile
+            + tournerTuile(rotation : Integer) : Tuile
         }
 
         abstract class Tuile <<abstract>>{
@@ -40,6 +41,7 @@ package src{
         - m_pattern : Pattern
         + <<create>> Tuile(fixe: Boolean , pattern : Pattern)
         + getObjectif() : Objectif
+        + getDirection() : Direction
         + tournerTuile(tuile : Tuile , orientation : Integer) : Tuile
         }
 
@@ -56,9 +58,6 @@ package src{
         class TuileLibre extends Tuile{
             + <<create>> TuileLibre(fixe : Boolean , pattern : Pattern)
             + getObjectif() : Objectif
-        }
-        class LabyrintheObserver{
-
         }
         enum Objectif <<enumeration>>{
             PORTE_AMICALE
@@ -79,6 +78,7 @@ package src{
             m_objectifRestant : Integer
             m_objectifRecup : Integer
             + <<create>> Joueur(tuile : Tuile , objectif : Objectif[])
+            + deplacement(versOu : Direction , nombreDeCase : Integer)
             + verifObjectif() : Boolean
             + getObjectifRecup() : Integer
             + getObjectifRestant() : Integer
@@ -90,12 +90,15 @@ package src{
         Joueur o-> "m_listeObjectifs" Objectif : > has several
         Joueur o-> "m_tuile \n 1" Tuile : > Is on
         Tuile -> "m_pattern" Pattern : > is type
-        Plateau -> "m_tuile \n 50" Tuile :  > Have 50
+        Plateau -> "m_tuile \n\n m_plateau \n49" Tuile :  > Have 49 (liste de 7 liste de 7 tuiles) an 1 extra
+
         Plateau -> "m_joueur \n 4" Joueur : < On It
 
 
     }
     package view{
+
+        class LabyrintheObserver{}
         class LabyrintheWindows{}
         class LabyrintheMainWindow{}
         class PlateauWindow{}

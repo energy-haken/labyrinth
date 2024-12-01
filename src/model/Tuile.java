@@ -5,6 +5,7 @@ public abstract class Tuile {
 
     private boolean m_fixe;
     private Pattern m_pattern;
+    private Direction m_direction;
 
 
 
@@ -21,6 +22,9 @@ public abstract class Tuile {
 
     public abstract Objectif getObjectif() ;
 
+    public Direction getDirection() {
+        return m_direction;
+    }
 
     /**
      *

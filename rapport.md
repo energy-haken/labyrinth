@@ -2,7 +2,9 @@
 
 ## Package model : 
 
-### Classes : 
+---
+
+### <span style="color:orange"> Classes : </span>
 
 #### Joueur 
 
@@ -16,8 +18,9 @@
 - a voir si il ne doit pas être déplace dans le package "controller"
 
 #### Tuiles
+<span style="color:green"> Classe abstract</span>
 
-- classe abstract parent de **TuileLibre** et **TuileObjectif**
+- parent de **TuileLibre** et **TuileObjectif**
 - a comme parametres son pattern et un boolean pour savoir si la tuile est fixe ou non
 
 #### TuileLibre
@@ -30,7 +33,7 @@
 
 - possède un parametre en plus : un Objectif associé
 
-### Enumeration
+### <span style="color:orange"> Enumeration </span>
 
 #### Direction
 

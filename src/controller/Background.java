@@ -2,6 +2,8 @@ package controller;
 
 import model.*;
 
+import java.util.ArrayList;
+
 public class Background {
     public Plateau lancementJeu(){
         /*20 angles dont 4 sont fixes et 16 sont déplaçables, 6 obj
@@ -22,6 +24,10 @@ public class Background {
             } else if (44<=i && i<50) {
                 new TuileObjectif(false, Pattern.T, Objectif.HERBE);
             }
+        }
+        ArrayList<Objectif> listeObjectif = new ArrayList<>() ;
+        for(int i = 0 ; i < 24 ; i++){
+            listeObjectif.add(Objectif.values()[i]);
         }
 
 

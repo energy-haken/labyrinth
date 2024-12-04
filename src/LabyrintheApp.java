@@ -1,3 +1,4 @@
+import controller.Background;
 import model.*;
 
 import java.util.ArrayList;
@@ -13,5 +14,7 @@ public class LabyrintheApp {
         joueur1.verifObjectif() ;
         //Plateau cUnPlateau = new Background().lancementJeu();
 
+        Background background = new Background() ;
+        background.lancementJeu() ;
     }
 }

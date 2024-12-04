@@ -12,5 +12,17 @@ public enum Objectif {
     GANZARSKI,
     RDS,
     STAGE,
-    ECHEC_CONTRE_H
+    ECHEC_CONTRE_H,
+    ALTERNANCE,
+    CLE_DES_SALLES,
+    ICTC411,
+    TIERLIST_PROF,
+    Z_COIN,
+    EDUROAM,
+    LABYRINTHE_INCEPTION,
+    SALLE_REUNION,
+    TOILETTE_CASSE,
+    PC_PRET,
+    Z_BOT,
+    T3
 }

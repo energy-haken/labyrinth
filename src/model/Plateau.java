@@ -45,14 +45,10 @@ public class Plateau {
     public Tuile changerTuile(Tuile tuileOriginal , Tuile tuileNew) {
         return tuileOriginal = tuileNew ;
     }
+    
 
-    /**
-     *
-     * @param direction orientation de la tuile
-     * @return la nouvelle tuile avec la nouvelle rotation
-     */
-    public Tuile tournerTuile( Direction direction){
-        return null ;
+    public Tuile getTuile(int coordoneeX , int coordoneeY){
+        return m_plateau.get(coordoneeX).get(coordoneeY);
     }
 
 }

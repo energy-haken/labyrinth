@@ -33,6 +33,7 @@ public abstract class Tuile {
      * @return la nouvelle tuile avec la nouvelle rotation
      */
     public Tuile tournerTuile(Tuile tuile, Direction direction) {
-        return null;
+        tuile.m_direction = direction;
+        return tuile;
     }
 }

@@ -3,12 +3,18 @@ package view;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import helpers.ImageHelper;
 
 public class PlateauWindow extends JFrame {
+    //charges les images
+    private static final BufferedImage Tpic = loadImage("img/T.png");
+    private static final BufferedImage ANGLEpic = loadImage("img/Corner.png");
+    private static final BufferedImage DROITpic = loadImage("img/LINEpng.png");
     private JPanel Plateau;
     private JPanel L1C1;
     private JPanel L1C2;
@@ -80,28 +86,42 @@ public class PlateauWindow extends JFrame {
             }
         }
 
-        // Load and scale the image
-        BufferedImage myPicture = loadImage("img/Corner.png");
-        if (myPicture != null) {
-            Image scaledImage = myPicture.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-            BufferedImage rotatedImage = ImageHelper.rotateClockwise(myPicture);
-            Image scaledImage2 = rotatedImage.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
 
-
-            BufferedImage rotatedImage2 = ImageHelper.rotateClockwise(myPicture);
-            rotatedImage2 = ImageHelper.rotateClockwise(rotatedImage2);
-            Image scaledImage3 = rotatedImage2.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-
-            BufferedImage rotatedImage3 = ImageHelper.rotateCounterClockwise(myPicture);
-            Image scaledImage4 = rotatedImage3.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-
-
-
-            // Add images to specific panels
-            panels[0][0].add(new JLabel(new ImageIcon(scaledImage4))); // Top-left corner
+        //scale les images
+        if (ANGLEpic != null) {
+            Image scaledImage = ANGLEpic.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
             panels[0][cols - 1].add(new JLabel(new ImageIcon(scaledImage))); // Top-right corner
-            panels[rows - 1][0].add(new JLabel(new ImageIcon(scaledImage3))); // Bottom-left corner
-            panels[rows - 1][cols - 1].add(new JLabel(new ImageIcon(scaledImage2))); // Bottom-right corner
+
+            BufferedImage rotatedImage = ImageHelper.rotateClockwise(ANGLEpic);
+            scaledImage = rotatedImage.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+            panels[rows - 1][cols - 1].add(new JLabel(new ImageIcon(scaledImage))); // Bottom-right corner
+
+
+            rotatedImage = ImageHelper.rotateClockwise(ImageHelper.rotateClockwise(ANGLEpic));
+            scaledImage = rotatedImage.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+            panels[rows - 1][0].add(new JLabel(new ImageIcon(scaledImage))); // Bottom-left corner
+
+
+            rotatedImage = ImageHelper.rotateCounterClockwise(ANGLEpic);
+            scaledImage = rotatedImage.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+            panels[0][0].add(new JLabel(new ImageIcon(scaledImage))); // Top-left corner
+
+
+            /*this.addComponentListener(new ComponentAdapter() {
+                public void componentResized(ComponentEvent componentEvent) {
+                    for (JPanel[] listePanel: panels) {
+                        for (JPanel pan: listePanel) {
+                            for (Component l : pan.getComponents()) {
+                                if ( l instanceof JLabel ) {
+                                    ((JLabel) l).setIcon(new ImageIcon(scaledImage.getScaledInstance(100,100,Image.SCALE_SMOOTH)));
+                                }
+                            }
+                        }
+                    }
+                }
+            });*/
+
+
         }
 
         // Set the content pane
@@ -116,7 +136,7 @@ public class PlateauWindow extends JFrame {
      * @param filePath Path to the image file.
      * @return BufferedImage if successful, null otherwise.
      */
-    private BufferedImage loadImage(String filePath) {
+    private static BufferedImage loadImage(String filePath) {
         try {
             return ImageIO.read(new File(filePath));
         } catch (IOException e) {
@@ -124,6 +144,7 @@ public class PlateauWindow extends JFrame {
             return null;
         }
     }
+
 
 
 }

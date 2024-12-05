@@ -45,7 +45,7 @@ public class Plateau {
     public Tuile changerTuile(Tuile tuileOriginal , Tuile tuileNew) {
         return tuileOriginal = tuileNew ;
     }
-    
+
 
     public Tuile getTuile(int coordoneeX , int coordoneeY){
         return m_plateau.get(coordoneeX).get(coordoneeY);

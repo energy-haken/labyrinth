@@ -27,13 +27,11 @@ public abstract class Tuile {
     }
 
     /**
-     *
-     * @param tuile La tuile a tourné
+     *:
      * @param direction orientation de la tuile
      * @return la nouvelle tuile avec la nouvelle rotation
      */
-    public Tuile tournerTuile(Tuile tuile, Direction direction) {
-        tuile.m_direction = direction;
-        return tuile;
+    public void tournerTuile(Direction direction) {
+        this.m_direction = direction;
     }
 }

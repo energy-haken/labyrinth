@@ -30,17 +30,18 @@ package src{
     }
     package model{
         class Plateau{
-            + <<create>> Plateau(tuiles : tuile[][] , joueur : joueur[])
+            + <<create>> Plateau(joueur : joueur[])
             + changerTuile(tuileOriginal : Tuile , tuileNew : Tuile) : Tuile
-            + pousserTuile( direction : String) : Tuile
+            + pousserTuile(colonne : Integer , direction : Direction) : Tuile
             + tournerTuile(rotation : Integer) : Tuile
+            + deplacementJoueur(versOu : Direction , nombreDeCase : Integer)
         }
 
         abstract class Tuile <<abstract>>{
         - m_fixe : Boolean
         - m_pattern : Pattern
         + <<create>> Tuile(fixe: Boolean , pattern : Pattern)
-        + getObjectif() : Objectif
+        + abstract getObjectif() : Objectif
         + getDirection() : Direction
         + tournerTuile(tuile : Tuile , orientation : Integer) : Tuile
         }
@@ -78,7 +79,7 @@ package src{
             m_objectifRestant : Integer
             m_objectifRecup : Integer
             + <<create>> Joueur(tuile : Tuile , objectif : Objectif[])
-            + deplacement(versOu : Direction , nombreDeCase : Integer)
+
             + verifObjectif() : Boolean
             + getObjectifRecup() : Integer
             + getObjectifRestant() : Integer
@@ -90,8 +91,8 @@ package src{
         Joueur o-> "m_listeObjectifs" Objectif : > has several
         Joueur o-> "m_tuile \n 1" Tuile : > Is on
         Tuile -> "m_pattern" Pattern : > is type
-        Plateau -> "m_tuile \n\n m_plateau \n49" Tuile :  > Have 49 (liste de 7 liste de 7 tuiles) an 1 extra
-
+        Plateau o-> "\n m_plateau \n 49" Tuile :  > Have 49 (liste de 7 liste de 7 tuiles)
+        Plateau o-> "m_tuile \n" Tuile : Have one extra
         Plateau -> "m_joueur \n 4" Joueur : < On It
 
 

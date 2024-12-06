@@ -8,7 +8,12 @@ import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import helpers.ImageHelper;
+import model.Plateau;
+import model.Tuile;
+
+import static model.Pattern.*;
 
 public class PlateauWindow extends JFrame {
     //charges les images
@@ -66,7 +71,7 @@ public class PlateauWindow extends JFrame {
     private JPanel L6C7;
     private JPanel L7C7;
 
-    public PlateauWindow(int rows, int cols) throws IOException {
+    public PlateauWindow(int rows, int cols, Plateau plateau) throws IOException {
         super("Plateau");
         setSize(700, 700);
 
@@ -86,8 +91,49 @@ public class PlateauWindow extends JFrame {
             }
         }
 
+        // Use the plateau object to set up the initial state of the grid
+        List<List<Tuile>> grid = plateau.getPlateau();
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                Tuile tuile = grid.get(row).get(col);
+                if (tuile != null) {
+                    BufferedImage image = null;
+                    switch (tuile.getPattern()) {
+                        case ANGLE:
+                            image = ANGLEpic;
+                            break;
+                        case DROIT:
+                            image = DROITpic;
+                            break;
+                        case T:
+                            image = Tpic;
+                            break;
+                    }
+                    switch (tuile.getDirection()) {
+                        case NORTH:
+                            image = ImageHelper.rotateCounterClockwise(image);
+                            break;
+                        case EAST:
+                            image = ImageHelper.rotateClockwise(image);
+                            break;
+                        case SOUTH:
+                            image = ImageHelper.rotateClockwise(ImageHelper.rotateClockwise(image));
+                            break;
+                        case WEST:
+                            break;
+                        case null :
+                            break;
+                    }
+                    if (image != null) {
+                        Image scaledImage = image.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                        panels[row][col].add(new JLabel(new ImageIcon(scaledImage)));
+                    }
+                }
+            }
+        }
 
         //scale les images
+        /*
         if (ANGLEpic != null) {
             Image scaledImage = ANGLEpic.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
             panels[0][cols - 1].add(new JLabel(new ImageIcon(scaledImage))); // Top-right corner
@@ -107,7 +153,9 @@ public class PlateauWindow extends JFrame {
             panels[0][0].add(new JLabel(new ImageIcon(scaledImage))); // Top-left corner
 
 
-            /*this.addComponentListener(new ComponentAdapter() {
+
+
+            this.addComponentListener(new ComponentAdapter() {
                 public void componentResized(ComponentEvent componentEvent) {
                     for (JPanel[] listePanel: panels) {
                         for (JPanel pan: listePanel) {
@@ -119,10 +167,11 @@ public class PlateauWindow extends JFrame {
                         }
                     }
                 }
-            });*/
+            });
 
 
         }
+        */
 
         // Set the content pane
         setContentPane(Plateau);

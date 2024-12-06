@@ -10,8 +10,8 @@ public class TuileObjectif extends Tuile {
      * @param pattern : Le style de la tuile
      * @param objectifAssocie : L'objectif présent sur la tuile
      */
-    public TuileObjectif(boolean fixe, Pattern pattern , Objectif objectifAssocie) {
-        super(fixe, pattern);
+    public TuileObjectif(boolean fixe, Pattern pattern , int coordoneeX , int coordoneeY  , Objectif objectifAssocie) {
+        super(fixe, pattern , coordoneeX , coordoneeY);
         m_objectifAssocie = objectifAssocie;
     }
 

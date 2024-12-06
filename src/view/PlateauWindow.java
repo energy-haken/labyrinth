@@ -114,12 +114,13 @@ public class PlateauWindow extends JFrame {
                             image = ImageHelper.rotateCounterClockwise(image);
                             break;
                         case EAST:
-                            image = ImageHelper.rotateClockwise(image);
+
                             break;
                         case SOUTH:
-                            image = ImageHelper.rotateClockwise(ImageHelper.rotateClockwise(image));
+                            image = ImageHelper.rotateClockwise(image);
                             break;
                         case WEST:
+                            image = ImageHelper.rotateClockwise(ImageHelper.rotateClockwise(image));
                             break;
                         case null :
                             break;
@@ -132,46 +133,30 @@ public class PlateauWindow extends JFrame {
             }
         }
 
-        //scale les images
-        /*
-        if (ANGLEpic != null) {
-            Image scaledImage = ANGLEpic.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-            panels[0][cols - 1].add(new JLabel(new ImageIcon(scaledImage))); // Top-right corner
-
-            BufferedImage rotatedImage = ImageHelper.rotateClockwise(ANGLEpic);
-            scaledImage = rotatedImage.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-            panels[rows - 1][cols - 1].add(new JLabel(new ImageIcon(scaledImage))); // Bottom-right corner
-
-
-            rotatedImage = ImageHelper.rotateClockwise(ImageHelper.rotateClockwise(ANGLEpic));
-            scaledImage = rotatedImage.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-            panels[rows - 1][0].add(new JLabel(new ImageIcon(scaledImage))); // Bottom-left corner
-
-
-            rotatedImage = ImageHelper.rotateCounterClockwise(ANGLEpic);
-            scaledImage = rotatedImage.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-            panels[0][0].add(new JLabel(new ImageIcon(scaledImage))); // Top-left corner
-
-
-
-
-            this.addComponentListener(new ComponentAdapter() {
-                public void componentResized(ComponentEvent componentEvent) {
-                    for (JPanel[] listePanel: panels) {
-                        for (JPanel pan: listePanel) {
-                            for (Component l : pan.getComponents()) {
-                                if ( l instanceof JLabel ) {
-                                    ((JLabel) l).setIcon(new ImageIcon(scaledImage.getScaledInstance(100,100,Image.SCALE_SMOOTH)));
-                                }
-                            }
-                        }
+        // Add non-fixed tiles to the grid
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                Tuile tuile = grid.get(row).get(col);
+                if (tuile != null && !tuile.isFixe()) {
+                    BufferedImage image = null;
+                    switch (tuile.getPattern()) {
+                        case ANGLE:
+                            image = ANGLEpic;
+                            break;
+                        case DROIT:
+                            image = DROITpic;
+                            break;
+                        case T:
+                            image = Tpic;
+                            break;
+                    }
+                    if (image != null) {
+                        Image scaledImage = image.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                        panels[row][col].add(new JLabel(new ImageIcon(scaledImage)));
                     }
                 }
-            });
-
-
+            }
         }
-        */
 
         // Set the content pane
         setContentPane(Plateau);

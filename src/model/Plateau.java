@@ -47,10 +47,10 @@ public class Plateau {
                     listeObjectif.remove(listeObjectif.size()-1);
                 }
                 if((j == 0)&&(k == 0)){
-                    this.m_plateau.get(j).get(k).setDirection(Direction.NORTH);
+                    this.m_plateau.get(j).get(k).setDirection(Direction.WEST);
                 }
                 if((j == 0)&&(k == 6)){
-                    this.m_plateau.get(j).get(k).setDirection(Direction.WEST);
+                    this.m_plateau.get(j).get(k).setDirection(Direction.NORTH);
                 }
                 if((j == 6)&&(k == 0)){
                     this.m_plateau.get(j).get(k).setDirection(Direction.SOUTH);
@@ -80,6 +80,25 @@ public class Plateau {
 
 
 
+        }
+
+        for(int i = 0 ; i < 7 ; i++){
+            for(int j = 0 ; j < 7 ; j++){
+                if((i == 0 && j == 2) || (i == 0 && j == 4) || (i == 2 && j == 4)){
+                    this.m_plateau.get(i).get(j).setDirection(Direction.SOUTH);
+                }
+                if((i == 2 && j == 0) || (i == 4 && j == 0) || (i == 2 && j == 2)){
+                    this.m_plateau.get(i).get(j).setDirection(Direction.EAST);
+                }
+                if((i == 2 && j == 6) || (i == 4 && j == 6) || (i == 4 && j == 4)){
+                    this.m_plateau.get(i).get(j).setDirection(Direction.WEST);
+                }
+                if((i == 6 && j == 2) || (i == 6 && j == 4) || (i == 4 && j == 2)){
+                    this.m_plateau.get(i).get(j).setDirection(Direction.NORTH);
+                }
+
+
+            }
         }
         for (List<Tuile> ligne: this.m_plateau) {
             for (Tuile t: ligne) {

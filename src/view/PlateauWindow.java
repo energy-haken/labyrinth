@@ -116,7 +116,7 @@ public class PlateauWindow extends JFrame {
 
                             else if(tuile.getObjectif() != null){
 
-                                image = ImageHelper.merge("img/Corner.png" , "img/PORTE_AMICALE.png") ;
+                                image = ImageHelper.merge("img/Corner.png" , "img/Objectifs/" + tuile.getObjectif().name() + ".png") ;
                             }
                             else{
                                 image = ANGLEpic;
@@ -125,7 +125,7 @@ public class PlateauWindow extends JFrame {
                             break;
                         case DROIT:
                             if(tuile.getObjectif() != null){
-                                image = ImageHelper.merge("img/LINE.png" , "img/PORTE_AMICALE.png") ;
+                                image = ImageHelper.merge("img/LINE.png" , "img/Objectifs/" + tuile.getObjectif().name() + ".png") ;
                             }
                             else{
                                 image = DROITpic;
@@ -134,7 +134,7 @@ public class PlateauWindow extends JFrame {
                             break;
                         case T:
                             if(tuile.getObjectif() != null){
-                                image = ImageHelper.merge("img/T.png" , "img/PORTE_AMICALE.png") ;
+                                image = ImageHelper.merge("img/T.png" , "img/Objectifs/" + tuile.getObjectif().name() + ".png") ;
                             }
                             else{
                                 image = Tpic;

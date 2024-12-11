@@ -9,6 +9,7 @@ public abstract class Tuile {
     private int m_coordoneeX;
     private int m_coordoneeY;
 
+    private int m_name;
 
 
     /**
@@ -16,11 +17,12 @@ public abstract class Tuile {
      * @param fixe : Boolean : Si la tuile sur le plateau est fixe ou non
      * @param pattern : Le style de la tuile
      */
-    public Tuile(boolean fixe, Pattern pattern , int coordoneeX , int coordoneeY) {
+    public Tuile(boolean fixe, Pattern pattern , int coordoneeX , int coordoneeY, int name) {
         m_fixe = fixe;
         m_pattern = pattern;
         m_coordoneeX = coordoneeX;
         m_coordoneeY = coordoneeY;
+        m_name = name;
     }
 
 
@@ -243,4 +245,6 @@ public abstract class Tuile {
         }
         return false;
     }
+
+    public int getName(){ return m_name; }
 }

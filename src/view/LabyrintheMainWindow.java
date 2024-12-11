@@ -38,8 +38,9 @@ public class LabyrintheMainWindow extends JFrame{
 
         setContentPane(Window);
         setVisible(true);
-        while(true){
+    }
 
-        }
+    public Plateau getPlateau() {
+        return Plateau.getPlateauModel();
     }
 }

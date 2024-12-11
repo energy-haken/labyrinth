@@ -25,7 +25,6 @@ public class Plateau {
 
 
 
-        ArrayList<Tuile> placable = new ArrayList<Tuile>();
         ArrayList<Objectif> listeObjectif = new ArrayList<>() ;
         ArrayList<Objectif> objectifs1 = new ArrayList<>() ;
 
@@ -40,18 +39,23 @@ public class Plateau {
 
 
 
+        int numTuile = 0;
         /*20 angles dont 4 sont fixes et 16 sont déplaçables, 6 obj
         12 sections droites toutes déplaçables,
         18 en forme de "T" dont 12 sont fixes et 6 sont déplaçables. 18 obj
         Pour le moment elles sont créé dans le vent, il faut encore les associer */
+
+        //4Af |12 TfO
         for (int j = 0; j < 7; j+=2) {
             for (int k = 0; k < 7; k+=2) {
                 if((j==0||j==6)&&(k==0||k==6)){
-                    this.m_plateau.get(j).set(k,new TuileLibre(true, Pattern.ANGLE , j , k));
+                    this.m_plateau.get(j).set(k,new TuileLibre(true, Pattern.ANGLE , j , k, numTuile));
+                    numTuile++;
 
                 }
                 else{
-                    this.m_plateau.get(j).set(k,new TuileObjectif(true, Pattern.T, j , k ,listeObjectif.get(listeObjectif.size()-1)));
+                    this.m_plateau.get(j).set(k,new TuileObjectif(true, Pattern.T, j , k ,listeObjectif.get(listeObjectif.size()-1), numTuile));
+                    numTuile++;
                     listeObjectif.remove(listeObjectif.size()-1);
                 }
                 if((j == 0)&&(k == 0)){
@@ -68,29 +72,7 @@ public class Plateau {
                 }
             }
         }
-        /*
-        for (int i = 4; i < 38; i++) {
-            if (i<10) {
-                placable.add(new TuileObjectif(false, Pattern.ANGLE, i , i , listeObjectif.get(listeObjectif.size()-1)));
-                listeObjectif.remove(listeObjectif.size()-1);
 
-
-            } else if (10<=i && i<20) {
-                placable.add(new TuileLibre(false, Pattern.ANGLE, i , i ));
-
-            } else if (20<=i && i<32) {
-                placable.add(new TuileLibre(false, Pattern.DROIT, i , i ));
-
-            } else if (32<=i && i<38) {
-                placable.add(new TuileObjectif(false, Pattern.T, i , i , listeObjectif.get(listeObjectif.size()-1)));
-                listeObjectif.remove(listeObjectif.size()-1);
-
-            }
-
-
-
-        }
-            */
 
         // Generation des Tuiles Déplacables
         for(int i = 0 ; i < 7 ; i++) {
@@ -99,9 +81,9 @@ public class Plateau {
                 Pattern pattern = checkPattern();
                 Direction direction = checkDirection();
                 if (checkObjectif() && !listeObjectif.isEmpty()) {
-                m_plateau.get(i).set(j, new TuileObjectif(false, pattern, i, j, listeObjectif.get(listeObjectif.size() - 1)));
+                m_plateau.get(i).set(j, new TuileObjectif(false, pattern, i, j, listeObjectif.get(listeObjectif.size() - 1), numTuile));
+                    numTuile++;
                 m_plateau.get(i).get(j).setDirection(direction);
-                placable.add(m_plateau.get(i).get(j));
 
                 listeObjectif.remove(listeObjectif.size() - 1);
 
@@ -110,9 +92,9 @@ public class Plateau {
 
                 }
                 else {
-                    m_plateau.get(i).set(j, new TuileLibre(false, pattern, i, j));
+                    m_plateau.get(i).set(j, new TuileLibre(false, pattern, i, j,numTuile));
+                    numTuile++;
                     m_plateau.get(i).get(j).setDirection(direction);
-                    placable.add(m_plateau.get(i).get(j));
                 }
 
             }
@@ -141,17 +123,7 @@ public class Plateau {
 
         Joueur joueurRouge = new Joueur(m_plateau.get(0).get(0) , objectifs1) ;
         m_joueurs.add(joueurRouge) ;
-
-        /*
-        for (List<Tuile> ligne: this.m_plateau) {
-            for (Tuile t: ligne) {
-                if(t == null){
-                    t = placable.get( (int) (Math.random() * placable.size()));
-                }
-            }
-        }
-
-        */
+        this.m_tuile = new TuileLibre(false, checkPattern(), -1,-1, numTuile);
 
     }
 
@@ -199,20 +171,10 @@ public class Plateau {
         return tuileSortante;
     }
 
-    /**
-     * Changer la tuile avec une autre (utilisé lors du poussage d'une ligne)
-     * @param tuileOriginal : La tuile qui va être remplacé
-     * @param tuileNew : La nouvelle tuile qui l'a remplace
-     * @return La tuille nouvellement remplacé
-     */
-    // PAS FINI
-    public Tuile changerTuile(Tuile tuileOriginal , Tuile tuileNew) {
-        return tuileOriginal = tuileNew ;
-    }
 
 
-    public Tuile getTuile(int coordoneeX , int coordoneeY){
-        return m_plateau.get(coordoneeX).get(coordoneeY);
+    public Tuile getTuile(){
+        return m_tuile;
     }
 
     public List<List<Tuile>> getPlateau() {
@@ -293,5 +255,17 @@ public class Plateau {
                 return false;
         }
         return false;
+    }
+
+    public void printBoard(){
+        for (List<Tuile> lT: this.m_plateau) {
+            System.out.print("\n");
+            for (Tuile T: lT) {
+                if(T!=null) {
+                    System.out.print(T.getName() + "\t");
+                }
+            }
+
+        }
     }
 }

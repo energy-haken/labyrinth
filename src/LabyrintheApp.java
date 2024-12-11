@@ -12,12 +12,12 @@ public class LabyrintheApp {
         ArrayList objectifsList = new ArrayList();
         objectifsList.add(Objectif.HERBE) ;
         objectifsList.add(Objectif.PORTE_AMICALE) ;
-        TuileLibre tuile = new TuileLibre(true , Pattern.T , 1 , 2);
+        TuileLibre tuile = new TuileLibre(true , Pattern.T , 1 , 2, 999);
         Joueur joueur1 = new Joueur(tuile , objectifsList);
         joueur1.verifObjectif() ;
         //Plateau cUnPlateau = new Background().lancementJeu();
 
-        Background background = new Background() ;
+        //Background background = new Background() ;
         /*background.lancementJeu();
 
             try {
@@ -31,5 +31,11 @@ public class LabyrintheApp {
          */
 
         LabyrintheMainWindow ForPity = new LabyrintheMainWindow();
+        ForPity.getPlateau().printBoard();
+        System.out.println(ForPity.getPlateau().getTuile().getName());
+        ForPity.getPlateau().pousserTuile(Direction.NORTH, 1);
+        System.out.println("pousser");
+        ForPity.getPlateau().printBoard();
+
     }
 }

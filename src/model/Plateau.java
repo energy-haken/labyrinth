@@ -94,6 +94,7 @@ public class Plateau {
                 if (checkObjectif() && !listeObjectif.isEmpty()) {
                 m_plateau.get(i).set(j, new TuileObjectif(false, pattern, i, j, listeObjectif.get(listeObjectif.size() - 1)));
                 m_plateau.get(i).get(j).setDirection(direction);
+                placable.add(m_plateau.get(i).get(j));
 
                 listeObjectif.remove(listeObjectif.size() - 1);
 
@@ -104,6 +105,7 @@ public class Plateau {
                 else {
                     m_plateau.get(i).set(j, new TuileLibre(false, pattern, i, j));
                     m_plateau.get(i).get(j).setDirection(direction);
+                    placable.add(m_plateau.get(i).get(j));
                 }
 
             }

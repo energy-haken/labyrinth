@@ -20,6 +20,7 @@ public class PlateauWindow extends JFrame {
     private static final BufferedImage Tpic = loadImage("img/T.png");
     private static final BufferedImage ANGLEpic = loadImage("img/Corner.png");
     private static final BufferedImage DROITpic = loadImage("img/LINE.png");
+
     private JPanel Plateau;
     private JPanel L1C1;
     private JPanel L1C2;
@@ -100,15 +101,49 @@ public class PlateauWindow extends JFrame {
                     BufferedImage image = null;
                     switch (tuile.getPattern()) {
                         case ANGLE:
-                            image = ANGLEpic;
+                            if((tuile.getCoordoneeX() == 0) && (tuile.getCoordoneeY() == 0)){
+                                image = ImageHelper.merge("img/Corner.png" , "img/SpawnJoueurRouge.png") ;
+                            }
+                            else if((tuile.getCoordoneeX() == 0) && (tuile.getCoordoneeY() == 6)){
+                                image = ImageHelper.merge("img/Corner.png" , "img/SpawnJoueurBleu.png") ;
+                            }
+                            else if((tuile.getCoordoneeX() == 6) && (tuile.getCoordoneeY() == 0)){
+                                image = ImageHelper.merge("img/Corner.png" , "img/SpawnJoueurVert.png") ;
+                            }
+                            else if((tuile.getCoordoneeX() == 6) && (tuile.getCoordoneeY() == 6)){
+                                image = ImageHelper.merge("img/Corner.png" , "img/SpawnJoueurJaune.png") ;
+                            }
+
+                            else if(tuile.getObjectif() != null){
+
+                                image = ImageHelper.merge("img/Corner.png" , "img/PORTE_AMICALE.png") ;
+                            }
+                            else{
+                                image = ANGLEpic;
+                            }
+
                             break;
                         case DROIT:
-                            image = DROITpic;
+                            if(tuile.getObjectif() != null){
+                                image = ImageHelper.merge("img/LINE.png" , "img/PORTE_AMICALE.png") ;
+                            }
+                            else{
+                                image = DROITpic;
+                            }
+
                             break;
                         case T:
-                            image = Tpic;
+                            if(tuile.getObjectif() != null){
+                                image = ImageHelper.merge("img/T.png" , "img/PORTE_AMICALE.png") ;
+                            }
+                            else{
+                                image = Tpic;
+                            }
+
                             break;
+
                     }
+
                     switch (tuile.getDirection()) {
                         case NORTH:
                             image = ImageHelper.rotateCounterClockwise(image);
@@ -129,6 +164,8 @@ public class PlateauWindow extends JFrame {
                         Image scaledImage = image.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
                         panels[row][col].add(new JLabel(new ImageIcon(scaledImage)));
                     }
+
+
                 }
             }
         }

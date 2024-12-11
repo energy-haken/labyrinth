@@ -16,22 +16,29 @@ public class Plateau {
                                                         Arrays.asList(null,null,null,null,null,null,null),
                                                         Arrays.asList(null,null,null,null,null,null,null),
                                                         Arrays.asList(null,null,null,null,null,null,null));
-    private ArrayList<Joueur> m_joueurs;
+    private ArrayList<Joueur> m_joueurs = new ArrayList<>();
 
     private Tuile m_tuile;
 
 
-    public Plateau(ArrayList<Joueur> joueurs){
+    public Plateau(){
 
-        m_joueurs = joueurs;
+
 
         ArrayList<Tuile> placable = new ArrayList<Tuile>();
         ArrayList<Objectif> listeObjectif = new ArrayList<>() ;
-
+        ArrayList<Objectif> objectifs1 = new ArrayList<>() ;
 
         for(int i = 0 ; i < 24 ; i++){
             listeObjectif.add(Objectif.values()[i]);
         }
+
+        for(int i = 0 ; i < listeObjectif.size()/4 ; i++){
+            objectifs1.add(listeObjectif.get(i));
+        }
+
+
+
 
         /*20 angles dont 4 sont fixes et 16 sont déplaçables, 6 obj
         12 sections droites toutes déplaçables,
@@ -99,7 +106,7 @@ public class Plateau {
                 listeObjectif.remove(listeObjectif.size() - 1);
 
                 // DEBUG
-                System.out.println("Objectif associé à la tuile : " + m_plateau.get(i).get(j).getObjectif());
+             //   System.out.println("Objectif associé à la tuile : " + m_plateau.get(i).get(j).getObjectif());
 
                 }
                 else {
@@ -131,6 +138,9 @@ public class Plateau {
 
             }
         }
+
+        Joueur joueurRouge = new Joueur(m_plateau.get(0).get(0) , objectifs1) ;
+        m_joueurs.add(joueurRouge) ;
 
         /*
         for (List<Tuile> ligne: this.m_plateau) {

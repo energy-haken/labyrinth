@@ -58,4 +58,189 @@ public abstract class Tuile {
     public void setDirection(Direction direction) {
         this.m_direction = direction;
     }
+
+    public boolean checkSortieTuile(Direction direction){
+        switch (this.getPattern()){
+            case T :
+                switch(direction){
+                    case NORTH :
+                        if(this.getDirection() == Direction.SOUTH){
+                            return false;
+                        }
+                        else if(this.getDirection() == Direction.WEST){
+                            return true;
+                        }
+                        else if(this.getDirection() == Direction.EAST){
+                            return true;
+                        }
+                        else{
+                            return true;
+                        }
+
+                    case EAST :
+                        if(this.getDirection() == Direction.WEST){
+                            return false;
+                        }
+                        else if(this.getDirection() == Direction.NORTH){
+                            return true;
+                        }
+                        else if(this.getDirection() == Direction.SOUTH){
+                            return true;
+                        }
+                        else{
+                            return true;
+                        }
+                    case SOUTH :
+                        if(this.getDirection() == Direction.NORTH){
+                            return false;
+                        }
+                        else if(this.getDirection() == Direction.WEST){
+                            return true;
+                        }
+                        else if(this.getDirection() == Direction.EAST){
+                            return true;
+                        }
+                        else{
+                            return true;
+                        }
+
+                    case WEST :
+                        if(this.getDirection() == Direction.EAST){
+                            return false;
+                        }
+                        else if(this.getDirection() == Direction.NORTH){
+                            return true;
+                        }
+                        else if(this.getDirection() == Direction.SOUTH){
+                            return true;
+                        }
+                        else{
+                            return true;
+                        }
+
+                }
+                break;
+            case DROIT:
+                switch(direction){
+                    case NORTH :
+                        if(this.getDirection() == Direction.SOUTH){
+                            return true;
+                        }
+                        else if(this.getDirection() == Direction.WEST){
+                            return false;
+                        }
+                        else if(this.getDirection() == Direction.EAST){
+                            return false;
+                        }
+                        else{
+                            return true;
+                        }
+
+                    case EAST :
+                        if(this.getDirection() == Direction.WEST){
+                            return true;
+                        }
+                        else if(this.getDirection() == Direction.NORTH){
+                            return false;
+                        }
+                        else if(this.getDirection() == Direction.SOUTH){
+                            return false;
+                        }
+                        else{
+                            return true;
+                        }
+
+                    case SOUTH :
+                        if(this.getDirection() == Direction.NORTH){
+                            return true;
+                        }
+                        else if(this.getDirection() == Direction.WEST){
+                            return false;
+                        }
+                        else if(this.getDirection() == Direction.EAST){
+                            return false;
+                        }
+                        else{
+                            return true;
+                        }
+
+                    case WEST :
+                        if(this.getDirection() == Direction.EAST){
+                            return true;
+                        }
+                        else if(this.getDirection() == Direction.NORTH){
+                            return false;
+                        }
+                        else if(this.getDirection() == Direction.SOUTH){
+                            return false;
+                        }
+                        else{
+                            return true;
+                        }
+
+                }
+                break;
+            case ANGLE:
+                switch(direction){
+                    case NORTH :
+                        if(this.getDirection() == Direction.SOUTH){
+                            return true;
+                        }
+                        else if(this.getDirection() == Direction.WEST){
+                            return false;
+                        }
+                        else if(this.getDirection() == Direction.EAST){
+                            return true;
+                        }
+                        else{
+                            return false;
+                        }
+
+                    case EAST :
+                        if(this.getDirection() == Direction.WEST){
+                            return true;
+                        }
+                        else if(this.getDirection() == Direction.NORTH){
+                            return false;
+                        }
+                        else if(this.getDirection() == Direction.SOUTH){
+                            return true;
+                        }
+                        else{
+                            return false;
+                        }
+
+                    case SOUTH :
+                        if(this.getDirection() == Direction.NORTH){
+                            return true;
+                        }
+                        else if(this.getDirection() == Direction.WEST){
+                            return true;
+                        }
+                        else if(this.getDirection() == Direction.EAST){
+                            return false;
+                        }
+                        else{
+                            return false;
+                        }
+
+                    case WEST :
+                        if(this.getDirection() == Direction.EAST){
+                            return true;
+                        }
+                        else if(this.getDirection() == Direction.NORTH){
+                            return true;
+                        }
+                        else if(this.getDirection() == Direction.SOUTH){
+                            return false;
+                        }
+                        else{
+                            return false;
+                        }
+
+                }
+                break;
+        }
+        return false;
+    }
 }

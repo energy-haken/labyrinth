@@ -77,7 +77,7 @@ public class PlateauWindow extends JPanel {
 
         // Initialize the main panel with a dynamic grid layout
         this.setLayout(new GridLayout(rows, cols));
-        model.Plateau plateau = new Plateau(null);
+        model.Plateau plateau = new Plateau();
         // Create a 2D array for panels
         JPanel[][] panels = new JPanel[rows][cols];
 

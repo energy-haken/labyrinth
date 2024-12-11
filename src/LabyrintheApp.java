@@ -29,6 +29,7 @@ public class LabyrintheApp {
 
 
          */
+        
 
         LabyrintheMainWindow ForPity = new LabyrintheMainWindow();
         ForPity.getPlateau().printBoard();
@@ -36,6 +37,10 @@ public class LabyrintheApp {
         ForPity.getPlateau().pousserTuile(Direction.NORTH, 1);
         System.out.println("pousser");
         ForPity.getPlateau().printBoard();
+
+
+
+
 
     }
 }

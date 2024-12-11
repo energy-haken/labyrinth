@@ -72,5 +72,7 @@ public class Joueur {
         return m_tuile;
     }
 
-
+    public void setTuile(Tuile tuile) {
+        m_tuile = tuile;
+    }
 }

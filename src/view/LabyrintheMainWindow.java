@@ -13,7 +13,7 @@ public class LabyrintheMainWindow extends JFrame{
     public LabyrintheMainWindow() throws IOException {
         super("Jeu");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Plateau = new PlateauWindow(7,7);
+        Plateau = new PlateauWindow(new Plateau());
         setSize(700, 700);
         setSize(Toolkit.getDefaultToolkit().getScreenSize());
 

@@ -25,9 +25,10 @@ public class PlateauWindow extends JPanel {
     private Plateau plateauModel;
 
 
-    public PlateauWindow(int rows, int cols) throws IOException {
+    public PlateauWindow(Plateau plateau) throws IOException {
         super();
-
+        int rows= 7 ;
+        int cols = 7 ;
         // Initialize the main panel with a dynamic grid layout
         this.setLayout(new GridLayout(rows, cols));
         plateauModel  = new Plateau();

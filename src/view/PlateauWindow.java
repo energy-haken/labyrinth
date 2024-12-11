@@ -15,7 +15,7 @@ import model.Tuile;
 
 import static model.Pattern.*;
 
-public class PlateauWindow extends JFrame {
+public class PlateauWindow extends JPanel {
     //charges les images
     private static final BufferedImage Tpic = loadImage("img/T.png");
     private static final BufferedImage ANGLEpic = loadImage("img/Corner.png");
@@ -73,12 +73,10 @@ public class PlateauWindow extends JFrame {
     private JPanel L7C7;
 
     public PlateauWindow(int rows, int cols) throws IOException {
-        super("Plateau");
-        setSize(700, 700);
+        super();
 
         // Initialize the main panel with a dynamic grid layout
-        Plateau = new JPanel();
-        Plateau.setLayout(new GridLayout(rows, cols));
+        this.setLayout(new GridLayout(rows, cols));
         model.Plateau plateau = new Plateau(null);
         // Create a 2D array for panels
         JPanel[][] panels = new JPanel[rows][cols];
@@ -88,7 +86,7 @@ public class PlateauWindow extends JFrame {
             for (int col = 0; col < cols; col++) {
                 panels[row][col] = new JPanel();
                 panels[row][col].setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Optional: add borders for visibility
-                Plateau.add(panels[row][col]);
+                this.add(panels[row][col]);
             }
         }
 
@@ -157,25 +155,21 @@ public class PlateauWindow extends JFrame {
                         case WEST:
                             image = ImageHelper.rotateClockwise(ImageHelper.rotateClockwise(image));
                             break;
-                        case null :
+                        default:
                             break;
                     }
                     if (image != null) {
-                        Image scaledImage = image.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-                        panels[row][col].add(new JLabel(new ImageIcon(scaledImage)));
+
+                        panels[row][col].add(new JLabel(new ImageIcon(image)));
                     }
 
 
                 }
             }
         }
-
-
-
-        // Set the content pane
-        setContentPane(Plateau);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
+
+
     }
 
     /**
@@ -193,6 +187,9 @@ public class PlateauWindow extends JFrame {
         }
     }
 
-
+//    public void resizeImage(){
+//        Image scaledImage = image.getScaledInstance(this.getSize().width/7,this.getSize().height/7,  Image.SCALE_SMOOTH);
+//        panels[row][col].add(new JLabel(new ImageIcon(scaledImage)));
+//    }
 
 }

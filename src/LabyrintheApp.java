@@ -1,5 +1,6 @@
 import controller.Background;
 import model.*;
+import view.LabyrintheMainWindow;
 import view.PlateauWindow;
 
 import java.io.IOException;
@@ -29,6 +30,6 @@ public class LabyrintheApp {
 
          */
 
-        PlateauWindow plateauWindow = new PlateauWindow(7, 7);
+        LabyrintheMainWindow ForPity = new LabyrintheMainWindow();
     }
 }

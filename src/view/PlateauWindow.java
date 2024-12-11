@@ -19,7 +19,7 @@ public class PlateauWindow extends JFrame {
     //charges les images
     private static final BufferedImage Tpic = loadImage("img/T.png");
     private static final BufferedImage ANGLEpic = loadImage("img/Corner.png");
-    private static final BufferedImage DROITpic = loadImage("img/LINEpng.png");
+    private static final BufferedImage DROITpic = loadImage("img/LINE.png");
     private JPanel Plateau;
     private JPanel L1C1;
     private JPanel L1C2;
@@ -71,14 +71,14 @@ public class PlateauWindow extends JFrame {
     private JPanel L6C7;
     private JPanel L7C7;
 
-    public PlateauWindow(int rows, int cols, Plateau plateau) throws IOException {
+    public PlateauWindow(int rows, int cols) throws IOException {
         super("Plateau");
         setSize(700, 700);
 
         // Initialize the main panel with a dynamic grid layout
         Plateau = new JPanel();
         Plateau.setLayout(new GridLayout(rows, cols));
-
+        model.Plateau plateau = new Plateau(null);
         // Create a 2D array for panels
         JPanel[][] panels = new JPanel[rows][cols];
 
@@ -133,30 +133,7 @@ public class PlateauWindow extends JFrame {
             }
         }
 
-        // Add non-fixed tiles to the grid
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < cols; col++) {
-                Tuile tuile = grid.get(row).get(col);
-                if (tuile != null && !tuile.isFixe()) {
-                    BufferedImage image = null;
-                    switch (tuile.getPattern()) {
-                        case ANGLE:
-                            image = ANGLEpic;
-                            break;
-                        case DROIT:
-                            image = DROITpic;
-                            break;
-                        case T:
-                            image = Tpic;
-                            break;
-                    }
-                    if (image != null) {
-                        Image scaledImage = image.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-                        panels[row][col].add(new JLabel(new ImageIcon(scaledImage)));
-                    }
-                }
-            }
-        }
+
 
         // Set the content pane
         setContentPane(Plateau);

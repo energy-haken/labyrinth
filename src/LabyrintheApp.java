@@ -29,6 +29,6 @@ public class LabyrintheApp {
 
          */
 
-        PlateauWindow plateauWindow = new PlateauWindow(7, 7, new Plateau(null));
+        PlateauWindow plateauWindow = new PlateauWindow(7, 7);
     }
 }

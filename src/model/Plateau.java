@@ -1,11 +1,12 @@
 package model;
 
 import view.PlateauWindow;
-
+import model.Direction ;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class Plateau {
     private List<List<Tuile>> m_plateau = Arrays.asList(Arrays.asList(null,null,null,null,null,null,null),
@@ -60,6 +61,7 @@ public class Plateau {
                 }
             }
         }
+        /*
         for (int i = 4; i < 38; i++) {
             if (i<10) {
                 placable.add(new TuileObjectif(false, Pattern.ANGLE, i , i , listeObjectif.get(listeObjectif.size()-1)));
@@ -81,6 +83,33 @@ public class Plateau {
 
 
         }
+            */
+
+        // Generation des Tuiles Déplacables
+        for(int i = 0 ; i < 7 ; i++) {
+            for (int j = 0; j < 7; j++) {
+            if (m_plateau.get(i).get(j) == null) {
+                Pattern pattern = checkPattern();
+                Direction direction = checkDirection();
+                if (checkObjectif() && !listeObjectif.isEmpty()) {
+                m_plateau.get(i).set(j, new TuileObjectif(false, pattern, i, j, listeObjectif.get(listeObjectif.size() - 1)));
+                m_plateau.get(i).get(j).setDirection(direction);
+
+                listeObjectif.remove(listeObjectif.size() - 1);
+
+                // DEBUG
+                System.out.println("Objectif associé à la tuile : " + m_plateau.get(i).get(j).getObjectif());
+
+                }
+                else {
+                    m_plateau.get(i).set(j, new TuileLibre(false, pattern, i, j));
+                    m_plateau.get(i).get(j).setDirection(direction);
+                }
+
+            }
+            }
+        }
+
 
         for(int i = 0 ; i < 7 ; i++){
             for(int j = 0 ; j < 7 ; j++){
@@ -100,6 +129,8 @@ public class Plateau {
 
             }
         }
+
+        /*
         for (List<Tuile> ligne: this.m_plateau) {
             for (Tuile t: ligne) {
                 if(t == null){
@@ -107,7 +138,11 @@ public class Plateau {
                 }
             }
         }
+
+        */
+
     }
+
 
     /**
      * Pousse une tuile sur le plateau
@@ -167,9 +202,84 @@ public class Plateau {
     public Tuile getTuile(int coordoneeX , int coordoneeY){
         return m_plateau.get(coordoneeX).get(coordoneeY);
     }
-    
+
     public List<List<Tuile>> getPlateau() {
         return m_plateau;
     }
 
+    public Pattern checkPattern(){
+        /*20 angles dont 4 sont fixes et 16 sont déplaçables, 6 obj
+        12 sections droites toutes déplaçables,
+        18 en forme de "T" dont 12 sont fixes et 6 sont déplaçables. 18 obj
+         */
+
+        int angle = 16 ;
+        int droit = 12 ;
+        int t = 6 ;
+
+        Random random = new Random();
+        int nb = random.nextInt(3);
+        switch (nb){
+            case 0 :
+                if(angle > 0){
+                    angle -= 1 ;
+                    return Pattern.ANGLE;
+                }
+                else{
+                    return checkPattern();
+                }
+
+            case 1 :
+                if(droit > 0){
+                    droit -= 1 ;
+                    return Pattern.DROIT;
+                }
+                else{
+                    return checkPattern();
+                }
+
+            case 2 :
+                if(t > 0){
+                    t -= 1 ;
+                    return Pattern.T;
+                }
+                else{
+                    return checkPattern();
+                }
+
+
+        }
+
+
+        return null;
+    }
+
+    public Direction checkDirection(){
+        Random random = new Random();
+        int nb = random.nextInt(4);
+        switch (nb){
+            case 0 :
+                return Direction.NORTH;
+            case 1 :
+                return Direction.SOUTH;
+            case 2 :
+                return Direction.EAST;
+            case 3 :
+                return Direction.WEST;
+        }
+        return null;
+    }
+
+    public boolean checkObjectif(){
+
+        Random random = new Random();
+        int nb = random.nextInt(2);
+        switch (nb){
+            case 0 :
+                return true;
+            case 1 :
+                return false;
+        }
+        return false;
+    }
 }

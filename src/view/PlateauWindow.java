@@ -144,7 +144,7 @@ public class PlateauWindow extends JPanel {
     public model.Plateau getPlateauModel() {
         return plateauModel;
     }
-
+    //
     //    public void resizeImage(){
 //        Image scaledImage = image.getScaledInstance(this.getSize().width/7,this.getSize().height/7,  Image.SCALE_SMOOTH);
 //        panels[row][col].add(new JLabel(new ImageIcon(scaledImage)));

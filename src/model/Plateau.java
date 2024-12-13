@@ -1,8 +1,7 @@
 package model;
 
-import view.PlateauWindow;
-import model.Direction ;
-import java.lang.reflect.Array;
+import model.tuiles.*;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -49,26 +48,24 @@ public class Plateau {
         for (int j = 0; j < 7; j+=2) {
             for (int k = 0; k < 7; k+=2) {
                 if((j==0||j==6)&&(k==0||k==6)){
-                    this.m_plateau.get(j).set(k,new TuileLibre(true, Pattern.ANGLE , j , k, numTuile));
+                    this.m_plateau.get(j).set(k,new TuileCoin(true, Direction.WEST, j , k, numTuile));
                     numTuile++;
 
                 }
                 else{
-                    this.m_plateau.get(j).set(k,new TuileObjectif(true, Pattern.T, j , k ,listeObjectif.get(listeObjectif.size()-1), numTuile));
+                    this.m_plateau.get(j).set(k,new TuileT(true, Direction.WEST, j , k ,numTuile , listeObjectif.get(listeObjectif.size()-1)));
                     numTuile++;
                     listeObjectif.remove(listeObjectif.size()-1);
                 }
-                if((j == 0)&&(k == 0)){
-                    this.m_plateau.get(j).get(k).setDirection(Direction.WEST);
-                }
+
                 if((j == 0)&&(k == 6)){
-                    this.m_plateau.get(j).get(k).setDirection(Direction.NORTH);
+                    this.m_plateau.get(j).get(k).tournerTuile(Direction.NORTH);
                 }
                 if((j == 6)&&(k == 0)){
-                    this.m_plateau.get(j).get(k).setDirection(Direction.SOUTH);
+                    this.m_plateau.get(j).get(k).tournerTuile(Direction.SOUTH);
                 }
                 if((j == 6)&&(k == 6)){
-                    this.m_plateau.get(j).get(k).setDirection(Direction.EAST);
+                    this.m_plateau.get(j).get(k).tournerTuile(Direction.EAST);
                 }
             }
         }
@@ -80,21 +77,35 @@ public class Plateau {
             if (m_plateau.get(i).get(j) == null) {
                 Pattern pattern = checkPattern();
                 Direction direction = checkDirection();
-                if (checkObjectif() && !listeObjectif.isEmpty()) {
-                m_plateau.get(i).set(j, new TuileObjectif(false, pattern, i, j, listeObjectif.get(listeObjectif.size() - 1), numTuile));
-                    numTuile++;
-                m_plateau.get(i).get(j).setDirection(direction);
-
+                if (checkObjectif() && !listeObjectif.isEmpty()) { // Tuile avec objectif
+                    if(pattern == Pattern.T){
+                        m_plateau.get(i).set(j , new TuileT(false , direction , i , j , numTuile, listeObjectif.get(listeObjectif.size() -1))) ;
+                        numTuile++;
+                    }
+                    else if(pattern == Pattern.DROIT){
+                        m_plateau.get(i).set(j , new TuileLigne(false , direction , i , j , numTuile, listeObjectif.get(listeObjectif.size() -1))) ;
+                        numTuile++;
+                    }
+                    else{
+                        m_plateau.get(i).set(j , new TuileCoin(false , direction , i , j , numTuile, listeObjectif.get(listeObjectif.size() -1))) ;
+                        numTuile++;
+                    }
                 listeObjectif.remove(listeObjectif.size() - 1);
-
-                // DEBUG
-             //   System.out.println("Objectif associé à la tuile : " + m_plateau.get(i).get(j).getObjectif());
-
                 }
-                else {
-                    m_plateau.get(i).set(j, new TuileLibre(false, pattern, i, j,numTuile));
-                    numTuile++;
-                    m_plateau.get(i).get(j).setDirection(direction);
+                else { // Tuile Sans Objectif
+                    if(pattern == Pattern.T){
+                        m_plateau.get(i).set(j , new TuileT(false , direction , i , j , numTuile)) ;
+                        numTuile++;
+                    }
+                    else if(pattern == Pattern.DROIT){
+                        m_plateau.get(i).set(j , new TuileLigne(false , direction , i , j , numTuile)) ;
+                        numTuile++;
+                    }
+                    else{
+                        m_plateau.get(i).set(j , new TuileCoin(false , direction , i , j , numTuile)) ;
+                        numTuile++;
+                    }
+
                 }
 
             }
@@ -105,27 +116,37 @@ public class Plateau {
         for(int i = 0 ; i < 7 ; i++){
             for(int j = 0 ; j < 7 ; j++){
                 if((i == 0 && j == 2) || (i == 0 && j == 4) || (i == 2 && j == 4)){
-                    this.m_plateau.get(i).get(j).setDirection(Direction.SOUTH);
+                    this.m_plateau.get(i).get(j).tournerTuile(Direction.SOUTH);
                 }
                 if((i == 2 && j == 0) || (i == 4 && j == 0) || (i == 2 && j == 2)){
-                    this.m_plateau.get(i).get(j).setDirection(Direction.EAST);
+                    this.m_plateau.get(i).get(j).tournerTuile(Direction.EAST);
                 }
                 if((i == 2 && j == 6) || (i == 4 && j == 6) || (i == 4 && j == 4)){
-                    this.m_plateau.get(i).get(j).setDirection(Direction.WEST);
+                    this.m_plateau.get(i).get(j).tournerTuile(Direction.WEST);
                 }
                 if((i == 6 && j == 2) || (i == 6 && j == 4) || (i == 4 && j == 2)){
-                    this.m_plateau.get(i).get(j).setDirection(Direction.NORTH);
+                    this.m_plateau.get(i).get(j).tournerTuile(Direction.NORTH);
                 }
 
 
             }
         }
-
+        // Ajout du Joueur
         Joueur joueurRouge = new Joueur(m_plateau.get(0).get(0) , objectifs1) ;
         m_joueurs.add(joueurRouge) ;
-        this.m_tuile = new TuileLibre(false, checkPattern(), -1,-1, numTuile);
-        m_tuile.setDirection(Direction.NORTH);
 
+        // Ajout de La 50eme Tuile
+
+        Pattern pattern = checkPattern();
+        if(pattern == Pattern.T){
+            this.m_tuile = new TuileT(false , Direction.NORTH ,-1 , -1 , numTuile) ;
+        }
+        else if(pattern == Pattern.DROIT){
+            this.m_tuile = new TuileLigne(false , Direction.NORTH , -1 , -1 , numTuile) ;
+        }
+        else{
+            this.m_tuile = new TuileCoin(false , Direction.NORTH , -1 , -1 , numTuile) ;
+        }
     }
 
 

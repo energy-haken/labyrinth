@@ -3,8 +3,6 @@ package view;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -12,11 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import helpers.ImageHelper;
 import model.Direction;
-import model.Objectif;
 import model.Plateau;
-import model.Tuile;
-
-import static model.Pattern.*;
+import model.tuiles.Tuile;
 
 public class PlateauWindow extends JPanel {
     //charges les images

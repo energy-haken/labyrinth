@@ -1,5 +1,7 @@
 package model;
 
+import model.tuiles.Tuile;
+
 import java.util.ArrayList;
 
 public class Joueur {

@@ -33,10 +33,6 @@ public class LabyrintheApp {
 
         LabyrintheMainWindow ForPity = new LabyrintheMainWindow();
         ForPity.getPlateau().printBoard();
-        System.out.println(ForPity.getPlateau().getTuile().getName());
-        ForPity.getPlateau().pousserTuile(Direction.NORTH, 1);
-        System.out.println("pousser");
-        ForPity.getPlateau().printBoard();
 
 
 

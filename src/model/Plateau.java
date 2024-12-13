@@ -124,6 +124,7 @@ public class Plateau {
         Joueur joueurRouge = new Joueur(m_plateau.get(0).get(0) , objectifs1) ;
         m_joueurs.add(joueurRouge) ;
         this.m_tuile = new TuileLibre(false, checkPattern(), -1,-1, numTuile);
+        m_tuile.setDirection(Direction.NORTH);
 
     }
 

@@ -1,6 +1,8 @@
 package view;
 
 import helpers.ImageHelper;
+import model.Direction;
+import model.Joueur;
 import model.tuiles.Tuile;
 
 import javax.imageio.ImageIO;
@@ -9,12 +11,11 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
-import java.awt.image.TileObserver;
 import java.io.File;
 import java.io.IOException;
 
 
-public class ImagePanel extends JPanel {
+public class ImagePanel extends JPanel implements LabyrintheObserver{
     private BufferedImage image;
 
     public ImagePanel(BufferedImage image) {
@@ -74,7 +75,7 @@ public class ImagePanel extends JPanel {
                 if (tile.getObjectif() != null) {
                     tileImage = ImageHelper.merge("img/LINE.png", "img/Objectifs/" + tile.getObjectif().name() + ".png");
                 } else {
-                    tileImage = loadImage("img/Corner.png");
+                    tileImage = loadImage("img/LINE.png");
                 }
                 break;
             default:
@@ -110,7 +111,27 @@ public class ImagePanel extends JPanel {
         }
     }
 
-    public Image getImage(){
+    public BufferedImage getImage(){
         return this.image;
+    }
+
+    @Override
+    public void updateInsertTuile(Direction direction, int colonne) {
+
+    }
+
+    @Override
+    public void updateTournerTuile(Direction direction) {
+
+    }
+
+    @Override
+    public void updateDeplacerJoueur(Joueur joueur, Direction direction) {
+
+    }
+
+    @Override
+    public void doBecauseMazeChange(Tuile tile) throws IOException {
+         this.updateImage(getImageByTile(tile));
     }
 }

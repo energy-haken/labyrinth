@@ -2,7 +2,6 @@ package model.tuiles;
 
 import model.Direction;
 import model.Objectif;
-import model.Pattern;
 
 public abstract class Tuile {
 

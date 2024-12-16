@@ -29,7 +29,7 @@ public class LabyrintheMainWindow extends JFrame{
     private PlateauWindow Plateau;
 
     public LabyrintheMainWindow() throws IOException {
-        super("Jeu");
+        super("LA VERSION NUMERIQUE DU LABYRINTHE");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Plateau = new PlateauWindow(new Plateau());
         setSize(700,700);

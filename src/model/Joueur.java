@@ -48,9 +48,7 @@ public class Joueur {
         }
     }
 
-    public void deplacement(Direction versOu, int nombreDeCase){
 
-    }
 
     /**
      * Recuperer le nombre d'objectifs qu'il reste au joueur a faire

@@ -2,7 +2,6 @@ package model.tuiles;
 
 import model.Direction;
 import model.Objectif;
-import model.Pattern;
 
 public class TuileT extends Tuile {
     public TuileT(boolean fixe,Direction direction , int coordoneeX, int coordoneeY, int name) {

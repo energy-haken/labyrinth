@@ -23,6 +23,7 @@ package src{
     package helpers{
         class ImageHelper{
             + static merge(backgroundPath : String, foregroundPaths : String) : BufferedImage
+            + static mergeB(background : BufferedImage, foreground : BufferedImage) : BufferedImage
             + static rotate(original : BufferedImage,angle : double) : BufferedImage
             + static rotateClockwise(original : BufferedImage ) : BufferedImage
             + static rotateCounterClockwise(original : BufferedImage ) : BufferedImage
@@ -30,20 +31,54 @@ package src{
     }
     package model{
         class Plateau{
-            + <<create>> Plateau(joueur : joueur[])
-            + changerTuile(tuileOriginal : Tuile , tuileNew : Tuile) : Tuile
-            + pousserTuile(colonne : Integer , direction : Direction) : Tuile
-            + tournerTuile(rotation : Integer) : Tuile
-            + deplacementJoueur(versOu : Direction , nombreDeCase : Integer)
+            + <<create>> Plateau()
+            + pousserTuile( direction : Direction ,colonne : Integer ) : Tuile
+            + getTuile() : Tuile
+            + getPlateau() : Tuile[][]
+            + getJoueur() : Joueur
+            + printBoard()
+            + checkDirection() : Direction
+            + checkPattern() : Pattern
+            + checkObjectif-) : Boolean
+            + deplacementJoueur(joueur : Joueur , versOu : Direction)
         }
+
+        package tuiles{
 
         abstract class Tuile <<abstract>>{
         - m_fixe : Boolean
         - m_pattern : Pattern
-        + <<create>> Tuile(fixe: Boolean , pattern : Pattern)
-        + abstract getObjectif() : Objectif
+        - m_coordoneeX : Integer
+        - m_coordoneeY : Integer
+        - m_name : Integer
+        + <<create>> Tuile(fixe: Boolean , pattern : Pattern, direction : Direction , coordoneeX : Integer , coordoneeY : Integer, name : Integer)
+        + <<create>> Tuile(fixe: Boolean , pattern : Pattern, direction : Direction , coordoneeX : Integer , coordoneeY : Integer , name : Integer, objectif : Objectif)
+        + getObjectif() : Objectif
         + getDirection() : Direction
-        + tournerTuile(tuile : Tuile , orientation : Integer) : Tuile
+        + getCoordoneeX() : Integer
+        + getCoordoneeY() : Integer
+        + getName() : Integer
+        + isFixe() : Boolean
+        ° checkSortieTuile(direction : Direction) : Boolean
+        + tournerTuile(direction : Direction)
+        }
+
+        class TuileCoin extends Tuile{
+        + <<create>> TuileCoin(fixe: Boolean , direction : Direction , coordoneeX : Integer , coordoneeY : Integer, name : Integer)
+        + <<create>> TuileCoin(fixe: Boolean , direction : Direction , coordoneeX : Integer , coordoneeY : Integer , name : Integer, objectif : Objectif)
+        + checkSortieTuile(direction : Direction) : Boolean
+        }
+
+        class TuileDroit extends Tuile{
+        + <<create>> TuileDroit(fixe: Boolean , direction : Direction , coordoneeX : Integer , coordoneeY : Integer, name : Integer)
+        + <<create>> TuileDroit(fixe: Boolean , direction : Direction , coordoneeX : Integer , coordoneeY : Integer , name : Integer, objectif : Objectif)
+        + checkSortieTuile(direction : Direction) : Boolean
+        }
+
+        class TuileT extends Tuile{
+        + <<create>> TuileT(fixe: Boolean , direction : Direction , coordoneeX : Integer , coordoneeY : Integer, name : Integer)
+        + <<create>> TuileT(fixe: Boolean , direction : Direction , coordoneeX : Integer , coordoneeY : Integer , name : Integer, objectif : Objectif)
+        + checkSortieTuile(direction : Direction) : Boolean
         }
 
         enum Pattern{
@@ -52,14 +87,7 @@ package src{
         DROIT
         }
 
-        class TuileObjectifs extends Tuile{
-            + <<create>> TuileObjectifs(fixe : Boolean , pattern : Pattern , objectifAssocie : Objectif)
-            + getObjectif() : Objectif
-        }
-        class TuileLibre extends Tuile{
-            + <<create>> TuileLibre(fixe : Boolean , pattern : Pattern)
-            + getObjectif() : Objectif
-        }
+       }
         enum Objectif <<enumeration>>{
             PORTE_AMICALE
             W
@@ -73,17 +101,20 @@ package src{
             GANZARSKI
             ECHEC_CONTRE_H
             HERBE
+            ...
         }
 
         class Joueur{
-            m_objectifRestant : Integer
-            m_objectifRecup : Integer
+            - m_objectifRestant : Integer
+            - m_objectifRecup : Integer
+            - m_couleur : String
             + <<create>> Joueur(tuile : Tuile , objectif : Objectif[])
-
             + verifObjectif() : Boolean
             + getObjectifRecup() : Integer
             + getObjectifRestant() : Integer
             + getTuile() : Tuile
+            + getCouleur() : String
+            + setTuile(tuile : Tuile)
             + validationObjectif()
         }
 
@@ -99,10 +130,17 @@ package src{
     }
     package view{
 
-        class LabyrintheObserver{}
-        class LabyrintheWindows{}
-        class LabyrintheMainWindow{}
-        class PlateauWindow{}
+        class LabyrintheMainWindow{
+            + <<create>> LabyrintheMainWindow()
+            + getPlateau() : Plateau
+        }
+        class PlateauWindow{
+            + <<create>> PlateauWindow()
+            + getPlateauModel() : Plateau
+            + loadImage(path : String) : BufferedImage
+            + loadPlayers(joueur : Joueur)
+            + updateMaze(direction : Direction, index : Integer)
+        }
     }
 
 

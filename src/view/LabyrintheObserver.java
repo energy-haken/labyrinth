@@ -1,8 +1,14 @@
 package view;
 
-public class LabyrintheObserver {
+import model.Direction;
+import model.Joueur;
 
-    public void windowResized(PlateauWindow window){
-        //window.resizeImage();
-    }
+public interface LabyrintheObserver {
+    void updateInsertTuile(Direction direction , int colonne);
+    void updateTournerTuile(Direction direction) ;
+    void updateDeplacerJoueur(Joueur joueur , Direction direction);
+
+
+
+
 }

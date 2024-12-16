@@ -1,4 +1,4 @@
-package model;
+package model.tuiles;
 
 public enum Pattern {
     ANGLE,

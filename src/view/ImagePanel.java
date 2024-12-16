@@ -134,4 +134,6 @@ public class ImagePanel extends JPanel implements LabyrintheObserver{
     public void doBecauseMazeChange(Tuile tile) throws IOException {
          this.updateImage(getImageByTile(tile));
     }
+
+
 }

@@ -121,7 +121,7 @@ public class PlateauWindow extends JPanel {
     public void addObserver(LabyrintheObserver o){
         observerList.add(o);
     }
-    private void notifyObserversMazeChange() throws IOException {
+    public void notifyObserversMazeChange() throws IOException {
         for (LabyrintheObserver o: observerList) {
             o.doBecauseMazeChange(getPlateauModel().getTuile());
         }

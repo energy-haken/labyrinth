@@ -35,7 +35,7 @@ public class LabyrintheMainWindow extends JFrame{
         setSize(1000,800);
 
         JPanel mainButton = new JPanel();
-        mainButton.setLayout(new FlowLayout());
+        mainButton.setLayout(new GridLayout(2,8));
 
         JPanel arrow = new JPanel();
         arrow.setLayout(new GridLayout(2,3));
@@ -46,22 +46,54 @@ public class LabyrintheMainWindow extends JFrame{
 
         arrow.add(new JPanel());
         arrow.add(upButton);
-        upButton.setText("haut");
+        upButton.setText("⬆️");
         arrow.add(new JPanel());
         arrow.add(leftButton);
-        leftButton.setText("gauche");
+        leftButton.setText("⬅️");
         arrow.add(downButton);
-        downButton.setText("bas");
+        downButton.setText("⬇️");
         arrow.add(rightButton);
-        rightButton.setText("droite");
+        rightButton.setText("➡️");
 
         remainingTilePanel = ImagePanel.getImageByTile(this.getPlateau().getTuile());
         Plateau.addObserver(remainingTilePanel);
-        mainButton.add(remainingTilePanel);
-        mainButton.add(arrow);
-        mainButton.add(turnButton);
-        turnButton.setText("Tourner la tuile");
 
+        mainButton.add(new JPanel());
+        mainButton.add(turnButton);
+        mainButton.add(new JPanel());
+        mainButton.add(new JPanel());
+        mainButton.add(new JPanel());
+        mainButton.add(new JPanel());
+        mainButton.add(new JPanel());
+        mainButton.add(new JPanel());
+        mainButton.add(new JPanel());
+
+        mainButton.add(new JPanel());
+        mainButton.add(remainingTilePanel);
+        mainButton.add(new JPanel());
+        mainButton.add(new JPanel());
+        mainButton.add(arrow);
+        mainButton.add(new JPanel());
+        mainButton.add(new JPanel());
+        turnButton.setText("Tourner la tuile");
+        mainButton.add(new JPanel());
+        turnButton.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed( ActionEvent actionEvent ) {
+                switch (getPlateau().getTuile().getDirection()) {
+                    case NORTH -> getPlateau().getTuile().tournerTuile(Direction.EAST);
+                    case EAST -> getPlateau().getTuile().tournerTuile(Direction.SOUTH);
+                    case SOUTH -> getPlateau().getTuile().tournerTuile(Direction.WEST);
+                    case WEST -> getPlateau().getTuile().tournerTuile(Direction.NORTH);
+
+                }
+                try {
+                    Plateau.notifyObserversMazeChange();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
 
 
 

@@ -13,5 +13,4 @@ public interface LabyrintheObserver {
 
 
     public void doBecauseMazeChange(Tuile tile) throws IOException;
-
 }

@@ -1,13 +1,17 @@
 package view;
 
+import helpers.ImageHelper;
 import model.Direction;
 import model.Plateau;
 import model.tuiles.Tuile;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
 public class LabyrintheMainWindow extends JFrame{
@@ -23,9 +27,10 @@ public class LabyrintheMainWindow extends JFrame{
     private JButton turnButton = new JButton();
 
 
+    private ImagePanel remainingTilePanel;
 
-
-    private JPanel Window;
+    private JPanel centerPanel = new JPanel();
+    private JPanel window;
     private PlateauWindow Plateau;
 
     public LabyrintheMainWindow() throws IOException {
@@ -33,14 +38,9 @@ public class LabyrintheMainWindow extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Plateau = new PlateauWindow(new Plateau());
         setSize(700,700);
-        //setSize(Toolkit.getDefaultToolkit().getScreenSize());
-
 
         JPanel mainButton = new JPanel();
-        setLayout(new BorderLayout());
-
-        JPanel mainButton2= new JPanel();
-        setLayout(new BorderLayout());
+        mainButton.setLayout(new FlowLayout());
 
         JPanel arrow = new JPanel();
         arrow.setLayout(new GridLayout(2,3));
@@ -48,7 +48,6 @@ public class LabyrintheMainWindow extends JFrame{
         JPanel panelTuileRestante = new JPanel();
         panelTuileRestante.setLayout(new GridLayout(1,1));
 
-        Tuile tuilreRestante = Plateau.getPlateauModel().getTuile() ;
 
         arrow.add(new JPanel());
         arrow.add(upButton);
@@ -61,16 +60,16 @@ public class LabyrintheMainWindow extends JFrame{
         arrow.add(rightButton);
         rightButton.setText("droite");
 
-
-
-        mainButton2.add(turnButton, BorderLayout.WEST);
+        remainingTilePanel = ImagePanel.getImageByTile(this.getPlateau().getTuile());
+        mainButton.add(remainingTilePanel);
+        mainButton.add(arrow);
+        mainButton.add(turnButton);
         turnButton.setText("Tourner la tuile");
 
 
 
 
-        mainButton2.add(finDeTourButton, BorderLayout.CENTER);
-        mainButton.add(arrow, BorderLayout.CENTER);
+        mainButton.add(finDeTourButton);
 
         JPanel panelsButtonHaut = new JPanel() ;
 
@@ -135,7 +134,7 @@ public class LabyrintheMainWindow extends JFrame{
         panelsButtonHaut.setVisible(true);
 
         JPanel panelButtonBas = new JPanel();
-        panelButtonBas.setLayout(new GridLayout(1,7));
+        panelButtonBas.setLayout(new GridLayout(1,5));
 
         JButton insert4 = new JButton();
         insert4.setText("Insert Colonne");
@@ -183,13 +182,11 @@ public class LabyrintheMainWindow extends JFrame{
             }
         });
 
-        panelButtonBas.add(mainButton);
         panelButtonBas.add(insert4);
         panelButtonBas.add(new JPanel());
         panelButtonBas.add(insert5);
         panelButtonBas.add(new JPanel());
         panelButtonBas.add(insert6);
-        panelButtonBas.add(mainButton2) ;
         panelButtonBas.setVisible(true);
 
 
@@ -308,18 +305,24 @@ public class LabyrintheMainWindow extends JFrame{
 
 
 
-        Window.setLayout(new BorderLayout());
-        Window.add(panelsButtonHaut, BorderLayout.NORTH);
-        Window.add(Plateau, BorderLayout.CENTER);
-        Window.add(panelButtonBas, BorderLayout.SOUTH);
-        Window.add(panelButtonDroite, BorderLayout.EAST);
-        Window.add(panelButtonGauche, BorderLayout.WEST);
-    //    Window.add(mainButton, BorderLayout.SOUTH);
-        Plateau.setVisible(true);
+        centerPanel.setLayout(new BorderLayout());
+        centerPanel.add(panelsButtonHaut, BorderLayout.NORTH);
+        centerPanel.add(Plateau, BorderLayout.CENTER);
+        centerPanel.add(panelButtonBas, BorderLayout.SOUTH);
+        centerPanel.add(panelButtonDroite, BorderLayout.EAST);
+        centerPanel.add(panelButtonGauche, BorderLayout.WEST);
+        window.setLayout(new BorderLayout());
+        window.add(centerPanel, BorderLayout.CENTER);
+        window.add(mainButton, BorderLayout.SOUTH);
 
+//        Plateau.addActionListener( new ActionListener() {
+//            @Override
+//            public void actionPerformed( ActionEvent actionEvent ) {
+//               remainingTilePanel.updateImage();
+//            }
+//        });
 
-
-        setContentPane(Window);
+        setContentPane(window);
         setVisible(true);
 
     }

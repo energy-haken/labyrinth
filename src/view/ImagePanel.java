@@ -74,7 +74,7 @@ public class ImagePanel extends JPanel {
                 if (tile.getObjectif() != null) {
                     tileImage = ImageHelper.merge("img/LINE.png", "img/Objectifs/" + tile.getObjectif().name() + ".png");
                 } else {
-                    tileImage = loadImage("img/Corner.png");
+                    tileImage = loadImage("img/LINE.png");
                 }
                 break;
             default:
@@ -110,7 +110,7 @@ public class ImagePanel extends JPanel {
         }
     }
 
-    public Image getImage(){
+    public BufferedImage getImage(){
         return this.image;
     }
 }

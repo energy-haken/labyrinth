@@ -90,8 +90,10 @@ public class PlateauWindow extends JPanel {
         int y = joueur.getTuile().getCoordoneeY();
         int idImage = joueur.getTuile().getName();
         Tuile tuile = plateauModel.getPlateau().get(x).get(y);
-        BufferedImage image = loadImage("img/Objectifs/RDS.png");
-        
+
+        //ImagePanel imagePanel = new ImagePanel(ImageHelper.mergeB(ImagePanel.getImageByTile(tuile).getImage(), "img/PionRouge.png")) ;
+        //imagePanelById.get(idImage).updateImage(imagePanel);
+
 
     }
     public void updateMaze(Direction direction, int index) throws IOException {

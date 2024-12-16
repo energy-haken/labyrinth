@@ -1,17 +1,11 @@
 package view;
 
-import helpers.ImageHelper;
 import model.Direction;
 import model.Plateau;
-import model.tuiles.Tuile;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 public class LabyrintheMainWindow extends JFrame{
@@ -33,11 +27,12 @@ public class LabyrintheMainWindow extends JFrame{
     private JPanel window;
     private PlateauWindow Plateau;
 
+
     public LabyrintheMainWindow() throws IOException {
         super("LA VERSION NUMERIQUE DU LABYRINTHE");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Plateau = new PlateauWindow(new Plateau());
-        setSize(700,700);
+        setSize(1000,800);
 
         JPanel mainButton = new JPanel();
         mainButton.setLayout(new FlowLayout());
@@ -61,6 +56,7 @@ public class LabyrintheMainWindow extends JFrame{
         rightButton.setText("droite");
 
         remainingTilePanel = ImagePanel.getImageByTile(this.getPlateau().getTuile());
+        Plateau.addObserver(remainingTilePanel);
         mainButton.add(remainingTilePanel);
         mainButton.add(arrow);
         mainButton.add(turnButton);
@@ -315,12 +311,6 @@ public class LabyrintheMainWindow extends JFrame{
         window.add(centerPanel, BorderLayout.CENTER);
         window.add(mainButton, BorderLayout.SOUTH);
 
-//        Plateau.addActionListener( new ActionListener() {
-//            @Override
-//            public void actionPerformed( ActionEvent actionEvent ) {
-//               remainingTilePanel.updateImage();
-//            }
-//        });
 
         setContentPane(window);
         setVisible(true);
@@ -330,4 +320,5 @@ public class LabyrintheMainWindow extends JFrame{
     public Plateau getPlateau() {
         return Plateau.getPlateauModel();
     }
+
 }

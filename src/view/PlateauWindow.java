@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import helpers.ImageHelper;
@@ -22,6 +23,8 @@ public class PlateauWindow extends JPanel {
     private static final BufferedImage DROITpic = loadImage("img/LINE.png");
 
     private JPanel Plateau;
+    private ArrayList<LabyrintheObserver> observerList = new ArrayList<>();
+
     private Plateau plateauModel;
 
     private JPanel[][] panels;
@@ -112,9 +115,16 @@ public class PlateauWindow extends JPanel {
 
             }
         }
+        notifyObserversMazeChange();
     }
 
-    public void addActionListener(ActionListener actionListener) {
-        listenerList.add(ActionListener.class, actionListener);
+    public void addObserver(LabyrintheObserver o){
+        observerList.add(o);
     }
+    private void notifyObserversMazeChange() throws IOException {
+        for (LabyrintheObserver o: observerList) {
+            o.doBecauseMazeChange(getPlateauModel().getTuile());
+        }
+    }
+
 }

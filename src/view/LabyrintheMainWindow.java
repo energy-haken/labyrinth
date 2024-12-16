@@ -66,18 +66,6 @@ public class LabyrintheMainWindow extends JFrame{
         mainButton2.add(turnButton, BorderLayout.WEST);
         turnButton.setText("Tourner la tuile");
 
-        turnButton.addActionListener( new ActionListener() {
-            @Override
-            public void actionPerformed( ActionEvent actionEvent ) {
-                getPlateau().pousserTuile(Direction.EAST, 1);
-                try {
-                    Plateau.updateMaze(Direction.EAST,1);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                getPlateau().printBoard();
-            }
-        });
 
 
 
@@ -91,10 +79,51 @@ public class LabyrintheMainWindow extends JFrame{
 
         JButton insert1 = new JButton();
         insert1.setText("Insert Colonne 1");
+
+        insert1.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed( ActionEvent actionEvent ) {
+                getPlateau().pousserTuile(Direction.SOUTH, 1);
+                try {
+                    Plateau.updateMaze(Direction.SOUTH,1);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                getPlateau().printBoard();
+            }
+        });
+
         JButton insert2 = new JButton();
         insert2.setText("Insert Colonne 2");
+
+        insert2.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed( ActionEvent actionEvent ) {
+                getPlateau().pousserTuile(Direction.SOUTH, 3);
+                try {
+                    Plateau.updateMaze(Direction.SOUTH,3);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                getPlateau().printBoard();
+            }
+        });
+
         JButton insert3 = new JButton();
         insert3.setText("Insert Colonne 3");
+
+        insert3.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed( ActionEvent actionEvent ) {
+                getPlateau().pousserTuile(Direction.SOUTH, 5);
+                try {
+                    Plateau.updateMaze(Direction.SOUTH,5);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                getPlateau().printBoard();
+            }
+        });
 
         panelsButtonHaut.add(new JPanel()) ;
         panelsButtonHaut.add(insert1);
@@ -110,10 +139,49 @@ public class LabyrintheMainWindow extends JFrame{
 
         JButton insert4 = new JButton();
         insert4.setText("Insert Colonne");
+        insert4.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed( ActionEvent actionEvent ) {
+                getPlateau().pousserTuile(Direction.NORTH, 1);
+                try {
+                    Plateau.updateMaze(Direction.NORTH,1);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                getPlateau().printBoard();
+            }
+        });
         JButton insert5 = new JButton();
         insert5.setText("Insert Colonne 2");
+
+        insert5.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed( ActionEvent actionEvent ) {
+                getPlateau().pousserTuile(Direction.NORTH, 3);
+                try {
+                    Plateau.updateMaze(Direction.NORTH,3);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                getPlateau().printBoard();
+            }
+        });
+
         JButton insert6 = new JButton();
         insert6.setText("Insert Colonne 3");
+
+        insert6.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed( ActionEvent actionEvent ) {
+                getPlateau().pousserTuile(Direction.NORTH, 5);
+                try {
+                    Plateau.updateMaze(Direction.NORTH,5);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                getPlateau().printBoard();
+            }
+        });
 
         panelButtonBas.add(mainButton);
         panelButtonBas.add(insert4);
@@ -131,10 +199,47 @@ public class LabyrintheMainWindow extends JFrame{
 
         JButton insert7 = new JButton();
         insert7.setText("Insert Ligne 1");
+
+        insert7.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed( ActionEvent actionEvent ) {
+                getPlateau().pousserTuile(Direction.WEST, 1);
+                try {
+                    Plateau.updateMaze(Direction.WEST,1);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                getPlateau().printBoard();
+            }
+        });
         JButton insert8 = new JButton();
         insert8.setText("Insert Ligne 2");
+        insert8.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed( ActionEvent actionEvent ) {
+                getPlateau().pousserTuile(Direction.WEST, 3);
+                try {
+                    Plateau.updateMaze(Direction.WEST,3);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                getPlateau().printBoard();
+            }
+        });
         JButton insert9 = new JButton();
         insert9.setText("Insert Ligne 3");
+        insert9.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed( ActionEvent actionEvent ) {
+                getPlateau().pousserTuile(Direction.WEST, 5);
+                try {
+                    Plateau.updateMaze(Direction.WEST,5);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                getPlateau().printBoard();
+            }
+        });
 
         panelButtonDroite.add(new JPanel());
         panelButtonDroite.add(insert7);
@@ -150,10 +255,46 @@ public class LabyrintheMainWindow extends JFrame{
 
         JButton insert10 = new JButton();
         insert10.setText("Insert Ligne 1");
+        insert10.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed( ActionEvent actionEvent ) {
+                getPlateau().pousserTuile(Direction.EAST, 1);
+                try {
+                    Plateau.updateMaze(Direction.EAST,1);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                getPlateau().printBoard();
+            }
+        });
         JButton insert11 = new JButton();
         insert11.setText("Insert Ligne 2");
+        insert11.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed( ActionEvent actionEvent ) {
+                getPlateau().pousserTuile(Direction.EAST, 3);
+                try {
+                    Plateau.updateMaze(Direction.EAST,3);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                getPlateau().printBoard();
+            }
+        });
         JButton insert12 = new JButton();
         insert12.setText("Insert Ligne 3");
+        insert12.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed( ActionEvent actionEvent ) {
+                getPlateau().pousserTuile(Direction.EAST, 5);
+                try {
+                    Plateau.updateMaze(Direction.EAST,5);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                getPlateau().printBoard();
+            }
+        });
 
         panelButtonGauche.add(new JPanel());
         panelButtonGauche.add(insert10);

@@ -132,7 +132,7 @@ public class Plateau {
             }
         }
         // Ajout du Joueur
-        Joueur joueurRouge = new Joueur(m_plateau.get(0).get(0) , objectifs1) ;
+        Joueur joueurRouge = new Joueur(m_plateau.get(0).get(0) , "ROUGE", objectifs1) ;
         m_joueurs.add(joueurRouge) ;
 
         // Ajout de La 50eme Tuile

@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import helpers.ImageHelper;
 import model.Direction;
+import model.Joueur;
 import model.Plateau;
 import model.tuiles.Tuile;
 
@@ -35,6 +36,8 @@ public class PlateauWindow extends JPanel {
         this.setLayout(new GridLayout(rows, cols));
 
         plateauModel  = new Plateau();
+        Joueur joueurRouge = plateauModel.getJoueur() ;
+
         // Create a 2D array for panels
         panels = new JPanel[rows][cols];
         // Initialize and add all panels to the Plateau
@@ -137,6 +140,7 @@ public class PlateauWindow extends JPanel {
             add(imagePanelById.get(i));
             i++;
         }
+        loadPlayers(joueurRouge);
         setVisible(true);
     }
 
@@ -159,7 +163,15 @@ public class PlateauWindow extends JPanel {
         return plateauModel;
     }
 
+    public void loadPlayers(Joueur joueur) throws IOException {
+        int x = joueur.getTuile().getCoordoneeX();
+        int y = joueur.getTuile().getCoordoneeY();
+        int idImage = joueur.getTuile().getName();
+        Tuile tuile = plateauModel.getPlateau().get(x).get(y);
+        BufferedImage image = loadImage("img/Objectifs/RDS.png");
+        
 
+    }
     public void updateMaze(Direction direction, int index) throws IOException {
         if(direction == Direction.NORTH || direction == Direction.SOUTH){
             for (int i=0;i<=6;i++){

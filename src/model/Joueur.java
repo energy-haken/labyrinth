@@ -9,17 +9,19 @@ public class Joueur {
     private int m_objectifRestant;
     private int m_objectifRecup;
     private Tuile m_tuile;
+    private String m_couleur;
 
     /**
      * Creation d'un Joueur
      * @param tuile La tuile sur lequel le Joueur va être positionné
      * @param listeObjectifs La liste des objectifs que le Joueur devra effectuer pour gagner
      */
-    public Joueur(Tuile tuile , ArrayList<Objectif> listeObjectifs){
+    public Joueur(Tuile tuile , String couleur , ArrayList<Objectif> listeObjectifs){
         m_tuile = tuile;
         m_listeObjectifs = listeObjectifs ; // Est ce que plusieurs joueurs peuvent avoir le même objectif ? Réponse du prof : NON
         m_objectifRecup = 0;
         m_objectifRestant = 6;
+        m_couleur = couleur;
     }
 
     /**
@@ -76,5 +78,9 @@ public class Joueur {
 
     public void setTuile(Tuile tuile) {
         m_tuile = tuile;
+    }
+
+    public String getCouleur() {
+        return m_couleur;
     }
 }

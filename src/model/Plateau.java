@@ -295,10 +295,12 @@ public class Plateau {
         if(joueur.getTuile().checkSortieTuile(direction)){
             int coorX = joueur.getTuile().getCoordoneeX() ;
             int coorY = joueur.getTuile().getCoordoneeY() ;
+
             switch (direction) {
                 case NORTH:
-                    if(m_plateau.get(coorX-1).get(coorY) == null){
+                    if(((coorX - 1) < 0) || (m_plateau.get(coorX - 1).get(coorY) == null)){
                         System.out.println("Tuile non accessible");
+                        System.out.println(m_plateau.get(coorX-1).get(coorY).getDirection()) ;
                     }
                     else if(m_plateau.get(coorX-1).get(coorY).checkSortieTuile(Direction.SOUTH)){
                         joueur.setTuile(m_plateau.get(coorX-1).get(coorY));
@@ -307,11 +309,13 @@ public class Plateau {
 
                     else{
                         System.out.println("Tuile non accessible");
+                        System.out.println(m_plateau.get(coorX-1).get(coorY).getDirection()) ;
                     }
                     break;
                 case SOUTH:
-                    if(m_plateau.get(coorX+1).get(coorY) == null){
+                    if(coorX + 1 >= m_plateau.size() || m_plateau.get(coorX+1).get(coorY) == null){
                         System.out.println("Tuile non accessible");
+                        System.out.println(m_plateau.get(coorX+1).get(coorY).getDirection()) ;
                     }
                     else if(m_plateau.get(coorX+1).get(coorY).checkSortieTuile(Direction.NORTH)){
                         joueur.setTuile(m_plateau.get(coorX+1).get(coorY));
@@ -320,11 +324,13 @@ public class Plateau {
 
                     else{
                         System.out.println("Tuile non accessible");
+                        System.out.println(m_plateau.get(coorX+1).get(coorY).getDirection()) ;
                     }
                     break;
                 case EAST:
-                    if(m_plateau.get(coorX).get(coorY+1) == null){
+                    if(coorY + 1 >= m_plateau.get(coorX).size() || m_plateau.get(coorX).get(coorY+1) == null){
                         System.out.println("Tuile non accessible");
+                        System.out.println(m_plateau.get(coorX).get(coorY+1).getDirection()) ;
                     }
                     else if(m_plateau.get(coorX).get(coorY+1).checkSortieTuile(Direction.WEST)){
                         joueur.setTuile(m_plateau.get(coorX).get(coorY+1));
@@ -333,11 +339,13 @@ public class Plateau {
 
                     else{
                         System.out.println("Tuile non accessible");
+                        System.out.println(m_plateau.get(coorX).get(coorY+1).getDirection()) ;
                     }
                     break;
                 case WEST:
-                    if(m_plateau.get(coorX).get(coorY-1) == null){
+                    if(coorY - 1 < 0 || m_plateau.get(coorX).get(coorY-1) == null){
                         System.out.println("Tuile non accessible");
+                        System.out.println(m_plateau.get(coorX).get(coorY-1).getDirection()) ;
                     }
                     else if(m_plateau.get(coorX).get(coorY-1).checkSortieTuile(Direction.EAST)){
                         joueur.setTuile(m_plateau.get(coorX).get(coorY-1));
@@ -346,6 +354,7 @@ public class Plateau {
 
                     else{
                         System.out.println("Tuile non accessible");
+                        System.out.println(m_plateau.get(coorX).get(coorY-1).getDirection()) ;
                     }
                     break;
             }

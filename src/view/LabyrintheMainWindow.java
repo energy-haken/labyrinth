@@ -1,6 +1,7 @@
 package view;
 
 import model.Direction;
+import model.Joueur;
 import model.Plateau;
 import javax.swing.*;
 import java.awt.*;
@@ -25,13 +26,13 @@ public class LabyrintheMainWindow extends JFrame{
 
     private JPanel centerPanel = new JPanel();
     private JPanel window;
-    private PlateauWindow Plateau;
+    private PlateauWindow PlateauW;
 
 
     public LabyrintheMainWindow() throws IOException {
         super("LA VERSION NUMERIQUE DU LABYRINTHE");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Plateau = new PlateauWindow(new Plateau());
+        PlateauW = new PlateauWindow(new Plateau());
         setSize(1000,800);
 
         JPanel mainButton = new JPanel();
@@ -55,8 +56,39 @@ public class LabyrintheMainWindow extends JFrame{
         arrow.add(rightButton);
         rightButton.setText("➡️");
 
+        upButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Joueur joueur = PlateauW.getPlateauModel().getJoueur() ;
+                PlateauW.getPlateauModel().deplacerJoueur(joueur , Direction.NORTH);
+            }
+        });
+
+        leftButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Joueur joueur = PlateauW.getPlateauModel().getJoueur() ;
+                PlateauW.getPlateauModel().deplacerJoueur(joueur , Direction.WEST);
+            }
+        });
+
+        rightButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Joueur joueur = PlateauW.getPlateauModel().getJoueur() ;
+                PlateauW.getPlateauModel().deplacerJoueur(joueur , Direction.EAST);
+            }
+        });
+
+        downButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Joueur joueur = PlateauW.getPlateauModel().getJoueur() ;
+                PlateauW.getPlateauModel().deplacerJoueur(joueur , Direction.SOUTH);
+            }
+        });
         remainingTilePanel = ImagePanel.getImageByTile(this.getPlateau().getTuile());
-        Plateau.addObserver(remainingTilePanel);
+        PlateauW.addObserver(remainingTilePanel);
 
         mainButton.add(new JPanel());
         mainButton.add(turnButton);
@@ -88,7 +120,7 @@ public class LabyrintheMainWindow extends JFrame{
 
                 }
                 try {
-                    Plateau.notifyObserversMazeChange();
+                    PlateauW.notifyObserversMazeChange();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -112,7 +144,7 @@ public class LabyrintheMainWindow extends JFrame{
             public void actionPerformed( ActionEvent actionEvent ) {
                 getPlateau().pousserTuile(Direction.SOUTH, 1);
                 try {
-                    Plateau.updateMaze(Direction.SOUTH,1);
+                    PlateauW.updateMaze(Direction.SOUTH,1);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -128,7 +160,7 @@ public class LabyrintheMainWindow extends JFrame{
             public void actionPerformed( ActionEvent actionEvent ) {
                 getPlateau().pousserTuile(Direction.SOUTH, 3);
                 try {
-                    Plateau.updateMaze(Direction.SOUTH,3);
+                    PlateauW.updateMaze(Direction.SOUTH,3);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -144,7 +176,7 @@ public class LabyrintheMainWindow extends JFrame{
             public void actionPerformed( ActionEvent actionEvent ) {
                 getPlateau().pousserTuile(Direction.SOUTH, 5);
                 try {
-                    Plateau.updateMaze(Direction.SOUTH,5);
+                    PlateauW.updateMaze(Direction.SOUTH,5);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -171,7 +203,7 @@ public class LabyrintheMainWindow extends JFrame{
             public void actionPerformed( ActionEvent actionEvent ) {
                 getPlateau().pousserTuile(Direction.NORTH, 1);
                 try {
-                    Plateau.updateMaze(Direction.NORTH,1);
+                    PlateauW.updateMaze(Direction.NORTH,1);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -186,7 +218,7 @@ public class LabyrintheMainWindow extends JFrame{
             public void actionPerformed( ActionEvent actionEvent ) {
                 getPlateau().pousserTuile(Direction.NORTH, 3);
                 try {
-                    Plateau.updateMaze(Direction.NORTH,3);
+                    PlateauW.updateMaze(Direction.NORTH,3);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -202,7 +234,7 @@ public class LabyrintheMainWindow extends JFrame{
             public void actionPerformed( ActionEvent actionEvent ) {
                 getPlateau().pousserTuile(Direction.NORTH, 5);
                 try {
-                    Plateau.updateMaze(Direction.NORTH,5);
+                    PlateauW.updateMaze(Direction.NORTH,5);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -230,7 +262,7 @@ public class LabyrintheMainWindow extends JFrame{
             public void actionPerformed( ActionEvent actionEvent ) {
                 getPlateau().pousserTuile(Direction.WEST, 1);
                 try {
-                    Plateau.updateMaze(Direction.WEST,1);
+                    PlateauW.updateMaze(Direction.WEST,1);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -244,7 +276,7 @@ public class LabyrintheMainWindow extends JFrame{
             public void actionPerformed( ActionEvent actionEvent ) {
                 getPlateau().pousserTuile(Direction.WEST, 3);
                 try {
-                    Plateau.updateMaze(Direction.WEST,3);
+                    PlateauW.updateMaze(Direction.WEST,3);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -258,7 +290,7 @@ public class LabyrintheMainWindow extends JFrame{
             public void actionPerformed( ActionEvent actionEvent ) {
                 getPlateau().pousserTuile(Direction.WEST, 5);
                 try {
-                    Plateau.updateMaze(Direction.WEST,5);
+                    PlateauW.updateMaze(Direction.WEST,5);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -285,7 +317,7 @@ public class LabyrintheMainWindow extends JFrame{
             public void actionPerformed( ActionEvent actionEvent ) {
                 getPlateau().pousserTuile(Direction.EAST, 1);
                 try {
-                    Plateau.updateMaze(Direction.EAST,1);
+                    PlateauW.updateMaze(Direction.EAST,1);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -299,7 +331,7 @@ public class LabyrintheMainWindow extends JFrame{
             public void actionPerformed( ActionEvent actionEvent ) {
                 getPlateau().pousserTuile(Direction.EAST, 3);
                 try {
-                    Plateau.updateMaze(Direction.EAST,3);
+                    PlateauW.updateMaze(Direction.EAST,3);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -313,7 +345,7 @@ public class LabyrintheMainWindow extends JFrame{
             public void actionPerformed( ActionEvent actionEvent ) {
                 getPlateau().pousserTuile(Direction.EAST, 5);
                 try {
-                    Plateau.updateMaze(Direction.EAST,5);
+                    PlateauW.updateMaze(Direction.EAST,5);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -335,7 +367,7 @@ public class LabyrintheMainWindow extends JFrame{
 
         centerPanel.setLayout(new BorderLayout());
         centerPanel.add(panelsButtonHaut, BorderLayout.NORTH);
-        centerPanel.add(Plateau, BorderLayout.CENTER);
+        centerPanel.add(PlateauW, BorderLayout.CENTER);
         centerPanel.add(panelButtonBas, BorderLayout.SOUTH);
         centerPanel.add(panelButtonDroite, BorderLayout.EAST);
         centerPanel.add(panelButtonGauche, BorderLayout.WEST);
@@ -350,7 +382,7 @@ public class LabyrintheMainWindow extends JFrame{
     }
 
     public Plateau getPlateau() {
-        return Plateau.getPlateauModel();
+        return PlateauW.getPlateauModel();
     }
 
 }

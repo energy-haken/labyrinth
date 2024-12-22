@@ -39,7 +39,7 @@ public class PlateauWindow extends JPanel {
         this.setLayout(new GridLayout(rows, cols));
 
         plateauModel  = new Plateau();
-        Joueur joueurRouge = plateauModel.getJoueur() ;
+
 
         // Create a 2D array for panels
         panels = new JPanel[rows][cols];
@@ -65,7 +65,7 @@ public class PlateauWindow extends JPanel {
             }
         }
 
-        loadPlayers(joueurRouge);
+
         setVisible(true);
     }
 
@@ -90,21 +90,29 @@ public class PlateauWindow extends JPanel {
 
     public void loadPlayers(Joueur joueur) throws IOException {
         int x = joueur.getTuile().getCoordoneeX();
-        int y = joueur.getTuile().getCoordoneeY();
-        int idImage = joueur.getTuile().getName();
-        Tuile tuile = plateauModel.getPlateau().get(x).get(y);
+    int y = joueur.getTuile().getCoordoneeY();
+    Tuile tuile = plateauModel.getPlateau().get(x).get(y);
+    int idImage = plateauModel.getPlateau().get(x).get(y).getName();
+    
+    // Find the existing ImagePanel by idImage
+    ImagePanel existingImagePanel = imagePanelById.get(idImage);
 
-        //ImagePanel imagePanel = new ImagePanel(ImageHelper.mergeB(ImagePanel.getImageByTile(tuile).getImage(), "img/PionRouge.png")) ;
-        //imagePanelById.get(idImage).updateImage(imagePanel);
-
-
+    if (existingImagePanel != null) {
+        // Update the existing ImagePanel with the new image
+        ImagePanel newImagePanel = new ImagePanel(ImageHelper.mergeB(ImagePanel.getImageByTile(tuile).getImage(), "img/Pion" + joueur.getCouleur() + ".png"));
+        existingImagePanel.updateImage(newImagePanel);
+        // Revalidate and repaint to ensure the component is properly displayed
+        existingImagePanel.revalidate();
+        existingImagePanel.repaint();
+    } else {
+        System.err.println("No existing ImagePanel found for id: " + idImage);
     }
+}
     public void updateMaze(Direction direction, int index) throws IOException {
         if(direction == Direction.NORTH || direction == Direction.SOUTH){
             for (int i=0;i<=6;i++){
                 int idImage = (i*7)+index;
                 Tuile tuile = plateauModel.getPlateau().get(i).get(index);
-
                 imagePanelById.get(idImage).updateImage(ImagePanel.getImageByTile(tuile));
             }
         }else {
@@ -115,6 +123,9 @@ public class PlateauWindow extends JPanel {
 
             }
         }
+        for (Joueur joueur : plateauModel.getJoueursDuPlateau()) {
+        loadPlayers(joueur);
+    }
         notifyObserversMazeChange();
     }
 

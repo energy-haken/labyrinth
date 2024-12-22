@@ -71,15 +71,30 @@ public class Plateau {
                     numTuile++;
                     listeObjectif.remove(listeObjectif.size()-1);
                 }
+                if((j==0)&&(k==0)){
+                    Joueur joueurRouge = new Joueur(m_plateau.get(0).get(0) , "ROUGE", objectifs1) ;
+                    m_joueurs.add(joueurRouge) ;
 
+                }
                 if((j == 0)&&(k == 6)){
                     this.m_plateau.get(j).get(k).tournerTuile(Direction.NORTH);
+
+                    Joueur joueurVert = new Joueur(m_plateau.get(0).get(6) , "VERT", objectifs3) ;
+                    m_joueurs.add(joueurVert) ;
+
+
                 }
                 if((j == 6)&&(k == 0)){
                     this.m_plateau.get(j).get(k).tournerTuile(Direction.SOUTH);
+
+                    Joueur joueurBleu = new Joueur(m_plateau.get(6).get(0) , "BLEU", objectifs2) ;
+
                 }
                 if((j == 6)&&(k == 6)){
                     this.m_plateau.get(j).get(k).tournerTuile(Direction.EAST);
+
+                    Joueur joueurJaune = new Joueur(m_plateau.get(6).get(6) , "JAUNE", objectifs4) ;
+                    m_joueurs.add(joueurJaune) ;
                 }
             }
         }
@@ -149,14 +164,8 @@ public class Plateau {
 
 
         // Ajout du Joueur
-        Joueur joueurRouge = new Joueur(m_plateau.get(0).get(0) , "ROUGE", objectifs1) ;
-        Joueur joueurBleu = new Joueur(m_plateau.get(6).get(0) , "BLEU", objectifs2) ;
-        Joueur joueurVert = new Joueur(m_plateau.get(0).get(6) , "VERT", objectifs3) ;
-        Joueur joueurJaune = new Joueur(m_plateau.get(6).get(6) , "JAUNE", objectifs4) ;
-        m_joueurs.add(joueurRouge) ;
-        m_joueurs.add(joueurBleu) ;
-        m_joueurs.add(joueurVert) ;
-        m_joueurs.add(joueurJaune) ;
+
+
 
         // Ajout de La 50eme Tuile
 
@@ -396,7 +405,10 @@ public class Plateau {
                         System.out.println(m_plateau.get(coorX).get(coorY-1).getDirection()) ;
                     }
                     break;
-            }
+
+
+        }
+            
         }
     }
 

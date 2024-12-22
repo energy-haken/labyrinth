@@ -43,15 +43,14 @@ public class ImagePanel extends JPanel implements LabyrintheObserver{
 
 
     public void updateImage(ImagePanel Panel){
-        Image newImage = Panel.getImage();
+         BufferedImage newImage = Panel.getImage();
         if (newImage != null) {
-            // Redimensionner l'image pour s'adapter à la taille du panneau
-            int panelWidth = getWidth();
-            int panelHeight = getHeight();
-            Image scaledImage = newImage.getScaledInstance(panelWidth, panelHeight, Image.SCALE_SMOOTH);
-            getGraphics().drawImage(scaledImage, 0, 0, panelWidth, panelHeight, this);
+            this.image = newImage;
+            repaint();
         }
     }
+
+   
     
     public static ImagePanel getImageByTile(Tuile tile) throws IOException {
 

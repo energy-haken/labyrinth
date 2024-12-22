@@ -3,11 +3,14 @@ package view;
 import model.Direction;
 import model.Joueur;
 import model.Plateau;
+import model.Tour;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class LabyrintheMainWindow extends JFrame{
     private JButton finDeTourButton;
@@ -33,8 +36,14 @@ public class LabyrintheMainWindow extends JFrame{
         super("LA VERSION NUMERIQUE DU LABYRINTHE");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         PlateauW = new PlateauWindow(new Plateau());
+        Tour tour = new Tour(PlateauW.getPlateauModel().getJoueur());
+        ArrayList<Joueur> joueurDuPlateau = PlateauW.getPlateauModel().getJoueursDuPlateau();
         setSize(1000,800);
-
+        for(int i = 0 ; i < 4 ; i++){
+            PlateauW.loadPlayers(tour.getJoueurDuTour());
+            tour.tourSuivant(joueurDuPlateau) ;
+            System.out.println(tour.getJoueurDuTour().getCouleur());
+        }
         JPanel mainButton = new JPanel();
         mainButton.setLayout(new GridLayout(2,8));
 
@@ -56,35 +65,56 @@ public class LabyrintheMainWindow extends JFrame{
         arrow.add(rightButton);
         rightButton.setText("➡️");
 
+
         upButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Joueur joueur = PlateauW.getPlateauModel().getJoueur() ;
+                Joueur joueur = tour.getJoueurDuTour() ;
                 PlateauW.getPlateauModel().deplacerJoueur(joueur , Direction.NORTH);
+                try {
+                    PlateauW.loadPlayers(tour.getJoueurDuTour());
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
         leftButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Joueur joueur = PlateauW.getPlateauModel().getJoueur() ;
+                Joueur joueur = tour.getJoueurDuTour() ;
                 PlateauW.getPlateauModel().deplacerJoueur(joueur , Direction.WEST);
+                try {
+                    PlateauW.loadPlayers(tour.getJoueurDuTour());
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
         rightButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Joueur joueur = PlateauW.getPlateauModel().getJoueur() ;
+                Joueur joueur = tour.getJoueurDuTour() ;
                 PlateauW.getPlateauModel().deplacerJoueur(joueur , Direction.EAST);
+                try {
+                    PlateauW.loadPlayers(tour.getJoueurDuTour());
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
         downButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Joueur joueur = PlateauW.getPlateauModel().getJoueur() ;
+                Joueur joueur = tour.getJoueurDuTour() ;
                 PlateauW.getPlateauModel().deplacerJoueur(joueur , Direction.SOUTH);
+                try {
+                    PlateauW.loadPlayers(tour.getJoueurDuTour());
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         remainingTilePanel = ImagePanel.getImageByTile(this.getPlateau().getTuile());

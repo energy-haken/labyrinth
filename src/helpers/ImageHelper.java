@@ -55,7 +55,7 @@ public class ImageHelper {
 	 * @param angle is the angle of rotation in radian
 	 * @return a new image representing the original image rotated of angle radian from its center.
 	 */
-	public static BufferedImage rotate( final BufferedImage original, double angle ) throws IllegalArgumentException {
+	public static BufferedImage rotate( final BufferedImage original, double angle )  {
 		if ( original.getWidth() != original.getHeight() )
 			throw new IllegalArgumentException("Original image must have same width and height.");
 		BufferedImage rotated = new BufferedImage(original.getWidth(), original.getHeight(), original.getType());
@@ -72,7 +72,7 @@ public class ImageHelper {
 	 * @param original is the input image to rotate
 	 * @return a new image representing the original image rotated by 90 degrees from its center.
 	 */
-	public static BufferedImage rotateClockwise( final BufferedImage original ) throws IllegalArgumentException {
+	public static BufferedImage rotateClockwise( final BufferedImage original ) {
 		return rotate( original, 0.5*Math.PI );
 	}
 
@@ -82,7 +82,7 @@ public class ImageHelper {
 	 * @param original is the input image to rotate
 	 * @return a new image representing the original image rotated by 90 degrees from its center.
 	 */
-	public static BufferedImage rotateCounterClockwise( final BufferedImage original ) throws IllegalArgumentException {
+	public static BufferedImage rotateCounterClockwise( final BufferedImage original ) {
 		return rotate( original, 1.5*Math.PI );
 	}
 }

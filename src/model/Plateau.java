@@ -346,9 +346,8 @@ public class Plateau {
 
     public void deplacerJoueur(Joueur joueur , Direction direction){
         if(joueur.getTuile().checkSortieTuile(direction)){
-            int coorX = joueur.getTuile().getCoordoneeX() ;
-            int coorY = joueur.getTuile().getCoordoneeY() ;
-
+            int coorX = joueur.getTuile().getCoordoneeX();
+            int coorY = joueur.getTuile().getCoordoneeY();
             switch (direction) {
                 case NORTH:
                     if(((coorX - 1) < 0) || (m_plateau.get(coorX - 1).get(coorY) == null)){

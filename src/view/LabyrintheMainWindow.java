@@ -67,28 +67,80 @@ public class LabyrintheMainWindow extends JFrame{
         upButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int oldTileID = m_turn.getJoueurDuTour().getTuile().getCoordoneeX()*7 + m_turn.getJoueurDuTour().getTuile().getCoordoneeY();
                 PlateauW.getPlateauModel().deplacerJoueur(m_turn.getJoueurDuTour() , Direction.NORTH);
+                try {
+                    PlateauW.updateTileByID(oldTileID);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                try {
+                    for (Joueur j :getPlateau().getJoueursDuPlateau()) {
+                        PlateauW.loadPlayers(j);
+                    }
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
         leftButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int oldTileID = m_turn.getJoueurDuTour().getTuile().getCoordoneeX()*7 + m_turn.getJoueurDuTour().getTuile().getCoordoneeY();
                 PlateauW.getPlateauModel().deplacerJoueur(m_turn.getJoueurDuTour() , Direction.WEST);
+                try {
+                    PlateauW.updateTileByID(oldTileID);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                try {
+                    for (Joueur j :getPlateau().getJoueursDuPlateau()) {
+                        PlateauW.loadPlayers(j);
+                    }
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
         rightButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int oldTileID = m_turn.getJoueurDuTour().getTuile().getCoordoneeX()*7 + m_turn.getJoueurDuTour().getTuile().getCoordoneeY();
                 PlateauW.getPlateauModel().deplacerJoueur(m_turn.getJoueurDuTour() , Direction.EAST);
+                try {
+                    PlateauW.updateTileByID(oldTileID);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                try {
+                    for (Joueur j :getPlateau().getJoueursDuPlateau()) {
+                        PlateauW.loadPlayers(j);
+                    }
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
         downButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int oldTileID = m_turn.getJoueurDuTour().getTuile().getCoordoneeX()*7 + m_turn.getJoueurDuTour().getTuile().getCoordoneeY();
                 PlateauW.getPlateauModel().deplacerJoueur(m_turn.getJoueurDuTour() , Direction.SOUTH);
+                try {
+                    PlateauW.updateTileByID(oldTileID);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                try {
+                    for (Joueur j :getPlateau().getJoueursDuPlateau()) {
+                        PlateauW.loadPlayers(j);
+                    }
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         remainingTilePanel = ImagePanel.getImageByTile(this.getPlateau().getTuile());

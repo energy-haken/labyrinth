@@ -93,7 +93,7 @@ public class PlateauWindow extends JPanel {
         int x = joueur.getTuile().getCoordoneeX();
     int y = joueur.getTuile().getCoordoneeY();
     Tuile tuile = plateauModel.getPlateau().get(x).get(y);
-    int idImage = plateauModel.getPlateau().get(x).get(y).getName();
+    int idImage = 7*x+y;
     
     // Find the existing ImagePanel by idImage
     ImagePanel existingImagePanel = imagePanelById.get(idImage);
@@ -128,6 +128,15 @@ public class PlateauWindow extends JPanel {
         loadPlayers(joueur);
     }
         notifyObserversMazeChange();
+    }
+
+    public void updateTileByID(int id) throws IOException {
+        int y = id%7;
+        int x = (id-y)/7;
+        Tuile tuile = plateauModel.getPlateau().get(x).get(y);
+
+        imagePanelById.get(id).updateImage(ImagePanel.getImageByTile(tuile));
+
     }
 
     public void addObserver(LabyrintheObserver o){

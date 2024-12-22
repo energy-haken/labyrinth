@@ -43,9 +43,6 @@ public class Joueur {
             m_objectifRestant -= 1 ;
             m_objectifRecup += 1 ;
         }
-        else{
-
-        }
     }
 
 
@@ -80,5 +77,9 @@ public class Joueur {
 
     public String getCouleur() {
         return m_couleur;
+    }
+
+    public Objectif getCurrentGoal(){
+        return m_listeObjectifs.get(0);
     }
 }

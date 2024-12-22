@@ -14,6 +14,7 @@ import helpers.ImageHelper;
 import model.Direction;
 import model.Joueur;
 import model.Plateau;
+import model.Tour;
 import model.tuiles.Tuile;
 
 public class PlateauWindow extends JPanel {

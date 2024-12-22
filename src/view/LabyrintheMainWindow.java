@@ -10,7 +10,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class LabyrintheMainWindow extends JFrame{
     private JButton finDeTourButton;
@@ -31,19 +30,19 @@ public class LabyrintheMainWindow extends JFrame{
     private JPanel window;
     private PlateauWindow PlateauW;
 
+    private Tour m_turn ;
+
 
     public LabyrintheMainWindow() throws IOException {
         super("LA VERSION NUMERIQUE DU LABYRINTHE");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         PlateauW = new PlateauWindow(new Plateau());
-        Tour tour = new Tour(PlateauW.getPlateauModel().getJoueur());
-        ArrayList<Joueur> joueurDuPlateau = PlateauW.getPlateauModel().getJoueursDuPlateau();
-        setSize(1000,800);
-        for(int i = 0 ; i < 4 ; i++){
-            PlateauW.loadPlayers(tour.getJoueurDuTour());
-            tour.tourSuivant(joueurDuPlateau) ;
-            System.out.println(tour.getJoueurDuTour().getCouleur());
+        m_turn= new Tour(getPlateau().getJoueursDuPlateau());
+        for (Joueur j:getPlateau().getJoueursDuPlateau()) {
+            PlateauW.loadPlayers(j);
         }
+        setSize(1000,800);
+
         JPanel mainButton = new JPanel();
         mainButton.setLayout(new GridLayout(2,8));
 
@@ -65,56 +64,31 @@ public class LabyrintheMainWindow extends JFrame{
         arrow.add(rightButton);
         rightButton.setText("➡️");
 
-
         upButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Joueur joueur = tour.getJoueurDuTour() ;
-                PlateauW.getPlateauModel().deplacerJoueur(joueur , Direction.NORTH);
-                try {
-                    PlateauW.loadPlayers(tour.getJoueurDuTour());
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+                PlateauW.getPlateauModel().deplacerJoueur(m_turn.getJoueurDuTour() , Direction.NORTH);
             }
         });
 
         leftButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Joueur joueur = tour.getJoueurDuTour() ;
-                PlateauW.getPlateauModel().deplacerJoueur(joueur , Direction.WEST);
-                try {
-                    PlateauW.loadPlayers(tour.getJoueurDuTour());
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+                PlateauW.getPlateauModel().deplacerJoueur(m_turn.getJoueurDuTour() , Direction.WEST);
             }
         });
 
         rightButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Joueur joueur = tour.getJoueurDuTour() ;
-                PlateauW.getPlateauModel().deplacerJoueur(joueur , Direction.EAST);
-                try {
-                    PlateauW.loadPlayers(tour.getJoueurDuTour());
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+                PlateauW.getPlateauModel().deplacerJoueur(m_turn.getJoueurDuTour() , Direction.EAST);
             }
         });
 
         downButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Joueur joueur = tour.getJoueurDuTour() ;
-                PlateauW.getPlateauModel().deplacerJoueur(joueur , Direction.SOUTH);
-                try {
-                    PlateauW.loadPlayers(tour.getJoueurDuTour());
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+                PlateauW.getPlateauModel().deplacerJoueur(m_turn.getJoueurDuTour() , Direction.SOUTH);
             }
         });
         remainingTilePanel = ImagePanel.getImageByTile(this.getPlateau().getTuile());
@@ -160,6 +134,13 @@ public class LabyrintheMainWindow extends JFrame{
 
 
         mainButton.add(finDeTourButton);
+        finDeTourButton.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed( ActionEvent actionEvent ) {
+                m_turn.tourSuivant();
+                System.out.println( m_turn.getJoueurDuTour().getCurrentGoal().name());
+            }
+        });
 
         JPanel panelsButtonHaut = new JPanel() ;
 

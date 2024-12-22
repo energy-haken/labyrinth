@@ -72,14 +72,14 @@ public class Plateau {
                     listeObjectif.remove(listeObjectif.size()-1);
                 }
                 if((j==0)&&(k==0)){
-                    Joueur joueurRouge = new Joueur(m_plateau.get(0).get(0) , "ROUGE", objectifs1) ;
+                    Joueur joueurRouge = new Joueur(m_plateau.get(0).get(0) , "Rouge", objectifs1) ;
                     m_joueurs.add(joueurRouge) ;
 
                 }
                 if((j == 0)&&(k == 6)){
                     this.m_plateau.get(j).get(k).tournerTuile(Direction.NORTH);
 
-                    Joueur joueurVert = new Joueur(m_plateau.get(0).get(6) , "VERT", objectifs3) ;
+                    Joueur joueurVert = new Joueur(m_plateau.get(0).get(6) , "Vert", objectifs3) ;
                     m_joueurs.add(joueurVert) ;
 
 
@@ -87,13 +87,15 @@ public class Plateau {
                 if((j == 6)&&(k == 0)){
                     this.m_plateau.get(j).get(k).tournerTuile(Direction.SOUTH);
 
-                    Joueur joueurBleu = new Joueur(m_plateau.get(6).get(0) , "BLEU", objectifs2) ;
+                    Joueur joueurBleu = new Joueur(m_plateau.get(6).get(0) , "Bleu", objectifs2) ;
+                    m_joueurs.add(joueurBleu) ;
+
 
                 }
                 if((j == 6)&&(k == 6)){
                     this.m_plateau.get(j).get(k).tournerTuile(Direction.EAST);
 
-                    Joueur joueurJaune = new Joueur(m_plateau.get(6).get(6) , "JAUNE", objectifs4) ;
+                    Joueur joueurJaune = new Joueur(m_plateau.get(6).get(6) , "Jaune", objectifs4) ;
                     m_joueurs.add(joueurJaune) ;
                 }
             }
@@ -235,6 +237,9 @@ public class Plateau {
         for (Joueur j:m_joueurs) {
             if(j.getTuile().getCoordoneeX()==-1){
                 j.setTuile(m_tuile);
+            }
+            if(j.verifObjectif()){
+                j.validationObjectif();
             }
         }
         m_tuile = tuileSortante;
@@ -406,10 +411,12 @@ public class Plateau {
                     }
                     break;
 
+            }
+            if(joueur.verifObjectif()){
+                joueur.validationObjectif();
+            }
+        }
 
-        }
-            
-        }
     }
 
     public Joueur getJoueur(){

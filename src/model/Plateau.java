@@ -26,6 +26,9 @@ public class Plateau {
 
         ArrayList<Objectif> listeObjectif = new ArrayList<>() ;
         ArrayList<Objectif> objectifs1 = new ArrayList<>() ;
+        ArrayList<Objectif> objectifs2 = new ArrayList<>() ;
+        ArrayList<Objectif> objectifs3 = new ArrayList<>() ;
+        ArrayList<Objectif> objectifs4 = new ArrayList<>() ;
 
         for(int i = 0 ; i < 24 ; i++){
             listeObjectif.add(Objectif.values()[i]);
@@ -34,6 +37,17 @@ public class Plateau {
         for(int i = 0 ; i < listeObjectif.size()/4 ; i++){
             objectifs1.add(listeObjectif.get(i));
         }
+        for(int i = 6 ; i < listeObjectif.size()/4 + 6 ; i++){
+            objectifs2.add(listeObjectif.get(i));
+        }
+        for(int i = 12 ; i < listeObjectif.size()/4 + 12; i++){
+            objectifs3.add(listeObjectif.get(i));
+        }
+        for(int i = 18 ; i < listeObjectif.size() ; i++){
+            objectifs4.add(listeObjectif.get(i));
+        }
+
+
 
 
 
@@ -131,9 +145,18 @@ public class Plateau {
 
             }
         }
+
+
+
         // Ajout du Joueur
         Joueur joueurRouge = new Joueur(m_plateau.get(0).get(0) , "ROUGE", objectifs1) ;
+        Joueur joueurBleu = new Joueur(m_plateau.get(6).get(0) , "BLEU", objectifs2) ;
+        Joueur joueurVert = new Joueur(m_plateau.get(0).get(6) , "VERT", objectifs3) ;
+        Joueur joueurJaune = new Joueur(m_plateau.get(6).get(6) , "JAUNE", objectifs4) ;
         m_joueurs.add(joueurRouge) ;
+        m_joueurs.add(joueurBleu) ;
+        m_joueurs.add(joueurVert) ;
+        m_joueurs.add(joueurJaune) ;
 
         // Ajout de La 50eme Tuile
 
@@ -362,6 +385,12 @@ public class Plateau {
     }
 
     public Joueur getJoueur(){
-        return m_joueurs.get(0);
+        Random random = new Random();
+        int joueurChoisi = random.nextInt(m_joueurs.size());
+        return m_joueurs.get(joueurChoisi);
+    }
+
+    public ArrayList<Joueur> getJoueursDuPlateau(){
+        return m_joueurs;
     }
 }

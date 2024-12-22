@@ -585,7 +585,7 @@ public class LabyrintheMainWindow extends JFrame {
 
     private void verifyVictory(){
         for (Player player : getBoard().getPlayersOnBoard()) {
-            if(player.getRemainingObjectives()==0){
+            if(player.getRemainingObjectives()==0 && player.getTile().getCoordinateX() == player.getFirstCoX() && player.getTile().getCoordinateY() == player.getFirstCoY()){
                 JPanel victoryPanel = new JPanel();
                 victoryPanel.setLayout(new BorderLayout());
 
@@ -593,7 +593,7 @@ public class LabyrintheMainWindow extends JFrame {
                 label.setFont(new Font("Arial", Font.BOLD, 24));
                 victoryPanel.add(label, BorderLayout.NORTH);
 
-                ImageIcon imageIcon = new ImageIcon("img/Pion" + _currentTurn.getCurrentPlayer().getColor() + ".png");
+                ImageIcon imageIcon = new ImageIcon("img/Pion" + player.getColor() + ".png");
                 JLabel imageLabel = new JLabel(imageIcon);
                 imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
                 victoryPanel.add(imageLabel, BorderLayout.CENTER);

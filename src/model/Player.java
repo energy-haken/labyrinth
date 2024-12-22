@@ -10,6 +10,8 @@ public class Player {
     private int _collectedObjectives;
     private Tile _tile;
     private String _color;
+    private int _firstCoX ;
+    private int _firstCoY ;
 
     /**
      * Creation of a Player
@@ -22,6 +24,8 @@ public class Player {
         this._collectedObjectives = 0;
         this._remainingObjectives = 6;
         this._color = color;
+        this._firstCoX = tile.getCoordinateX() ;
+        this._firstCoY = tile.getCoordinateY() ;
     }
 
     /**
@@ -75,5 +79,13 @@ public class Player {
 
     public Objective getCurrentGoal() {
         return _objectiveList.get(0);
+    }
+
+    public int getFirstCoX() {
+        return _firstCoX;
+    }
+
+    public int getFirstCoY() {
+        return _firstCoY;
     }
 }

@@ -1,14 +1,14 @@
 package view;
 
-import model.Direction;
-import model.Joueur;
-import model.Plateau;
-import model.Tour;
+import model.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
 public class LabyrintheMainWindow extends JFrame{
@@ -42,6 +42,8 @@ public class LabyrintheMainWindow extends JFrame{
             PlateauW.loadPlayers(j);
         }
         setSize(1000,800);
+        BufferedImage imageJoueur = ImageIO.read(new File("img/Pion" + m_turn.getJoueurDuTour().getCouleur() +  ".png")) ;
+        ImagePanel panelImageJoueur = new ImagePanel(imageJoueur);
 
         JPanel mainButton = new JPanel();
         mainButton.setLayout(new GridLayout(2,8));
@@ -146,6 +148,12 @@ public class LabyrintheMainWindow extends JFrame{
         remainingTilePanel = ImagePanel.getImageByTile(this.getPlateau().getTuile());
         PlateauW.addObserver(remainingTilePanel);
 
+        JPanel objectifPanel = new JPanel();
+        objectifPanel.setLayout(new BorderLayout());
+        JLabel objectifLabel = new JLabel(m_turn.getJoueurDuTour().getCurrentGoal().name()) ;
+        objectifPanel.add(objectifLabel, BorderLayout.EAST) ;
+        objectifPanel.add(panelImageJoueur , BorderLayout.WEST) ;
+
         mainButton.add(new JPanel());
         mainButton.add(turnButton);
         mainButton.add(new JPanel());
@@ -162,7 +170,7 @@ public class LabyrintheMainWindow extends JFrame{
         mainButton.add(new JPanel());
         mainButton.add(arrow);
         mainButton.add(new JPanel());
-        mainButton.add(new JPanel());
+        mainButton.add(objectifPanel);
         turnButton.setText("Tourner la tuile");
         mainButton.add(new JPanel());
         turnButton.addActionListener( new ActionListener() {
@@ -190,6 +198,15 @@ public class LabyrintheMainWindow extends JFrame{
             @Override
             public void actionPerformed( ActionEvent actionEvent ) {
                 m_turn.tourSuivant();
+                objectifLabel.setText(m_turn.getJoueurDuTour().getCurrentGoal().name());
+                try {
+                    BufferedImage imageJoueur2 = ImageIO.read(new File("img/Pion" + m_turn.getJoueurDuTour().getCouleur() +  ".png")) ;
+                    ImagePanel panelImageJoueur2 = new ImagePanel(imageJoueur2) ;
+                    objectifPanel.remove(panelImageJoueur);
+                    objectifPanel.add(panelImageJoueur2, BorderLayout.WEST);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 System.out.println( m_turn.getJoueurDuTour().getCurrentGoal().name());
             }
         });

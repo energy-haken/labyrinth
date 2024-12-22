@@ -1,54 +1,48 @@
-# Rendu 1
+# Rendu 
 
 ## Package model : 
 
 ---
 
-### <span style="color:orange"> Classes : </span>
+### Fonctionnalités
 
-#### Joueur 
+1 - La **génératon des tuiles**
 
-- Il possède sa liste d'objectifs a remplir ainsi que le nombre déja éffecuté + restant
-- Connais la tuile sur lequel il se trouve (pour faciliter le déplacement et détecter s'il se trouve sur l'objectif)
+- [ ] Niveau 1 : avec une orientation initiale fixe
+- [x] Niveau 2 : avec une orientation initiale aléatoire
 
+2 - Le **génération du plateau** avec les tuiles :
 
-#### Plateau
+- [ ] Niveau 1 : placées de façon fixe (toujours le même plateau de départ)
+- [ ] Niveau 2 : placées toutes de façon aléatoire
+- [x] Niveau 3 : placées de façon fixe ou aléatoire comme dans le jeu de société
 
-- Contient les méthodes permettant de gérer les déplacement de tuiles
+3 - L'**ajout des objectifs** sur les tuiles :
 
-#### Tuiles
-<span style="color:green"> Classe abstract</span>
+- [ ] Niveau 1 : placés de façon fixe
+- [ ] Niveau 2 : placés de façon totalement aléatoire, 1 seul maximum par tuile
+- [x] Niveau 3 : placés de façon aléatoire mais pas sur les cases du départ des joueurs
 
-- parent de **TuileLibre** et **TuileObjectif**
-- a comme attribut son pattern, sa direction et un boolean pour savoir si la tuile est fixe ou non. 
-- La combinaison de Pattern + Direction nous permettra de définir ou sont les sortie de la tuile et où sont les murs. 
+4 - La **distribution des "cartes objectifs"** aux joueurs :
 
-#### TuileLibre
+- [x] Niveau 1 : de façon fixe
+- [ ] Niveau 2 : de façon aléatoire
 
-- enfant de **Tuile** 
-- renvoie null pour getObjectif() car son role n'est pas d'accueiler des objectifs
+5 - Le **déplacement des pions case par case**
+ - [x] Fait
 
-#### TuileObjectif
+6 - Le **déplacement d'une ligne ou colonne du plateau** par la tuile supplémentaire :
 
-- possède un attribut en plus : un Objectif associé
+- [ ] Niveau 1 : Toutes les lignes et colonnes
+- [ ] Niveau 2 : Uniquement les lignes et colonnes impaires
+- [x] Niveau 3 : En gérant le passage d'un joueur éjecté au côté opposé de la ligne/colonne actuelle
+- [ ] Niveau 4 : En interdisant le déplacement inverse du précédent
 
-### <span style="color:orange"> Enumeration </span>
+7 - La **détection d'un objectif atteint** par un joueur et le passage à l'objectif suivant
+- [ ] Non fait
 
-#### Direction
+8 - La **détection de la fin du tour d'un joueur**
+- [x] Fait
 
-###### Utilisé pour connaître de multiples informations :
-- l'orientation d'une tuile
-- les sortie et murs d'une tuiles (en combinaison avec le pattern)
-- le sens de rotation que le joueur veut faire subir a une tuile
-- les paramètres de poussé d'une tuile (le sens et la direction)
-
-#### Objectif
-
-- Objectifs en rapport avec l'IUT
-- liste non complète encore pour le moment
-
-#### Pattern
-
-- pattern utilisé pour la création de tuile
-- utilisé pour faciliter et formaliser l'utilisation (notamment pour pouvoir définir ou sont les murs et les sorties d'une tuile)
-
+9 - La **détection de la fin de partie** lorsqu'un joueur a trouvé tous ses objectifs et est revenu à sa position de départ
+- [ ] Non fait

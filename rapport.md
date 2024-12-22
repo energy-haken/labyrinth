@@ -1,6 +1,7 @@
 # Rendu 
 
-## Package model : 
+
+
 
 ---
 
@@ -42,7 +43,23 @@
 - [x] fait en fin de tour
 
 8 - La **détection de la fin du tour d'un player**
-- [ ] Non Fait
+- [ ] Non Fait | Pas faisable de la manière dont on l'a implémenté (aucun moyen de savoir quand le Joueur veut s'arrêter de bouger)
 
 9 - La **détection de la fin de partie** lorsqu'un player a trouvé tous ses objectifs et est revenu à sa position de départ
 - [x] fait en fin de tour
+
+
+## Evolution depuis le rendu1
+
+- Le code a été mis en anglais par souci de cohérence. (sauf certains commentaires)
+- Les classes Tuiles ont été remaniés afin d'avoir des morceaux de code plus court et plus simple a comprendre
+- Utilisation du controller
+- Supression de certaines classes inutile (Background.java) car elles n'ont au final pas été utiles
+## Infos supplémentaires
+
+- Les attributs privées des .form n'ont pas été mis sur le diagramme UML afin d'en faciliciter la lecture
+- Idem pour les objectifs (ils n'y sont pas tous)
+- Le jeu peut être joué par des personnes daltonien.
+- On a tenté de faire le bonus 2 mais aucune solution n'a été trouvée pour relancer l'application
+- Les seuls patron de conception implémenté fut le MVC et l'Observer, nous n'avons pas trouvé d'autres patrons "utile" permettant de nous faire gagner du temps (la facade a été envisagé avec "Background.java" mais fut abandonné)
+- 

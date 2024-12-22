@@ -494,6 +494,8 @@ public class LabyrintheMainWindow extends JFrame {
         _endTurnButton.addActionListener(actionEvent -> {
             _currentTurn.nextTurn();
             goalLabel.setText(_currentTurn.getCurrentPlayer().getCurrentGoal().name());
+            playerGoalAchieved.setText("Over : " + _currentTurn.getCurrentPlayer().getCollectedObjectives());
+            playerGoalRemained.setText("Remained : " + _currentTurn.getCurrentPlayer().getRemainingObjectives());
             try {
                 // Changing the Player + associate Objective
                 BufferedImage playerImage2 = ImageIO.read(new File("img/Pion" + _currentTurn.getCurrentPlayer().getColor() + ".png"));
@@ -504,6 +506,7 @@ public class LabyrintheMainWindow extends JFrame {
                 ImagePanel goalImagePanel2 = new ImagePanel(goalImage2);
                 goalPanel.remove(goalImagePanel);
                 goalPanel.add(goalImagePanel2, BorderLayout.CENTER);
+
                 _endTurnButton.setEnabled(false);
             } catch (IOException e) {
                 throw new RuntimeException(e);

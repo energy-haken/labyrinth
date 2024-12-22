@@ -39,10 +39,10 @@
 - [ ] Niveau 4 : En interdisant le déplacement inverse du précédent
 
 7 - La **détection d'un objective atteint** par un player et le passage à l'objective suivant
-- [ ] Non fait
+- [x] fait en fin de tour
 
 8 - La **détection de la fin du tour d'un player**
-- [ ] Fait
+- [ ] Non Fait
 
 9 - La **détection de la fin de partie** lorsqu'un player a trouvé tous ses objectifs et est revenu à sa position de départ
-- [ ] Non fait
+- [x] fait en fin de tour

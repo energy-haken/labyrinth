@@ -50,7 +50,7 @@ public class PlateauWindow extends JPanel {
         }
 
         // Use the board object to set up the initial state of the grid
-        List<List<Tile>> grid = boardModel.getBoard();
+        List<List<Tile>> grid = boardModel.get_board();
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 Tile tile = grid.get(row).get(col);
@@ -87,7 +87,7 @@ public class PlateauWindow extends JPanel {
     public void loadPlayers(Player player) throws IOException {
         int x = player.getTile().getCoordinateX();
         int y = player.getTile().getCoordinateY();
-        Tile tile = boardModel.getBoard().get(x).get(y);
+        Tile tile = boardModel.get_board().get(x).get(y);
         int idImage = 7 * x + y;
 
         // Find the existing ImagePanel by idImage
@@ -109,13 +109,13 @@ public class PlateauWindow extends JPanel {
         if (direction == Direction.NORTH || direction == Direction.SOUTH) {
             for (int i = 0; i <= 6; i++) {
                 int idImage = (i * 7) + index;
-                Tile tile = boardModel.getBoard().get(i).get(index);
+                Tile tile = boardModel.get_board().get(i).get(index);
                 imagePanelById.get(idImage).updateImage(ImagePanel.getImageByTile(tile));
             }
         } else {
             for (int i = 0; i <= 6; i++) {
                 int idImage = i + (index * 7);
-                Tile tile = boardModel.getBoard().get(index).get(i);
+                Tile tile = boardModel.get_board().get(index).get(i);
                 imagePanelById.get(idImage).updateImage(ImagePanel.getImageByTile(tile));
             }
         }
@@ -128,7 +128,7 @@ public class PlateauWindow extends JPanel {
     public void updateTileByID(int id) throws IOException {
         int y = id % 7;
         int x = (id - y) / 7;
-        Tile tile = boardModel.getBoard().get(x).get(y);
+        Tile tile = boardModel.get_board().get(x).get(y);
 
         imagePanelById.get(id).updateImage(ImagePanel.getImageByTile(tile));
     }

@@ -8,16 +8,16 @@ import java.util.List;
 import java.util.Random;
 
 public class Board {
-    private List<List<Tile>> board = Arrays.asList(Arrays.asList(null,null,null,null,null,null,null),
+    private List<List<Tile>> _board = Arrays.asList(Arrays.asList(null,null,null,null,null,null,null),
                                                    Arrays.asList(null,null,null,null,null,null,null),
                                                    Arrays.asList(null,null,null,null,null,null,null),
                                                    Arrays.asList(null,null,null,null,null,null,null),
                                                    Arrays.asList(null,null,null,null,null,null,null),
                                                    Arrays.asList(null,null,null,null,null,null,null),
                                                    Arrays.asList(null,null,null,null,null,null,null));
-    private ArrayList<Player> players = new ArrayList<>();
+    private ArrayList<Player> _players = new ArrayList<>();
 
-    private Tile extraTile;
+    private Tile _extraTile;
 
     public Board(){
         ArrayList<Objective> objectiveList = new ArrayList<>();
@@ -48,32 +48,32 @@ public class Board {
         for (int j = 0; j < 7; j+=2) {
             for (int k = 0; k < 7; k+=2) {
                 if((j==0||j==6)&&(k==0||k==6)){
-                    this.board.get(j).set(k,new TileCorner(true, Direction.WEST, j , k, tileNumber));
+                    this._board.get(j).set(k,new TileCorner(true, Direction.WEST, j , k, tileNumber));
                     tileNumber++;
                 }
                 else{
-                    this.board.get(j).set(k,new TileT(true, Direction.WEST, j , k ,tileNumber , objectiveList.get(objectiveList.size()-1)));
+                    this._board.get(j).set(k,new TileT(true, Direction.WEST, j , k ,tileNumber , objectiveList.get(objectiveList.size()-1)));
                     tileNumber++;
                     objectiveList.remove(objectiveList.size()-1);
                 }
                 if((j==0)&&(k==0)){
-                    Player playerRed = new Player(board.get(0).get(0) , "Red", objectives1) ;
-                    players.add(playerRed) ;
+                    Player playerRed = new Player(_board.get(0).get(0) , "Red", objectives1) ;
+                    _players.add(playerRed) ;
                 }
                 if((j == 0)&&(k == 6)){
-                    this.board.get(j).get(k).rotateTile(Direction.NORTH);
-                    Player playerGreen = new Player(board.get(0).get(6) , "Green", objectives3) ;
-                    players.add(playerGreen) ;
+                    this._board.get(j).get(k).rotateTile(Direction.NORTH);
+                    Player playerGreen = new Player(_board.get(0).get(6) , "Green", objectives3) ;
+                    _players.add(playerGreen) ;
                 }
                 if((j == 6)&&(k == 0)){
-                    this.board.get(j).get(k).rotateTile(Direction.SOUTH);
-                    Player playerBlue = new Player(board.get(6).get(0) , "Blue", objectives2) ;
-                    players.add(playerBlue) ;
+                    this._board.get(j).get(k).rotateTile(Direction.SOUTH);
+                    Player playerBlue = new Player(_board.get(6).get(0) , "Blue", objectives2) ;
+                    _players.add(playerBlue) ;
                 }
                 if((j == 6)&&(k == 6)){
-                    this.board.get(j).get(k).rotateTile(Direction.EAST);
-                    Player playerYellow = new Player(board.get(6).get(6) , "Yellow", objectives4) ;
-                    players.add(playerYellow) ;
+                    this._board.get(j).get(k).rotateTile(Direction.EAST);
+                    Player playerYellow = new Player(_board.get(6).get(6) , "Yellow", objectives4) ;
+                    _players.add(playerYellow) ;
                 }
             }
         }
@@ -81,35 +81,35 @@ public class Board {
         // Generation of Movable Tiles
         for(int i = 0 ; i < 7 ; i++) {
             for (int j = 0; j < 7; j++) {
-                if (board.get(i).get(j) == null) {
+                if (_board.get(i).get(j) == null) {
                     Pattern pattern = checkPattern();
                     Direction direction = checkDirection();
                     if (checkObjective() && !objectiveList.isEmpty()) { // Tile with objective
                         if(pattern == Pattern.T){
-                            board.get(i).set(j , new TileT(false , direction , i , j , tileNumber, objectiveList.get(objectiveList.size() -1))) ;
+                            _board.get(i).set(j , new TileT(false , direction , i , j , tileNumber, objectiveList.get(objectiveList.size() -1))) ;
                             tileNumber++;
                         }
                         else if(pattern == Pattern.LINE){
-                            board.get(i).set(j , new TileLine(false , direction , i , j , tileNumber, objectiveList.get(objectiveList.size() -1))) ;
+                            _board.get(i).set(j , new TileLine(false , direction , i , j , tileNumber, objectiveList.get(objectiveList.size() -1))) ;
                             tileNumber++;
                         }
                         else{
-                            board.get(i).set(j , new TileCorner(false , direction , i , j , tileNumber, objectiveList.get(objectiveList.size() -1))) ;
+                            _board.get(i).set(j , new TileCorner(false , direction , i , j , tileNumber, objectiveList.get(objectiveList.size() -1))) ;
                             tileNumber++;
                         }
                         objectiveList.remove(objectiveList.size() - 1);
                     }
                     else { // Tile without objective
                         if(pattern == Pattern.T){
-                            board.get(i).set(j , new TileT(false , direction , i , j , tileNumber)) ;
+                            _board.get(i).set(j , new TileT(false , direction , i , j , tileNumber)) ;
                             tileNumber++;
                         }
                         else if(pattern == Pattern.LINE){
-                            board.get(i).set(j , new TileLine(false , direction , i , j , tileNumber)) ;
+                            _board.get(i).set(j , new TileLine(false , direction , i , j , tileNumber)) ;
                             tileNumber++;
                         }
                         else{
-                            board.get(i).set(j , new TileCorner(false , direction , i , j , tileNumber)) ;
+                            _board.get(i).set(j , new TileCorner(false , direction , i , j , tileNumber)) ;
                             tileNumber++;
                         }
                     }
@@ -120,16 +120,16 @@ public class Board {
         for(int i = 0 ; i < 7 ; i++){
             for(int j = 0 ; j < 7 ; j++){
                 if((i == 0 && j == 2) || (i == 0 && j == 4) || (i == 2 && j == 4)){
-                    this.board.get(i).get(j).rotateTile(Direction.SOUTH);
+                    this._board.get(i).get(j).rotateTile(Direction.SOUTH);
                 }
                 if((i == 2 && j == 0) || (i == 4 && j == 0) || (i == 2 && j == 2)){
-                    this.board.get(i).get(j).rotateTile(Direction.EAST);
+                    this._board.get(i).get(j).rotateTile(Direction.EAST);
                 }
                 if((i == 2 && j == 6) || (i == 4 && j == 6) || (i == 4 && j == 4)){
-                    this.board.get(i).get(j).rotateTile(Direction.WEST);
+                    this._board.get(i).get(j).rotateTile(Direction.WEST);
                 }
                 if((i == 6 && j == 2) || (i == 6 && j == 4) || (i == 4 && j == 2)){
-                    this.board.get(i).get(j).rotateTile(Direction.NORTH);
+                    this._board.get(i).get(j).rotateTile(Direction.NORTH);
                 }
             }
         }
@@ -137,13 +137,13 @@ public class Board {
         // Adding the 50th Tile
         Pattern pattern = checkPattern();
         if(pattern == Pattern.T){
-            this.extraTile = new TileT(false , Direction.NORTH ,-1 , -1 , tileNumber) ;
+            this._extraTile = new TileT(false , Direction.NORTH ,-1 , -1 , tileNumber) ;
         }
         else if(pattern == Pattern.LINE){
-            this.extraTile = new TileLine(false , Direction.NORTH , -1 , -1 , tileNumber) ;
+            this._extraTile = new TileLine(false , Direction.NORTH , -1 , -1 , tileNumber) ;
         }
         else{
-            this.extraTile = new TileCorner(false , Direction.NORTH , -1 , -1 , tileNumber) ;
+            this._extraTile = new TileCorner(false , Direction.NORTH , -1 , -1 , tileNumber) ;
         }
     }
 
@@ -156,64 +156,64 @@ public class Board {
         Tile outgoingTile = null;
         switch (direction) {
             case NORTH:
-                outgoingTile = board.get(0).get(column);
-                for (int i = 0; i < board.size() - 1; i++) {
-                    board.get(i).set(column, board.get(i + 1).get(column));
-                    board.get(i).get(column).setCoordinate(i,column);
+                outgoingTile = _board.get(0).get(column);
+                for (int i = 0; i < _board.size() - 1; i++) {
+                    _board.get(i).set(column, _board.get(i + 1).get(column));
+                    _board.get(i).get(column).setCoordinate(i,column);
                 }
-                board.get(board.size() - 1).set(column, extraTile);
-                extraTile.setCoordinate(board.size() - 1, column);
+                _board.get(_board.size() - 1).set(column, _extraTile);
+                _extraTile.setCoordinate(_board.size() - 1, column);
                 break;
             case SOUTH:
-                outgoingTile = board.get(board.size() - 1).get(column);
-                for (int i = board.size() - 1; i > 0; i--) {
-                    board.get(i).set(column, board.get(i - 1).get(column));
-                    board.get(i).get(column).setCoordinate(i,column);
+                outgoingTile = _board.get(_board.size() - 1).get(column);
+                for (int i = _board.size() - 1; i > 0; i--) {
+                    _board.get(i).set(column, _board.get(i - 1).get(column));
+                    _board.get(i).get(column).setCoordinate(i,column);
                 }
-                board.get(0).set(column, extraTile);
-                extraTile.setCoordinate(0, column);
+                _board.get(0).set(column, _extraTile);
+                _extraTile.setCoordinate(0, column);
                 break;
             case EAST:
-                outgoingTile = board.get(column).get(board.size() - 1);
-                for (int i = board.size() - 1; i > 0; i--) {
-                    board.get(column).set(i, board.get(column).get(i - 1));
-                    board.get(column).get(i).setCoordinate(column, i);
+                outgoingTile = _board.get(column).get(_board.size() - 1);
+                for (int i = _board.size() - 1; i > 0; i--) {
+                    _board.get(column).set(i, _board.get(column).get(i - 1));
+                    _board.get(column).get(i).setCoordinate(column, i);
                 }
-                board.get(column).set(0, extraTile);
-                extraTile.setCoordinate(column,0);
+                _board.get(column).set(0, _extraTile);
+                _extraTile.setCoordinate(column,0);
                 break;
             case WEST:
-                outgoingTile = board.get(column).get(0);
-                for (int i = 0; i < board.size() - 1; i++) {
-                    board.get(column).set(i, board.get(column).get(i + 1));
-                    board.get(column).get(i).setCoordinate(column, i);
+                outgoingTile = _board.get(column).get(0);
+                for (int i = 0; i < _board.size() - 1; i++) {
+                    _board.get(column).set(i, _board.get(column).get(i + 1));
+                    _board.get(column).get(i).setCoordinate(column, i);
                 }
-                board.get(column).set(board.size() - 1, extraTile);
-                extraTile.setCoordinate(column,board.size() - 1);
+                _board.get(column).set(_board.size() - 1, _extraTile);
+                _extraTile.setCoordinate(column, _board.size() - 1);
                 break;
         }
         outgoingTile.setCoordinate(-1,-1);
-        for (Player player: players) {
+        for (Player player: _players) {
             if(player.getTile().getCoordinateX()==-1){
-                player.setTile(extraTile);
+                player.setTile(_extraTile);
             }
             if(player.verifyObjective()){
                 player.validateObjective();
             }
         }
-        extraTile = outgoingTile;
+        _extraTile = outgoingTile;
         return outgoingTile;
     }
 
     public Tile getTile(){
-        return extraTile;
+        return _extraTile;
     }
 
-    public List<List<Tile>> getBoard() {
-        return board;
+    public List<List<Tile>> get_board() {
+        return _board;
     }
 
-    public Pattern checkPattern(){
+    private Pattern checkPattern(){
         int angle = 16;
         int line = 12;
         int t = 6;
@@ -249,7 +249,7 @@ public class Board {
         return null;
     }
 
-    public Direction checkDirection(){
+    private Direction checkDirection(){
         Random random = new Random();
         int nb = random.nextInt(4);
         switch (nb){
@@ -265,7 +265,7 @@ public class Board {
         return null;
     }
 
-    public boolean checkObjective(){
+    private boolean checkObjective(){
         Random random = new Random();
         int nb = random.nextInt(2);
         switch (nb){
@@ -278,7 +278,7 @@ public class Board {
     }
 
     public void printBoard(){
-        for (List<Tile> lT: this.board) {
+        for (List<Tile> lT: this._board) {
             System.out.print("\n");
             for (Tile T: lT) {
                 if(T!=null) {
@@ -294,59 +294,59 @@ public class Board {
             int coorY = player.getTile().getCoordinateY();
             switch (direction) {
                 case NORTH:
-                    if(((coorX - 1) < 0) || (board.get(coorX - 1).get(coorY) == null)){
+                    if(((coorX - 1) < 0) || (_board.get(coorX - 1).get(coorY) == null)){
                         System.out.println("Tile not accessible");
-                        System.out.println(board.get(coorX-1).get(coorY).getDirection()) ;
+                        System.out.println(_board.get(coorX-1).get(coorY).getDirection()) ;
                     }
-                    else if(board.get(coorX-1).get(coorY).checkTileExit(Direction.SOUTH)){
-                        player.setTile(board.get(coorX-1).get(coorY));
+                    else if(_board.get(coorX-1).get(coorY).checkTileExit(Direction.SOUTH)){
+                        player.setTile(_board.get(coorX-1).get(coorY));
                         System.out.println("New tile: " + player.getTile().getCoordinateX() + " " + player.getTile().getCoordinateY());
                     }
                     else{
                         System.out.println("Tile not accessible");
-                        System.out.println(board.get(coorX-1).get(coorY).getDirection()) ;
+                        System.out.println(_board.get(coorX-1).get(coorY).getDirection()) ;
                     }
                     break;
                 case SOUTH:
-                    if(coorX + 1 >= board.size() || board.get(coorX+1).get(coorY) == null){
+                    if(coorX + 1 >= _board.size() || _board.get(coorX+1).get(coorY) == null){
                         System.out.println("Tile not accessible");
-                        System.out.println(board.get(coorX+1).get(coorY).getDirection()) ;
+                        System.out.println(_board.get(coorX+1).get(coorY).getDirection()) ;
                     }
-                    else if(board.get(coorX+1).get(coorY).checkTileExit(Direction.NORTH)){
-                        player.setTile(board.get(coorX+1).get(coorY));
+                    else if(_board.get(coorX+1).get(coorY).checkTileExit(Direction.NORTH)){
+                        player.setTile(_board.get(coorX+1).get(coorY));
                         System.out.println("New tile: " + player.getTile().getCoordinateX() + " " + player.getTile().getCoordinateY());
                     }
                     else{
                         System.out.println("Tile not accessible");
-                        System.out.println(board.get(coorX+1).get(coorY).getDirection()) ;
+                        System.out.println(_board.get(coorX+1).get(coorY).getDirection()) ;
                     }
                     break;
                 case EAST:
-                    if(coorY + 1 >= board.get(coorX).size() || board.get(coorX).get(coorY+1) == null){
+                    if(coorY + 1 >= _board.get(coorX).size() || _board.get(coorX).get(coorY+1) == null){
                         System.out.println("Tile not accessible");
-                        System.out.println(board.get(coorX).get(coorY+1).getDirection()) ;
+                        System.out.println(_board.get(coorX).get(coorY+1).getDirection()) ;
                     }
-                    else if(board.get(coorX).get(coorY+1).checkTileExit(Direction.WEST)){
-                        player.setTile(board.get(coorX).get(coorY+1));
+                    else if(_board.get(coorX).get(coorY+1).checkTileExit(Direction.WEST)){
+                        player.setTile(_board.get(coorX).get(coorY+1));
                         System.out.println("New tile: " + player.getTile().getCoordinateX() + " " + player.getTile().getCoordinateY());
                     }
                     else{
                         System.out.println("Tile not accessible");
-                        System.out.println(board.get(coorX).get(coorY+1).getDirection()) ;
+                        System.out.println(_board.get(coorX).get(coorY+1).getDirection()) ;
                     }
                     break;
                 case WEST:
-                    if(coorY - 1 < 0 || board.get(coorX).get(coorY-1) == null){
+                    if(coorY - 1 < 0 || _board.get(coorX).get(coorY-1) == null){
                         System.out.println("Tile not accessible");
-                        System.out.println(board.get(coorX).get(coorY-1).getDirection()) ;
+                        System.out.println(_board.get(coorX).get(coorY-1).getDirection()) ;
                     }
-                    else if(board.get(coorX).get(coorY-1).checkTileExit(Direction.EAST)){
-                        player.setTile(board.get(coorX).get(coorY-1));
+                    else if(_board.get(coorX).get(coorY-1).checkTileExit(Direction.EAST)){
+                        player.setTile(_board.get(coorX).get(coorY-1));
                         System.out.println("New tile: " + player.getTile().getCoordinateX() + " " + player.getTile().getCoordinateY());
                     }
                     else{
                         System.out.println("Tile not accessible");
-                        System.out.println(board.get(coorX).get(coorY-1).getDirection()) ;
+                        System.out.println(_board.get(coorX).get(coorY-1).getDirection()) ;
                     }
                     break;
             }
@@ -358,11 +358,11 @@ public class Board {
 
     public Player getPlayer(){
         Random random = new Random();
-        int chosenPlayer = random.nextInt(players.size());
-        return players.get(chosenPlayer);
+        int chosenPlayer = random.nextInt(_players.size());
+        return _players.get(chosenPlayer);
     }
 
     public ArrayList<Player> getPlayersOnBoard(){
-        return players;
+        return _players;
     }
 }

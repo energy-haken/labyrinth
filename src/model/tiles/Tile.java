@@ -5,14 +5,13 @@ import model.Objective;
 
 public abstract class Tile {
 
-    private boolean fixed;
-    private Pattern pattern;
-    private Direction direction;
-    private int coordinateX;
-    private int coordinateY;
-    private Objective objective;
-
-    private int name;
+    private boolean _fixed;
+    private Pattern _pattern;
+    private Direction _direction;
+    private int _coordinateX;
+    private int _coordinateY;
+    private Objective _objective;
+    private int _name;
 
     /**
      *
@@ -20,64 +19,64 @@ public abstract class Tile {
      * @param pattern : The style of the tile
      */
     public Tile(boolean fixed, Pattern pattern, Direction direction, int coordinateX, int coordinateY, int name) {
-        this.fixed = fixed;
-        this.pattern = pattern;
-        this.coordinateX = coordinateX;
-        this.coordinateY = coordinateY;
-        this.name = name;
-        this.objective = null;
-        this.direction = direction;
+        this._fixed = fixed;
+        this._pattern = pattern;
+        this._coordinateX = coordinateX;
+        this._coordinateY = coordinateY;
+        this._name = name;
+        this._objective = null;
+        this._direction = direction;
     }
 
     public Tile(boolean fixed, Pattern pattern, Direction direction, int coordinateX, int coordinateY, int name, Objective objective) {
-        this.fixed = fixed;
-        this.pattern = pattern;
-        this.coordinateX = coordinateX;
-        this.coordinateY = coordinateY;
-        this.name = name;
-        this.objective = objective;
-        this.direction = direction;
+        this._fixed = fixed;
+        this._pattern = pattern;
+        this._coordinateX = coordinateX;
+        this._coordinateY = coordinateY;
+        this._name = name;
+        this._objective = objective;
+        this._direction = direction;
     }
 
     public Objective getObjective() {
-        return objective;
+        return _objective;
     }
 
     public Direction getDirection() {
-        return direction;
+        return _direction;
     }
 
     /**
      * @param direction orientation of the tile
      */
     public void rotateTile(Direction direction) {
-        this.direction = direction;
+        this._direction = direction;
     }
 
     public boolean isFixed() {
-        return fixed;
+        return _fixed;
     }
 
     public void setCoordinate(int x, int y) {
-        this.coordinateX = x;
-        this.coordinateY = y;
+        this._coordinateX = x;
+        this._coordinateY = y;
     }
 
     public int getCoordinateX() {
-        return coordinateX;
+        return _coordinateX;
     }
 
     public int getCoordinateY() {
-        return coordinateY;
+        return _coordinateY;
     }
 
     public Pattern getPattern() {
-        return pattern;
+        return _pattern;
     }
 
     public abstract boolean checkTileExit(Direction direction);
 
     public int getName() {
-        return name;
+        return _name;
     }
 }

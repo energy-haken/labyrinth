@@ -5,11 +5,11 @@ import model.tiles.Tile;
 import java.util.ArrayList;
 
 public class Player {
-    private ArrayList<Objective> objectiveList;
-    private int remainingObjectives;
-    private int collectedObjectives;
-    private Tile tile;
-    private String color;
+    private ArrayList<Objective> _objectiveList;
+    private int _remainingObjectives;
+    private int _collectedObjectives;
+    private Tile _tile;
+    private String _color;
 
     /**
      * Creation of a Player
@@ -17,11 +17,11 @@ public class Player {
      * @param objectiveList The list of objectives that the Player must complete to win
      */
     public Player(Tile tile, String color, ArrayList<Objective> objectiveList) {
-        this.tile = tile;
-        this.objectiveList = objectiveList; // Can multiple players have the same objective? Answer from the professor: NO
-        this.collectedObjectives = 0;
-        this.remainingObjectives = 6;
-        this.color = color;
+        this._tile = tile;
+        this._objectiveList = objectiveList; // Can multiple players have the same objective? Answer from the professor: NO
+        this._collectedObjectives = 0;
+        this._remainingObjectives = 6;
+        this._color = color;
     }
 
     /**
@@ -29,14 +29,14 @@ public class Player {
      * @return true if the objective is the same / false if it does not match
      */
     public boolean verifyObjective() {
-        return tile.getObjective() == objectiveList.get(0);
+        return _tile.getObjective() == _objectiveList.get(0);
     }
 
     public void validateObjective() {
         if (verifyObjective()) {
-            objectiveList.remove(0);
-            remainingObjectives -= 1;
-            collectedObjectives += 1;
+            _objectiveList.remove(0);
+            _remainingObjectives -= 1;
+            _collectedObjectives += 1;
         }
     }
 
@@ -45,7 +45,7 @@ public class Player {
      * @return the number of remaining objectives
      */
     public int getRemainingObjectives() {
-        return remainingObjectives;
+        return _remainingObjectives;
     }
 
     /**
@@ -53,25 +53,25 @@ public class Player {
      * @return the number of collected objectives
      */
     public int getCollectedObjectives() {
-        return collectedObjectives;
+        return _collectedObjectives;
     }
 
     /**
      * @return the tile on which the Player is located
      */
     public Tile getTile() {
-        return tile;
+        return _tile;
     }
 
     public void setTile(Tile tile) {
-        this.tile = tile;
+        this._tile = tile;
     }
 
     public String getColor() {
-        return color;
+        return _color;
     }
 
     public Objective getCurrentGoal() {
-        return objectiveList.get(0);
+        return _objectiveList.get(0);
     }
 }

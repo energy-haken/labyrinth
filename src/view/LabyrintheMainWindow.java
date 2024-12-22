@@ -1,5 +1,6 @@
 package view;
 
+import controller.LabyrintheController;
 import model.*;
 
 import javax.imageio.ImageIO;
@@ -14,33 +15,42 @@ import java.io.IOException;
 public class LabyrintheMainWindow extends JFrame {
     private JButton endTurnButton;
 
-    private JButton upButton = new JButton();
-    private JButton downButton = new JButton();
-    private JButton leftButton = new JButton();
-    private JButton rightButton = new JButton();
-
-    private JButton turnButton = new JButton();
-
-    private ImagePanel remainingTilePanel;
-
-    private JPanel centerPanel = new JPanel();
-    private JPanel windowPanel;
-    private PlateauWindow plateauWindow;
-
-    private Turn currentTurn;
+    private JButton _upButton = new JButton();
+    private JButton _downButton = new JButton();
+    private JButton _leftButton = new JButton();
+    private JButton _rightButton = new JButton();
+    private JButton _turnButton = new JButton();
+    private ImagePanel _remainingTilePanel;
+    private JPanel _centerPanel = new JPanel();
+    private JPanel _windowPanel;
+    private PlateauWindow _plateauWindow;
+    private Turn _currentTurn;
+    private JButton _insertColumn1Bottom = new JButton();
+    private JButton _insertColumn1Top = new JButton();
+    private JButton _insertColumn2Bottom = new JButton();
+    private JButton _insertColumn2Top = new JButton();
+    private JButton _insertColumn3Bottom = new JButton();
+    private JButton _insertColumn3Top = new JButton();
+    private JButton _insertLine1Left = new JButton();
+    private JButton _insertLine1Right = new JButton();
+    private JButton _insertLine2Left = new JButton();
+    private JButton _insertLine2Right = new JButton();
+    private JButton _insertLine3Left = new JButton();
+    private JButton _insertLine3Right = new JButton();
 
     public LabyrintheMainWindow() throws IOException {
         super("The Numerical Maze");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        plateauWindow = new PlateauWindow(new Board());
-        currentTurn = new Turn(getBoard().getPlayersOnBoard());
+        _plateauWindow = new PlateauWindow(new Board());
+        _currentTurn = new Turn(getBoard().getPlayersOnBoard());
+        LabyrintheController controller = new LabyrintheController(_plateauWindow.getBoardModel());
         for (Player player : getBoard().getPlayersOnBoard()) {
-            plateauWindow.loadPlayers(player);
+            _plateauWindow.loadPlayers(player);
         }
         setSize(1000, 800);
-        BufferedImage playerImage = ImageIO.read(new File("img/Pion" + currentTurn.getCurrentPlayer().getColor() + ".png"));
+        BufferedImage playerImage = ImageIO.read(new File("img/Pion" + _currentTurn.getCurrentPlayer().getColor() + ".png"));
         ImagePanel playerImagePanel = new ImagePanel(playerImage);
-        BufferedImage goalImage = ImageIO.read(new File("img/Objectives/" + currentTurn.getCurrentPlayer().getCurrentGoal().name() + ".png"));
+        BufferedImage goalImage = ImageIO.read(new File("img/Objectives/" + _currentTurn.getCurrentPlayer().getCurrentGoal().name() + ".png"));
         ImagePanel goalImagePanel = new ImagePanel(goalImage);
         JPanel mainButtonPanel = new JPanel();
         mainButtonPanel.setLayout(new GridLayout(2, 8));
@@ -52,29 +62,31 @@ public class LabyrintheMainWindow extends JFrame {
         remainingTilePanelContainer.setLayout(new GridLayout(1, 1));
 
         arrowPanel.add(new JPanel());
-        arrowPanel.add(upButton);
-        upButton.setText("⬆️");
+        arrowPanel.add(_upButton);
+        _upButton.setText("⬆️");
         arrowPanel.add(new JPanel());
-        arrowPanel.add(leftButton);
-        leftButton.setText("⬅️");
-        arrowPanel.add(downButton);
-        downButton.setText("⬇️");
-        arrowPanel.add(rightButton);
-        rightButton.setText("➡️");
+        arrowPanel.add(_leftButton);
+        _leftButton.setText("⬅️");
+        arrowPanel.add(_downButton);
+        _downButton.setText("⬇️");
+        arrowPanel.add(_rightButton);
+        _rightButton.setText("➡️");
 
-        upButton.addActionListener(new ActionListener() {
+        disableButtonsMovement();
+
+        _upButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int oldTileID = currentTurn.getCurrentPlayer().getTile().getCoordinateX() * 7 + currentTurn.getCurrentPlayer().getTile().getCoordinateY();
-                plateauWindow.getBoardModel().movePlayer(currentTurn.getCurrentPlayer(), Direction.NORTH);
+                int oldTileID = _currentTurn.getCurrentPlayer().getTile().getCoordinateX() * 7 + _currentTurn.getCurrentPlayer().getTile().getCoordinateY();
+                controller.modifyMovePlayer(_currentTurn.getCurrentPlayer() , Direction.NORTH);
                 try {
-                    plateauWindow.updateTileByID(oldTileID);
+                    _plateauWindow.updateTileByID(oldTileID);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
                 try {
                     for (Player player : getBoard().getPlayersOnBoard()) {
-                        plateauWindow.loadPlayers(player);
+                        _plateauWindow.loadPlayers(player);
                     }
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -82,19 +94,19 @@ public class LabyrintheMainWindow extends JFrame {
             }
         });
 
-        leftButton.addActionListener(new ActionListener() {
+        _leftButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int oldTileID = currentTurn.getCurrentPlayer().getTile().getCoordinateX() * 7 + currentTurn.getCurrentPlayer().getTile().getCoordinateY();
-                plateauWindow.getBoardModel().movePlayer(currentTurn.getCurrentPlayer(), Direction.WEST);
+                int oldTileID = _currentTurn.getCurrentPlayer().getTile().getCoordinateX() * 7 + _currentTurn.getCurrentPlayer().getTile().getCoordinateY();
+                controller.modifyMovePlayer(_currentTurn.getCurrentPlayer(), Direction.WEST);
                 try {
-                    plateauWindow.updateTileByID(oldTileID);
+                    _plateauWindow.updateTileByID(oldTileID);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
                 try {
                     for (Player player : getBoard().getPlayersOnBoard()) {
-                        plateauWindow.loadPlayers(player);
+                        _plateauWindow.loadPlayers(player);
                     }
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -102,19 +114,19 @@ public class LabyrintheMainWindow extends JFrame {
             }
         });
 
-        rightButton.addActionListener(new ActionListener() {
+        _rightButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int oldTileID = currentTurn.getCurrentPlayer().getTile().getCoordinateX() * 7 + currentTurn.getCurrentPlayer().getTile().getCoordinateY();
-                plateauWindow.getBoardModel().movePlayer(currentTurn.getCurrentPlayer(), Direction.EAST);
+                int oldTileID = _currentTurn.getCurrentPlayer().getTile().getCoordinateX() * 7 + _currentTurn.getCurrentPlayer().getTile().getCoordinateY();
+                controller.modifyMovePlayer(_currentTurn.getCurrentPlayer(), Direction.EAST);
                 try {
-                    plateauWindow.updateTileByID(oldTileID);
+                    _plateauWindow.updateTileByID(oldTileID);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
                 try {
                     for (Player player : getBoard().getPlayersOnBoard()) {
-                        plateauWindow.loadPlayers(player);
+                        _plateauWindow.loadPlayers(player);
                     }
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -122,37 +134,37 @@ public class LabyrintheMainWindow extends JFrame {
             }
         });
 
-        downButton.addActionListener(new ActionListener() {
+        _downButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int oldTileID = currentTurn.getCurrentPlayer().getTile().getCoordinateX() * 7 + currentTurn.getCurrentPlayer().getTile().getCoordinateY();
-                plateauWindow.getBoardModel().movePlayer(currentTurn.getCurrentPlayer(), Direction.SOUTH);
+                int oldTileID = _currentTurn.getCurrentPlayer().getTile().getCoordinateX() * 7 + _currentTurn.getCurrentPlayer().getTile().getCoordinateY();
+                controller.modifyMovePlayer(_currentTurn.getCurrentPlayer(), Direction.SOUTH);
                 try {
-                    plateauWindow.updateTileByID(oldTileID);
+                    _plateauWindow.updateTileByID(oldTileID);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
                 try {
                     for (Player player : getBoard().getPlayersOnBoard()) {
-                        plateauWindow.loadPlayers(player);
+                        _plateauWindow.loadPlayers(player);
                     }
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
             }
         });
-        remainingTilePanel = ImagePanel.getImageByTile(this.getBoard().getTile());
-        plateauWindow.addObserver(remainingTilePanel);
+        _remainingTilePanel = ImagePanel.getImageByTile(this.getBoard().getTile());
+        _plateauWindow.addObserver(_remainingTilePanel);
 
         JPanel goalPanel = new JPanel();
         goalPanel.setLayout(new BorderLayout());
-        JLabel goalLabel = new JLabel(currentTurn.getCurrentPlayer().getCurrentGoal().name());
+        JLabel goalLabel = new JLabel(_currentTurn.getCurrentPlayer().getCurrentGoal().name());
         goalPanel.add(goalLabel, BorderLayout.EAST);
         goalPanel.add(goalImagePanel, BorderLayout.CENTER);
         goalPanel.add(playerImagePanel, BorderLayout.WEST);
 
         mainButtonPanel.add(new JPanel());
-        mainButtonPanel.add(turnButton);
+        mainButtonPanel.add(_turnButton);
         mainButtonPanel.add(new JPanel());
         mainButtonPanel.add(new JPanel());
         mainButtonPanel.add(new JPanel());
@@ -162,25 +174,25 @@ public class LabyrintheMainWindow extends JFrame {
         mainButtonPanel.add(new JPanel());
 
         mainButtonPanel.add(new JPanel());
-        mainButtonPanel.add(remainingTilePanel);
+        mainButtonPanel.add(_remainingTilePanel);
         mainButtonPanel.add(new JPanel());
         mainButtonPanel.add(new JPanel());
         mainButtonPanel.add(arrowPanel);
         mainButtonPanel.add(new JPanel());
         mainButtonPanel.add(goalPanel);
-        turnButton.setText("Rotate Tile");
+        _turnButton.setText("Rotate Tile");
         mainButtonPanel.add(new JPanel());
-        turnButton.addActionListener(new ActionListener() {
+        _turnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 switch (getBoard().getTile().getDirection()) {
-                    case NORTH -> getBoard().getTile().rotateTile(Direction.EAST);
-                    case EAST -> getBoard().getTile().rotateTile(Direction.SOUTH);
-                    case SOUTH -> getBoard().getTile().rotateTile(Direction.WEST);
-                    case WEST -> getBoard().getTile().rotateTile(Direction.NORTH);
+                    case NORTH -> controller.modifyRotateTile(Direction.EAST);
+                    case EAST -> controller.modifyRotateTile(Direction.SOUTH);
+                    case SOUTH -> controller.modifyRotateTile(Direction.WEST);
+                    case WEST -> controller.modifyRotateTile(Direction.NORTH);
                 }
                 try {
-                    plateauWindow.notifyObserversMazeChange();
+                    _plateauWindow.notifyObserversMazeChange();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -189,282 +201,342 @@ public class LabyrintheMainWindow extends JFrame {
 
         mainButtonPanel.add(endTurnButton);
 
+        // The differents buttons to insert the tile
+
         JPanel topButtonPanel = new JPanel();
         topButtonPanel.setLayout(new GridLayout(1, 7));
 
-        JButton insertColumn1Bottom = new JButton();
-        insertColumn1Bottom.setText("Insert Column 1");
-        JButton insertColumn2Bottom = new JButton();
-        insertColumn2Bottom.setText("Insert Column 2");
-        JButton insertColumn3Bottom = new JButton();
-        insertColumn3Bottom.setText("Insert Column 3");
-        JButton insertColumn1Top = new JButton();
-        insertColumn1Top.setText("Insert Column");
-        JButton insertColumn2Top = new JButton();
-        insertColumn2Top.setText("Insert Column 2");
-        JButton insertColumn3Top = new JButton();
-        insertColumn3Top.setText("Insert Column 3");
-        JButton insertRow1Left = new JButton();
-        insertRow1Left.setText("Insert Row 1");
-        JButton insertRow2Left = new JButton();
-        insertRow2Left.setText("Insert Row 2");
-        JButton insertRow3Left = new JButton();
-        insertRow3Left.setText("Insert Row 3");
-        JButton insertRow1Right = new JButton();
-        insertRow1Right.setText("Insert Row 1");
-        JButton insertRow2Right = new JButton();
-        insertRow2Right.setText("Insert Row 2");
-        JButton insertRow3Right = new JButton();
-        insertRow3Right.setText("Insert Row 3");
+        _insertColumn1Bottom = new JButton();
+        _insertColumn1Bottom.setText("Insert Column 1");
+        _insertColumn2Bottom = new JButton();
+        _insertColumn2Bottom.setText("Insert Column 2");
+        _insertColumn3Bottom = new JButton();
+        _insertColumn3Bottom.setText("Insert Column 3");
+        _insertColumn1Top = new JButton();
+        _insertColumn1Top.setText("Insert Column");
+        _insertColumn2Top = new JButton();
+        _insertColumn2Top.setText("Insert Column 2");
+        _insertColumn3Top = new JButton();
+        _insertColumn3Top.setText("Insert Column 3");
+        _insertLine1Left = new JButton();
+        _insertLine1Left.setText("Insert Row 1");
+        _insertLine2Left = new JButton();
+        _insertLine2Left.setText("Insert Row 2");
+        _insertLine3Left = new JButton();
+        _insertLine3Left.setText("Insert Row 3");
+        _insertLine1Right = new JButton();
+        _insertLine1Right.setText("Insert Row 1");
+        _insertLine2Right = new JButton();
+        _insertLine2Right.setText("Insert Row 2");
+        _insertLine3Right = new JButton();
+        _insertLine3Right.setText("Insert Row 3");
 
-        insertColumn1Bottom.addActionListener(actionEvent -> {
-            getBoard().pushTile(Direction.SOUTH, 1);
+        // Actions listeners of the buttons
+
+        _insertColumn1Bottom.addActionListener(actionEvent -> {
+            controller.modifyPushTile(Direction.SOUTH, 1);
             try {
-                plateauWindow.updateMaze(Direction.SOUTH, 1);
-                insertColumn1Top.setEnabled(false);
+                _plateauWindow.updateMaze(Direction.SOUTH, 1);
+                disableButtonsInsert();
+                enableButtonsMovement();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            getBoard().printBoard();
+
         });
 
-        insertColumn2Bottom.addActionListener(actionEvent -> {
-            getBoard().pushTile(Direction.SOUTH, 3);
+        _insertColumn2Bottom.addActionListener(actionEvent -> {
+            controller.modifyPushTile(Direction.SOUTH, 3);
             try {
-                plateauWindow.updateMaze(Direction.SOUTH, 3);
-                insertColumn2Top.setEnabled(false);
+                _plateauWindow.updateMaze(Direction.SOUTH, 3);
+                disableButtonsInsert();
+                enableButtonsMovement();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            getBoard().printBoard();
+
         });
 
-        insertColumn3Bottom.addActionListener(actionEvent -> {
-            getBoard().pushTile(Direction.SOUTH, 5);
+        _insertColumn3Bottom.addActionListener(actionEvent -> {
+            controller.modifyPushTile(Direction.SOUTH, 5);
             try {
-                plateauWindow.updateMaze(Direction.SOUTH, 5);
-                insertColumn3Top.setEnabled(false);
+                _plateauWindow.updateMaze(Direction.SOUTH, 5);
+                disableButtonsInsert();
+                enableButtonsMovement();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            getBoard().printBoard();
+
         });
 
-        topButtonPanel.add(new JPanel());
-        topButtonPanel.add(insertColumn1Bottom);
-        topButtonPanel.add(new JPanel());
-        topButtonPanel.add(insertColumn2Bottom);
-        topButtonPanel.add(new JPanel());
-        topButtonPanel.add(insertColumn3Bottom);
-        topButtonPanel.add(new JPanel());
-        topButtonPanel.setVisible(true);
+
 
         JPanel bottomButtonPanel = new JPanel();
         bottomButtonPanel.setLayout(new GridLayout(1, 5));
 
-        insertColumn1Top.addActionListener(new ActionListener() {
+        _insertColumn1Top.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                getBoard().pushTile(Direction.NORTH, 1);
+                controller.modifyPushTile(Direction.NORTH, 1);
                 try {
-                    plateauWindow.updateMaze(Direction.NORTH, 1);
-                    insertColumn1Bottom.setEnabled(false);
+                    _plateauWindow.updateMaze(Direction.NORTH, 1);
+                    disableButtonsInsert();
+                    enableButtonsMovement();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                getBoard().printBoard();
+
             }
         });
 
-        insertColumn2Top.addActionListener(new ActionListener() {
+        _insertColumn2Top.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                getBoard().pushTile(Direction.NORTH, 3);
+                controller.modifyPushTile(Direction.NORTH, 3);
                 try {
-                    plateauWindow.updateMaze(Direction.NORTH, 3);
-                    insertColumn2Bottom.setEnabled(false);
+                    _plateauWindow.updateMaze(Direction.NORTH, 3);
+                    disableButtonsInsert();
+                    enableButtonsMovement();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                getBoard().printBoard();
+
             }
         });
 
-        insertColumn3Top.addActionListener(new ActionListener() {
+        _insertColumn3Top.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                getBoard().pushTile(Direction.NORTH, 5);
+                controller.modifyPushTile(Direction.NORTH, 5);
                 try {
-                    plateauWindow.updateMaze(Direction.NORTH, 5);
-                    insertColumn3Bottom.setEnabled(false);
+                    _plateauWindow.updateMaze(Direction.NORTH, 5);
+                    disableButtonsInsert();
+                    enableButtonsMovement();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                getBoard().printBoard();
+
             }
         });
 
-        bottomButtonPanel.add(insertColumn1Top);
-        bottomButtonPanel.add(new JPanel());
-        bottomButtonPanel.add(insertColumn2Top);
-        bottomButtonPanel.add(new JPanel());
-        bottomButtonPanel.add(insertColumn3Top);
-        bottomButtonPanel.setVisible(true);
+
 
         JPanel rightButtonPanel = new JPanel();
         rightButtonPanel.setLayout(new GridLayout(7, 1));
 
-        insertRow1Left.addActionListener(new ActionListener() {
+        _insertLine1Left.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                getBoard().pushTile(Direction.WEST, 1);
+                controller.modifyPushTile(Direction.WEST, 1);
                 try {
-                    plateauWindow.updateMaze(Direction.WEST, 1);
-                    insertRow1Right.setEnabled(false);
+                    _plateauWindow.updateMaze(Direction.WEST, 1);
+                    disableButtonsInsert();
+                    enableButtonsMovement();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                getBoard().printBoard();
+
             }
         });
 
-        insertRow2Left.addActionListener(new ActionListener() {
+        _insertLine2Left.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                getBoard().pushTile(Direction.WEST, 3);
+                controller.modifyPushTile(Direction.WEST, 3);
                 try {
-                    plateauWindow.updateMaze(Direction.WEST, 3);
-                    insertRow2Right.setEnabled(false);
+                    _plateauWindow.updateMaze(Direction.WEST, 3);
+                    disableButtonsInsert();
+                    enableButtonsMovement();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                getBoard().printBoard();
+
             }
         });
 
-        insertRow3Left.addActionListener(new ActionListener() {
+        _insertLine3Left.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                getBoard().pushTile(Direction.WEST, 5);
+                controller.modifyPushTile(Direction.WEST, 5);
                 try {
-                    plateauWindow.updateMaze(Direction.WEST, 5);
-                    insertRow3Right.setEnabled(false);
+                    _plateauWindow.updateMaze(Direction.WEST, 5);
+                    disableButtonsInsert();
+                    enableButtonsMovement();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                getBoard().printBoard();
+
             }
         });
 
-        rightButtonPanel.add(new JPanel());
-        rightButtonPanel.add(insertRow1Left);
-        rightButtonPanel.add(new JPanel());
-        rightButtonPanel.add(insertRow2Left);
-        rightButtonPanel.add(new JPanel());
-        rightButtonPanel.add(insertRow3Left);
-        rightButtonPanel.add(new JPanel());
-        rightButtonPanel.setVisible(true);
+
 
         JPanel leftButtonPanel = new JPanel();
         leftButtonPanel.setLayout(new GridLayout(7, 1));
 
-        insertRow1Right.addActionListener(new ActionListener() {
+        _insertLine1Right.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                getBoard().pushTile(Direction.EAST, 1);
+                controller.modifyPushTile(Direction.EAST, 1);
                 try {
-                    plateauWindow.updateMaze(Direction.EAST, 1);
-                    insertRow1Left.setEnabled(false);
+                    _plateauWindow.updateMaze(Direction.EAST, 1);
+                    disableButtonsInsert();
+                    enableButtonsMovement();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                getBoard().printBoard();
+
             }
         });
 
-        insertRow2Right.addActionListener(new ActionListener() {
+        _insertLine2Right.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                getBoard().pushTile(Direction.EAST, 3);
+                controller.modifyPushTile(Direction.EAST, 3);
                 try {
-                    plateauWindow.updateMaze(Direction.EAST, 3);
-                    insertRow2Left.setEnabled(false);
+                    _plateauWindow.updateMaze(Direction.EAST, 3);
+                    disableButtonsInsert();
+                    enableButtonsMovement();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                getBoard().printBoard();
+
             }
         });
 
-        insertRow3Right.addActionListener(new ActionListener() {
+        _insertLine3Right.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                getBoard().pushTile(Direction.EAST, 5);
+                controller.modifyPushTile(Direction.EAST, 5);
                 try {
-                    plateauWindow.updateMaze(Direction.EAST, 5);
-                    insertRow3Left.setEnabled(false);
+                    _plateauWindow.updateMaze(Direction.EAST, 5);
+                    disableButtonsInsert();
+                    enableButtonsMovement();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                getBoard().printBoard();
+
             }
         });
 
+        // Add to the differents panels
+        topButtonPanel.add(new JPanel());
+        topButtonPanel.add(_insertColumn1Bottom);
+        topButtonPanel.add(new JPanel());
+        topButtonPanel.add(_insertColumn2Bottom);
+        topButtonPanel.add(new JPanel());
+        topButtonPanel.add(_insertColumn3Bottom);
+        topButtonPanel.add(new JPanel());
+        topButtonPanel.setVisible(true);
+        bottomButtonPanel.add(_insertColumn1Top);
+        bottomButtonPanel.add(new JPanel());
+        bottomButtonPanel.add(_insertColumn2Top);
+        bottomButtonPanel.add(new JPanel());
+        bottomButtonPanel.add(_insertColumn3Top);
+        bottomButtonPanel.setVisible(true);
+        rightButtonPanel.add(new JPanel());
+        rightButtonPanel.add(_insertLine1Left);
+        rightButtonPanel.add(new JPanel());
+        rightButtonPanel.add(_insertLine2Left);
+        rightButtonPanel.add(new JPanel());
+        rightButtonPanel.add(_insertLine3Left);
+        rightButtonPanel.add(new JPanel());
+        rightButtonPanel.setVisible(true);
         leftButtonPanel.add(new JPanel());
-        leftButtonPanel.add(insertRow1Right);
+        leftButtonPanel.add(_insertLine1Right);
         leftButtonPanel.add(new JPanel());
-        leftButtonPanel.add(insertRow2Right);
+        leftButtonPanel.add(_insertLine2Right);
         leftButtonPanel.add(new JPanel());
-        leftButtonPanel.add(insertRow3Right);
+        leftButtonPanel.add(_insertLine3Right);
         leftButtonPanel.add(new JPanel());
         leftButtonPanel.setVisible(true);
 
+
+        // What happened when changing turn
         endTurnButton.addActionListener(actionEvent -> {
-            currentTurn.nextTurn();
-            goalLabel.setText(currentTurn.getCurrentPlayer().getCurrentGoal().name());
+            _currentTurn.nextTurn();
+            goalLabel.setText(_currentTurn.getCurrentPlayer().getCurrentGoal().name());
             try {
-                BufferedImage playerImage2 = ImageIO.read(new File("img/Pion" + currentTurn.getCurrentPlayer().getColor() + ".png"));
+                // Changing the Player + associate Objective
+                BufferedImage playerImage2 = ImageIO.read(new File("img/Pion" + _currentTurn.getCurrentPlayer().getColor() + ".png"));
                 ImagePanel playerImagePanel2 = new ImagePanel(playerImage2);
                 goalPanel.remove(playerImagePanel);
                 goalPanel.add(playerImagePanel2, BorderLayout.WEST);
-                BufferedImage goalImage2 = ImageIO.read(new File("img/Objectives/" + currentTurn.getCurrentPlayer().getCurrentGoal().name() + ".png"));
+                BufferedImage goalImage2 = ImageIO.read(new File("img/Objectives/" + _currentTurn.getCurrentPlayer().getCurrentGoal().name() + ".png"));
                 ImagePanel goalImagePanel2 = new ImagePanel(goalImage2);
                 goalPanel.remove(goalImagePanel);
                 goalPanel.add(goalImagePanel2, BorderLayout.CENTER);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            insertColumn1Bottom.setEnabled(true);
-            insertColumn2Bottom.setEnabled(true);
-            insertColumn3Bottom.setEnabled(true);
-            insertColumn1Top.setEnabled(true);
-            insertColumn2Top.setEnabled(true);
-            insertColumn3Top.setEnabled(true);
-            insertRow1Right.setEnabled(true);
-            insertRow2Right.setEnabled(true);
-            insertRow3Right.setEnabled(true);
-            insertRow1Left.setEnabled(true);
-            insertRow2Left.setEnabled(true);
-            insertRow3Left.setEnabled(true);
-
-            System.out.println(currentTurn.getCurrentPlayer().getCurrentGoal().name());
+            // Re enable the buttons
+            enableButtonsInsert();
+            disableButtonsMovement();
         });
+        // Add all the panels to main one
+        _centerPanel.setLayout(new BorderLayout());
+        _centerPanel.add(topButtonPanel, BorderLayout.NORTH);
+        _centerPanel.add(_plateauWindow, BorderLayout.CENTER);
+        _centerPanel.add(bottomButtonPanel, BorderLayout.SOUTH);
+        _centerPanel.add(rightButtonPanel, BorderLayout.EAST);
+        _centerPanel.add(leftButtonPanel, BorderLayout.WEST);
+        _windowPanel.setLayout(new BorderLayout());
+        _windowPanel.add(_centerPanel, BorderLayout.CENTER);
+        _windowPanel.add(mainButtonPanel, BorderLayout.SOUTH);
 
-        centerPanel.setLayout(new BorderLayout());
-        centerPanel.add(topButtonPanel, BorderLayout.NORTH);
-        centerPanel.add(plateauWindow, BorderLayout.CENTER);
-        centerPanel.add(bottomButtonPanel, BorderLayout.SOUTH);
-        centerPanel.add(rightButtonPanel, BorderLayout.EAST);
-        centerPanel.add(leftButtonPanel, BorderLayout.WEST);
-        windowPanel.setLayout(new BorderLayout());
-        windowPanel.add(centerPanel, BorderLayout.CENTER);
-        windowPanel.add(mainButtonPanel, BorderLayout.SOUTH);
-
-        setContentPane(windowPanel);
+        setContentPane(_windowPanel);
         setVisible(true);
     }
 
+    /**
+     *
+     * @return the board of the game (Class : Board.java)
+     */
     public Board getBoard() {
-        return plateauWindow.getBoardModel();
+        return _plateauWindow.getBoardModel();
+    }
+
+    private void disableButtonsInsert(){
+        _insertColumn1Top.setEnabled(false) ;
+        _insertColumn2Top.setEnabled(false) ;
+        _insertColumn3Top.setEnabled(false) ;
+        _insertLine1Left.setEnabled(false) ;
+        _insertLine2Left.setEnabled(false) ;
+        _insertLine3Left.setEnabled(false) ;
+        _insertLine1Right.setEnabled(false) ;
+        _insertLine2Right.setEnabled(false) ;
+        _insertLine3Right.setEnabled(false) ;
+        _insertColumn1Bottom.setEnabled(false) ;
+        _insertColumn2Bottom.setEnabled(false) ;
+        _insertColumn3Bottom.setEnabled(false) ;
+    }
+
+    private void enableButtonsInsert(){
+        _insertColumn1Top.setEnabled(true) ;
+        _insertColumn2Top.setEnabled(true) ;
+        _insertColumn3Top.setEnabled(true) ;
+        _insertLine1Left.setEnabled(true) ;
+        _insertLine2Left.setEnabled(true) ;
+        _insertLine3Left.setEnabled(true) ;
+        _insertLine1Right.setEnabled(true) ;
+        _insertLine2Right.setEnabled(true) ;
+        _insertLine3Right.setEnabled(true) ;
+        _insertColumn1Bottom.setEnabled(true) ;
+        _insertColumn2Bottom.setEnabled(true) ;
+        _insertColumn3Bottom.setEnabled(true) ;
+    }
+
+    private void disableButtonsMovement(){
+        _upButton.setEnabled(false) ;
+        _downButton.setEnabled(false) ;
+        _leftButton.setEnabled(false) ;
+        _rightButton.setEnabled(false) ;
+    }
+
+    private void enableButtonsMovement(){
+        _upButton.setEnabled(true) ;
+        _downButton.setEnabled(true) ;
+        _leftButton.setEnabled(true) ;
+        _rightButton.setEnabled(true) ;
     }
 }

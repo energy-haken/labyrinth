@@ -6,89 +6,105 @@ skinparam classAttributeIconSize 0
 skinparam classFontStyle Bold
 hide enum methods
 
-
-package src{
-    class LabyrintheApp{
+package src {
+    class LabyrintheApp {
         static main(args : String[])
     }
 
-    package controller{
-        class LabyrintheController{
-        + bougerLigne(plateau : Plateau)
-        }
-        class Background{
-        + lancementJeu() : Boolean
+    LabyrintheApp *-> view.LabyrintheMainWindow : <Instanciate>
+    package controller {
+        class LabyrintheController {
+            + modifyMovePlayer(player : Player , direction : Direction)
+            + modifyPushTile(direction : Direction , column : Integer)
+            + modifyRotateTile(direction : Direction)
         }
     }
-    package helpers{
-        class ImageHelper{
+
+    package helpers {
+        class ImageHelper {
             + static merge(backgroundPath : String, foregroundPaths : String) : BufferedImage
             + static mergeB(background : BufferedImage, foreground : BufferedImage) : BufferedImage
-            + static rotate(original : BufferedImage,angle : double) : BufferedImage
-            + static rotateClockwise(original : BufferedImage ) : BufferedImage
-            + static rotateCounterClockwise(original : BufferedImage ) : BufferedImage
+            + static rotate(original : BufferedImage, angle : double) : BufferedImage
+            + static rotateClockwise(original : BufferedImage) : BufferedImage
+            + static rotateCounterClockwise(original : BufferedImage) : BufferedImage
         }
     }
-    package model{
-        class Plateau{
-            + <<create>> Plateau()
-            + pousserTuile( direction : Direction ,colonne : Integer ) : Tuile
-            + getTuile() : Tuile
-            + getPlateau() : Tuile[][]
-            + getJoueur() : Joueur
+
+    package model {
+        class Board {
+            + <<create>> Board()
+            + pushTile(direction : Direction, column : Integer) : Tile
+            + getTile() : Tile
+            + getBoard() : Tile[][]
+            + getPlayer() : Player
+            + getPlayerOnBoard() : Player[]
             + printBoard()
-            + checkDirection() : Direction
-            + checkPattern() : Pattern
-            + checkObjectif-) : Boolean
-            + deplacementJoueur(joueur : Joueur , versOu : Direction)
+            - checkDirection() : Direction
+            - checkPattern() : Pattern
+            - checkObjective() : Boolean
+            + movePlayer(player : Player, direction : Direction)
+        }
+        Board "1" *--> "\n _board \n 49" tiles.Tile : has
+        Board "1" *--> "\n _extraTile \n 1" tiles.Tile : has extra
+        Board *--> "_players \n 4" Player : has
+        Board o-> Direction : use
+
+        enum Direction {
+        EAST
+        NORTH
+        SOUTH
+        WEST
         }
 
-        package tuiles{
+        package tiles {
+            abstract class Tile <<abstract>> {
+                - _fixed : Boolean
+                - _pattern : Pattern
+                - _coordinateX : Integer
+                - _coordinateY : Integer
+                - _name : Integer
+                + <<create>> Tile(fixed: Boolean, pattern : Pattern, direction : Direction, coordinateX : Integer, coordinateY : Integer, name : Integer)
+                + <<create>> Tile(fixed: Boolean, pattern : Pattern, direction : Direction, coordinateX : Integer, coordinateY : Integer, name : Integer, objective : Objective)
+                + getObjective() : Objective
+                + getDirection() : Direction
+                + getCoordinateX() : Integer
+                + getCoordinateY() : Integer
+                + getName() : Integer
+                + isFixed() : Boolean
+                + abstract checkTileExit(direction : Direction) : Boolean
+                + rotateTile(direction : Direction)
+            }
+        Tile "1" o--> "objective \n 0/1" .src.model.Objective : has
+        Tile *--> "_pattern \n 1" Pattern : is type
+        Tile o-> "_direction \n 1" Direction : has one
 
-        abstract class Tuile <<abstract>>{
-        - m_fixe : Boolean
-        - m_pattern : Pattern
-        - m_coordoneeX : Integer
-        - m_coordoneeY : Integer
-        - m_name : Integer
-        + <<create>> Tuile(fixe: Boolean , pattern : Pattern, direction : Direction , coordoneeX : Integer , coordoneeY : Integer, name : Integer)
-        + <<create>> Tuile(fixe: Boolean , pattern : Pattern, direction : Direction , coordoneeX : Integer , coordoneeY : Integer , name : Integer, objectif : Objectif)
-        + getObjectif() : Objectif
-        + getDirection() : Direction
-        + getCoordoneeX() : Integer
-        + getCoordoneeY() : Integer
-        + getName() : Integer
-        + isFixe() : Boolean
-        ° checkSortieTuile(direction : Direction) : Boolean
-        + tournerTuile(direction : Direction)
+            class TileCorner extends Tile {
+                + <<create>> TileCorner(fixed: Boolean, direction : Direction, coordinateX : Integer, coordinateY : Integer, name : Integer)
+                + <<create>> TileCorner(fixed: Boolean, direction : Direction, coordinateX : Integer, coordinateY : Integer, name : Integer, objective : Objective)
+                + checkTileExit(direction : Direction) : Boolean
+            }
+
+            class TileLine extends Tile {
+                + <<create>> TileLine(fixed: Boolean, direction : Direction, coordinateX : Integer, coordinateY : Integer, name : Integer)
+                + <<create>> TileLine(fixed: Boolean, direction : Direction, coordinateX : Integer, coordinateY : Integer, name : Integer, objective : Objective)
+                + checkTileExit(direction : Direction) : Boolean
+            }
+
+            class TileT extends Tile {
+                + <<create>> TileT(fixed: Boolean, direction : Direction, coordinateX : Integer, coordinateY : Integer, name : Integer)
+                + <<create>> TileT(fixed: Boolean, direction : Direction, coordinateX : Integer, coordinateY : Integer, name : Integer, objective : Objective)
+                + checkTileExit(direction : Direction) : Boolean
+            }
+
+
+            enum Pattern {
+                CORNER
+                T
+                LINE
+            }
         }
 
-        class TuileCoin extends Tuile{
-        + <<create>> TuileCoin(fixe: Boolean , direction : Direction , coordoneeX : Integer , coordoneeY : Integer, name : Integer)
-        + <<create>> TuileCoin(fixe: Boolean , direction : Direction , coordoneeX : Integer , coordoneeY : Integer , name : Integer, objectif : Objectif)
-        + checkSortieTuile(direction : Direction) : Boolean
-        }
-
-        class TuileDroit extends Tuile{
-        + <<create>> TuileDroit(fixe: Boolean , direction : Direction , coordoneeX : Integer , coordoneeY : Integer, name : Integer)
-        + <<create>> TuileDroit(fixe: Boolean , direction : Direction , coordoneeX : Integer , coordoneeY : Integer , name : Integer, objectif : Objectif)
-        + checkSortieTuile(direction : Direction) : Boolean
-        }
-
-        class TuileT extends Tuile{
-        + <<create>> TuileT(fixe: Boolean , direction : Direction , coordoneeX : Integer , coordoneeY : Integer, name : Integer)
-        + <<create>> TuileT(fixe: Boolean , direction : Direction , coordoneeX : Integer , coordoneeY : Integer , name : Integer, objectif : Objectif)
-        + checkSortieTuile(direction : Direction) : Boolean
-        }
-
-        enum Pattern{
-        ANGLE
-        T
-        DROIT
-        }
-
-       }
-        enum Objectif <<enumeration>>{
+        enum Objective <<enumeration>> {
             PORTE_AMICALE
             W
             BARBE_DE_Z
@@ -104,47 +120,82 @@ package src{
             ...
         }
 
-        class Joueur{
-            - m_objectifRestant : Integer
-            - m_objectifRecup : Integer
-            - m_couleur : String
-            + <<create>> Joueur(tuile : Tuile , objectif : Objectif[])
-            + verifObjectif() : Boolean
-            + getObjectifRecup() : Integer
-            + getObjectifRestant() : Integer
-            + getTuile() : Tuile
-            + getCouleur() : String
-            + setTuile(tuile : Tuile)
-            + validationObjectif()
+        class Player {
+            - _remainingObjectives : Integer
+            - _collectedObjectives : Integer
+            - _color : String
+            + <<create>> Player(tile : Tile, color : String, objectives : Objective[])
+            + verifyObjective() : Boolean
+            + getCollectedObjectives() : Integer
+            + getRemainingObjectives() : Integer
+            + getCurrentGoal() : Objective
+            + getTile() : Tile
+            + getColor() : String
+            + setTile(tile : Tile)
+            + validateObjective()
         }
 
-        TuileObjectifs -> "m_objectifAssocie" Objectif : > is One
-        Joueur o-> "m_listeObjectifs" Objectif : > has several
-        Joueur o-> "m_tuile \n 1" Tuile : > Is on
-        Tuile -> "m_pattern" Pattern : > is type
-        Plateau o-> "\n m_plateau \n 49" Tuile :  > Have 49 (liste de 7 liste de 7 tuiles)
-        Plateau o-> "m_tuile \n" Tuile : Have one extra
-        Plateau -> "m_joueur \n 4" Joueur : < On It
+        Player "1" *--> " _objectiveList \n 0..*" Objective : has
+        Player "1" o--> " _tile \n 1" Tile : is on
 
+
+        class Turn{
+        - _id : Integer
+        + <<create>> Turn(players : Player[])
+        + getCurrentPlayer() : Player
+        + nextTurn() : Player
+        }
+
+        Turn "1" o-> " _currentPlayer \n 1" Player : is the turn of >
+        Turn "1" o-> "_playerList \n 4" Player : player playings
 
     }
-    package view{
 
-        class LabyrintheMainWindow{
+    package view {
+        class LabyrintheMainWindow {
             + <<create>> LabyrintheMainWindow()
-            + getPlateau() : Plateau
+            + getBoard() : Board
         }
-        class PlateauWindow{
-            + <<create>> PlateauWindow()
-            + getPlateauModel() : Plateau
+
+        LabyrintheMainWindow *-> PlateauWindow : <<use>>
+        LabyrintheMainWindow o-> ImagePanel : <<use>>
+        LabyrintheMainWindow *-> LabyrintheController : <<use>>
+
+        class PlateauWindow {
+            + <<create>> PlateauWindow(board : Board)
+            + getBoardModel() : Board
             + loadImage(path : String) : BufferedImage
-            + loadPlayers(joueur : Joueur)
+            + loadPlayers(player : Player)
             + updateMaze(direction : Direction, index : Integer)
+            + updateTileByID(id : Integer)
+            + notifyObserversMazeChange()
+
+        }
+
+            PlateauWindow *-> Board : <<use>>
+            PlateauWindow o-> Player : <<use>>
+            PlateauWindow o-> Direction : <<use>>
+            PlateauWindow o-> ImagePanel : <<use>>
+        class ImagePanel implements LabyrintheObserver{
+            - _image : BufferedImage
+            + ImagePanel(image : BufferedImage)
+            + doBecauseMazeChange(tile : Tile()
+            + getImage() : BufferedImage
+            + getImageByTile(tile : Tile) : ImagePanel
+            + loadImage(path : String) : BufferedImage
+            + paintComponent(g : Graphics)
+            + updateImage(panel : ImagePanel)
+            + updateInsertTile(direction Direction , column : Integer)
+            + updateMovePlayer(player : Player : direction : Direction)
+            + updateRotateTile(direction : Direction)
+        }
+
+        interface LabyrintheObserver{
+            + doBecauseMazeChange(tile : Tile)
+            + updateInsertTile(direction : Direction , column : Integer)
+            + updateMovePlayer(player : Player , direction : Direction)
+            + updateRotateTile(direction : Direction)
         }
     }
-
-
-
 }
-
 @enduml

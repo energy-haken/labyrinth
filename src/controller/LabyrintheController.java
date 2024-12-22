@@ -5,12 +5,21 @@ import model.Board;
 import model.Player;
 
 public class LabyrintheController {
-    private Board m_board;
-    public void modifyPushTuile(Direction direction , int colonne) {
-        this.m_board.pushTile(direction, colonne);
+    private final Board _board;
+
+    public LabyrintheController(Board board) {
+        _board = board ;
     }
 
-    public void modifyDeplacerJoueur(Player player, Direction direction) {
-        this.m_board.movePlayer(player, direction);
+    public void modifyPushTile(Direction direction , int colonne) {
+        this._board.pushTile(direction, colonne);
+    }
+
+    public void modifyMovePlayer(Player player, Direction direction) {
+        this._board.movePlayer(player, direction);
+    }
+
+    public void modifyRotateTile(Direction direction) {
+        _board.getTile().rotateTile(direction);
     }
 }

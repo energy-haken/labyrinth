@@ -187,30 +187,46 @@ public class Plateau {
                 tuileSortante = m_plateau.get(0).get(colonne);
                 for (int i = 0; i < m_plateau.size() - 1; i++) {
                     m_plateau.get(i).set(colonne, m_plateau.get(i + 1).get(colonne));
+                    m_plateau.get(i).get(colonne).setCoordonee(i,colonne);
                 }
                 m_plateau.get(m_plateau.size() - 1).set(colonne, m_tuile);
+                m_tuile.setCoordonee(m_plateau.size() - 1, colonne);
                 break;
             case SOUTH:
                 tuileSortante = m_plateau.get(m_plateau.size() - 1).get(colonne);
                 for (int i = m_plateau.size() - 1; i > 0; i--) {
                     m_plateau.get(i).set(colonne, m_plateau.get(i - 1).get(colonne));
+                    m_plateau.get(i).get(colonne).setCoordonee(i,colonne);
                 }
                 m_plateau.get(0).set(colonne, m_tuile);
+                m_tuile.setCoordonee(0, colonne);
+
                 break;
             case EAST:
                 tuileSortante = m_plateau.get(colonne).get(m_plateau.size() - 1);
                 for (int i = m_plateau.size() - 1; i > 0; i--) {
                     m_plateau.get(colonne).set(i, m_plateau.get(colonne).get(i - 1));
+                    m_plateau.get(colonne).get(i).setCoordonee(colonne, i);
                 }
                 m_plateau.get(colonne).set(0, m_tuile);
+                m_tuile.setCoordonee(colonne,0);
+
                 break;
             case WEST:
                 tuileSortante = m_plateau.get(colonne).get(0);
                 for (int i = 0; i < m_plateau.size() - 1; i++) {
                     m_plateau.get(colonne).set(i, m_plateau.get(colonne).get(i + 1));
+                    m_plateau.get(colonne).get(i).setCoordonee(colonne, i);
                 }
                 m_plateau.get(colonne).set(m_plateau.size() - 1, m_tuile);
+                m_tuile.setCoordonee(colonne,m_plateau.size() - 1);
                 break;
+        }
+        tuileSortante.setCoordonee(-1,-1);
+        for (Joueur j:m_joueurs) {
+            if(j.getTuile().getCoordoneeX()==-1){
+                j.setTuile(m_tuile);
+            }
         }
         m_tuile = tuileSortante;
         return tuileSortante;
@@ -307,7 +323,7 @@ public class Plateau {
             System.out.print("\n");
             for (Tuile T: lT) {
                 if(T!=null) {
-                    System.out.print(T.getName() + "\t");
+                    System.out.print(T.getName() + " (" + T.getCoordoneeX()+ T.getCoordoneeY()+ ")\t\t\t");
                 }
             }
 

@@ -63,6 +63,11 @@ public abstract class Tuile {
         return m_fixe;
     }
 
+    public void setCoordonee(int x, int y){
+        m_coordoneeX = x;
+        m_coordoneeY = y;
+    }
+
     public int getCoordoneeX() {
         return m_coordoneeX;
     }

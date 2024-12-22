@@ -100,7 +100,7 @@ public class PlateauWindow extends JPanel {
 
     if (existingImagePanel != null) {
         // Update the existing ImagePanel with the new image
-        ImagePanel newImagePanel = new ImagePanel(ImageHelper.mergeB(ImagePanel.getImageByTile(tuile).getImage(), "img/Pion" + joueur.getCouleur() + ".png"));
+        ImagePanel newImagePanel = new ImagePanel(ImageHelper.mergeB(existingImagePanel.getImage(), "img/Pion" + joueur.getCouleur() + ".png"));
         existingImagePanel.updateImage(newImagePanel);
         // Revalidate and repaint to ensure the component is properly displayed
         existingImagePanel.revalidate();

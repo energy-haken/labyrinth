@@ -4,10 +4,10 @@ import model.Direction;
 import model.Board;
 import model.Player;
 
-public class LabyrintheController {
+public class LabyrinthController {
     private final Board _board;
 
-    public LabyrintheController(Board board) {
+    public LabyrinthController(Board board) {
         _board = board ;
     }
 

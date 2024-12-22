@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class ImagePanel extends JPanel implements LabyrintheObserver {
+public class ImagePanel extends JPanel implements LabyrinthObserver {
     private BufferedImage image;
 
     public ImagePanel(BufferedImage image) {

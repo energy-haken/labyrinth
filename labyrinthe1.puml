@@ -124,6 +124,8 @@ package src {
             - _remainingObjectives : Integer
             - _collectedObjectives : Integer
             - _color : String
+            - _firstCoX : Integer
+            - _firstCoY
             + <<create>> Player(tile : Tile, color : String, objectives : Objective[])
             + verifyObjective() : Boolean
             + getCollectedObjectives() : Integer

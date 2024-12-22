@@ -1,6 +1,6 @@
 package view;
 
-import controller.LabyrintheController;
+import controller.LabyrinthController;
 import model.*;
 
 import javax.imageio.ImageIO;
@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class LabyrintheMainWindow extends JFrame {
+public class LabyrinthMainWindow extends JFrame {
     private JButton _endTurnButton;
     private JButton _upButton = new JButton();
     private JButton _downButton = new JButton();
@@ -23,7 +23,7 @@ public class LabyrintheMainWindow extends JFrame {
     private ImagePanel _remainingTilePanel;
     private JPanel _centerPanel = new JPanel();
     private JPanel _windowPanel;
-    private PlateauWindow _plateauWindow;
+    private BoardWindow _boardWindow;
     private Turn _currentTurn;
     private JButton _insertColumn1Bottom = new JButton();
     private JButton _insertColumn1Top = new JButton();
@@ -38,14 +38,14 @@ public class LabyrintheMainWindow extends JFrame {
     private JButton _insertLine3Left = new JButton();
     private JButton _insertLine3Right = new JButton();
 
-    public LabyrintheMainWindow() throws IOException {
+    public LabyrinthMainWindow() throws IOException {
         super("The Numerical Maze");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        _plateauWindow = new PlateauWindow(new Board());
+        _boardWindow = new BoardWindow(new Board());
         _currentTurn = new Turn(getBoard().getPlayersOnBoard());
-        LabyrintheController controller = new LabyrintheController(_plateauWindow.getBoardModel());
+        LabyrinthController controller = new LabyrinthController(_boardWindow.getBoardModel());
         for (Player player : getBoard().getPlayersOnBoard()) {
-            _plateauWindow.loadPlayers(player);
+            _boardWindow.loadPlayers(player);
         }
         setSize(1000, 800);
         BufferedImage playerImage = ImageIO.read(new File("img/Pion" + _currentTurn.getCurrentPlayer().getColor() + ".png"));
@@ -82,13 +82,13 @@ public class LabyrintheMainWindow extends JFrame {
                 int oldTileID = _currentTurn.getCurrentPlayer().getTile().getCoordinateX() * 7 + _currentTurn.getCurrentPlayer().getTile().getCoordinateY();
                 controller.modifyMovePlayer(_currentTurn.getCurrentPlayer() , Direction.NORTH);
                 try {
-                    _plateauWindow.updateTileByID(oldTileID);
+                    _boardWindow.updateTileByID(oldTileID);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
                 try {
                     for (Player player : getBoard().getPlayersOnBoard()) {
-                        _plateauWindow.loadPlayers(player);
+                        _boardWindow.loadPlayers(player);
                     }
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -102,13 +102,13 @@ public class LabyrintheMainWindow extends JFrame {
                 int oldTileID = _currentTurn.getCurrentPlayer().getTile().getCoordinateX() * 7 + _currentTurn.getCurrentPlayer().getTile().getCoordinateY();
                 controller.modifyMovePlayer(_currentTurn.getCurrentPlayer(), Direction.WEST);
                 try {
-                    _plateauWindow.updateTileByID(oldTileID);
+                    _boardWindow.updateTileByID(oldTileID);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
                 try {
                     for (Player player : getBoard().getPlayersOnBoard()) {
-                        _plateauWindow.loadPlayers(player);
+                        _boardWindow.loadPlayers(player);
                     }
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -122,13 +122,13 @@ public class LabyrintheMainWindow extends JFrame {
                 int oldTileID = _currentTurn.getCurrentPlayer().getTile().getCoordinateX() * 7 + _currentTurn.getCurrentPlayer().getTile().getCoordinateY();
                 controller.modifyMovePlayer(_currentTurn.getCurrentPlayer(), Direction.EAST);
                 try {
-                    _plateauWindow.updateTileByID(oldTileID);
+                    _boardWindow.updateTileByID(oldTileID);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
                 try {
                     for (Player player : getBoard().getPlayersOnBoard()) {
-                        _plateauWindow.loadPlayers(player);
+                        _boardWindow.loadPlayers(player);
                     }
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -142,13 +142,13 @@ public class LabyrintheMainWindow extends JFrame {
                 int oldTileID = _currentTurn.getCurrentPlayer().getTile().getCoordinateX() * 7 + _currentTurn.getCurrentPlayer().getTile().getCoordinateY();
                 controller.modifyMovePlayer(_currentTurn.getCurrentPlayer(), Direction.SOUTH);
                 try {
-                    _plateauWindow.updateTileByID(oldTileID);
+                    _boardWindow.updateTileByID(oldTileID);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
                 try {
                     for (Player player : getBoard().getPlayersOnBoard()) {
-                        _plateauWindow.loadPlayers(player);
+                        _boardWindow.loadPlayers(player);
                     }
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -156,7 +156,7 @@ public class LabyrintheMainWindow extends JFrame {
             }
         });
         _remainingTilePanel = ImagePanel.getImageByTile(this.getBoard().getTile());
-        _plateauWindow.addObserver(_remainingTilePanel);
+        _boardWindow.addObserver(_remainingTilePanel);
 
         JPanel goalPanel = new JPanel();
         goalPanel.setLayout(new BorderLayout());
@@ -200,7 +200,7 @@ public class LabyrintheMainWindow extends JFrame {
                     case WEST -> controller.modifyRotateTile(Direction.NORTH);
                 }
                 try {
-                    _plateauWindow.notifyObserversMazeChange();
+                    _boardWindow.notifyObserversMazeChange();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -217,7 +217,7 @@ public class LabyrintheMainWindow extends JFrame {
                     case WEST -> controller.modifyRotateTile(Direction.SOUTH);
                 }
                 try {
-                    _plateauWindow.notifyObserversMazeChange();
+                    _boardWindow.notifyObserversMazeChange();
                 }
                 catch (IOException e) {
                     throw new RuntimeException(e);
@@ -262,7 +262,7 @@ public class LabyrintheMainWindow extends JFrame {
         _insertColumn1Bottom.addActionListener(actionEvent -> {
             controller.modifyPushTile(Direction.SOUTH, 1);
             try {
-                _plateauWindow.updateMaze(Direction.SOUTH, 1);
+                _boardWindow.updateMaze(Direction.SOUTH, 1);
                 disableButtonsInsert();
                 enableButtonsMovement();
                 _endTurnButton.setEnabled(true);
@@ -275,7 +275,7 @@ public class LabyrintheMainWindow extends JFrame {
         _insertColumn2Bottom.addActionListener(actionEvent -> {
             controller.modifyPushTile(Direction.SOUTH, 3);
             try {
-                _plateauWindow.updateMaze(Direction.SOUTH, 3);
+                _boardWindow.updateMaze(Direction.SOUTH, 3);
                 disableButtonsInsert();
                 enableButtonsMovement();
                 _endTurnButton.setEnabled(true);
@@ -288,7 +288,7 @@ public class LabyrintheMainWindow extends JFrame {
         _insertColumn3Bottom.addActionListener(actionEvent -> {
             controller.modifyPushTile(Direction.SOUTH, 5);
             try {
-                _plateauWindow.updateMaze(Direction.SOUTH, 5);
+                _boardWindow.updateMaze(Direction.SOUTH, 5);
                 disableButtonsInsert();
                 enableButtonsMovement();
                 _endTurnButton.setEnabled(true);
@@ -308,7 +308,7 @@ public class LabyrintheMainWindow extends JFrame {
             public void actionPerformed(ActionEvent actionEvent) {
                 controller.modifyPushTile(Direction.NORTH, 1);
                 try {
-                    _plateauWindow.updateMaze(Direction.NORTH, 1);
+                    _boardWindow.updateMaze(Direction.NORTH, 1);
                     disableButtonsInsert();
                     enableButtonsMovement();
                     _endTurnButton.setEnabled(true);
@@ -324,7 +324,7 @@ public class LabyrintheMainWindow extends JFrame {
             public void actionPerformed(ActionEvent actionEvent) {
                 controller.modifyPushTile(Direction.NORTH, 3);
                 try {
-                    _plateauWindow.updateMaze(Direction.NORTH, 3);
+                    _boardWindow.updateMaze(Direction.NORTH, 3);
                     disableButtonsInsert();
                     enableButtonsMovement();
                     _endTurnButton.setEnabled(true);
@@ -340,7 +340,7 @@ public class LabyrintheMainWindow extends JFrame {
             public void actionPerformed(ActionEvent actionEvent) {
                 controller.modifyPushTile(Direction.NORTH, 5);
                 try {
-                    _plateauWindow.updateMaze(Direction.NORTH, 5);
+                    _boardWindow.updateMaze(Direction.NORTH, 5);
                     disableButtonsInsert();
                     enableButtonsMovement();
                     _endTurnButton.setEnabled(true);
@@ -361,7 +361,7 @@ public class LabyrintheMainWindow extends JFrame {
             public void actionPerformed(ActionEvent actionEvent) {
                 controller.modifyPushTile(Direction.WEST, 1);
                 try {
-                    _plateauWindow.updateMaze(Direction.WEST, 1);
+                    _boardWindow.updateMaze(Direction.WEST, 1);
                     disableButtonsInsert();
                     enableButtonsMovement();
                     _endTurnButton.setEnabled(true);
@@ -377,7 +377,7 @@ public class LabyrintheMainWindow extends JFrame {
             public void actionPerformed(ActionEvent actionEvent) {
                 controller.modifyPushTile(Direction.WEST, 3);
                 try {
-                    _plateauWindow.updateMaze(Direction.WEST, 3);
+                    _boardWindow.updateMaze(Direction.WEST, 3);
                     disableButtonsInsert();
                     enableButtonsMovement();
                     _endTurnButton.setEnabled(true);
@@ -393,7 +393,7 @@ public class LabyrintheMainWindow extends JFrame {
             public void actionPerformed(ActionEvent actionEvent) {
                 controller.modifyPushTile(Direction.WEST, 5);
                 try {
-                    _plateauWindow.updateMaze(Direction.WEST, 5);
+                    _boardWindow.updateMaze(Direction.WEST, 5);
                     disableButtonsInsert();
                     enableButtonsMovement();
                     _endTurnButton.setEnabled(true);
@@ -414,7 +414,7 @@ public class LabyrintheMainWindow extends JFrame {
             public void actionPerformed(ActionEvent actionEvent) {
                 controller.modifyPushTile(Direction.EAST, 1);
                 try {
-                    _plateauWindow.updateMaze(Direction.EAST, 1);
+                    _boardWindow.updateMaze(Direction.EAST, 1);
                     disableButtonsInsert();
                     enableButtonsMovement();
                     _endTurnButton.setEnabled(true);
@@ -430,7 +430,7 @@ public class LabyrintheMainWindow extends JFrame {
             public void actionPerformed(ActionEvent actionEvent) {
                 controller.modifyPushTile(Direction.EAST, 3);
                 try {
-                    _plateauWindow.updateMaze(Direction.EAST, 3);
+                    _boardWindow.updateMaze(Direction.EAST, 3);
                     disableButtonsInsert();
                     enableButtonsMovement();
                     _endTurnButton.setEnabled(true);
@@ -446,7 +446,7 @@ public class LabyrintheMainWindow extends JFrame {
             public void actionPerformed(ActionEvent actionEvent) {
                 controller.modifyPushTile(Direction.EAST, 5);
                 try {
-                    _plateauWindow.updateMaze(Direction.EAST, 5);
+                    _boardWindow.updateMaze(Direction.EAST, 5);
                     disableButtonsInsert();
                     enableButtonsMovement();
                     _endTurnButton.setEnabled(true);
@@ -519,7 +519,7 @@ public class LabyrintheMainWindow extends JFrame {
         // Add all the panels to main one
         _centerPanel.setLayout(new BorderLayout());
         _centerPanel.add(topButtonPanel, BorderLayout.NORTH);
-        _centerPanel.add(_plateauWindow, BorderLayout.CENTER);
+        _centerPanel.add(_boardWindow, BorderLayout.CENTER);
         _centerPanel.add(bottomButtonPanel, BorderLayout.SOUTH);
         _centerPanel.add(rightButtonPanel, BorderLayout.EAST);
         _centerPanel.add(leftButtonPanel, BorderLayout.WEST);
@@ -536,7 +536,7 @@ public class LabyrintheMainWindow extends JFrame {
      * @return the board of the game (Class : Board.java)
      */
     public Board getBoard() {
-        return _plateauWindow.getBoardModel();
+        return _boardWindow.getBoardModel();
     }
 
     private void disableButtonsInsert(){

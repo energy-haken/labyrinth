@@ -6,7 +6,7 @@ import model.tiles.Tile;
 
 import java.io.IOException;
 
-public interface LabyrintheObserver {
+public interface LabyrinthObserver {
     void updateInsertTile(Direction direction , int colonne);
     void updateRotateTile(Direction direction) ;
     void updateMovePlayer(Player player, Direction direction);

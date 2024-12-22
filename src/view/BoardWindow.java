@@ -15,21 +15,21 @@ import model.Direction;
 import model.Player;
 import model.tiles.Tile;
 
-public class PlateauWindow extends JPanel {
+public class BoardWindow extends JPanel {
     // Load images
     private static final BufferedImage Tpic = loadImage("img/T.png");
     private static final BufferedImage ANGLEpic = loadImage("img/Corner.png");
     private static final BufferedImage LINEpic = loadImage("img/LINE.png");
 
     private JPanel boardPanel;
-    private ArrayList<LabyrintheObserver> observerList = new ArrayList<>();
+    private ArrayList<LabyrinthObserver> observerList = new ArrayList<>();
 
     private Board boardModel;
 
     private JPanel[][] panels;
     private HashMap<Integer, ImagePanel> imagePanelById = new HashMap<>();
 
-    public PlateauWindow(Board board) throws IOException {
+    public BoardWindow(Board board) throws IOException {
         super();
         int rows = 7;
         int cols = 7;
@@ -133,12 +133,12 @@ public class PlateauWindow extends JPanel {
         imagePanelById.get(id).updateImage(ImagePanel.getImageByTile(tile));
     }
 
-    public void addObserver(LabyrintheObserver o) {
+    public void addObserver(LabyrinthObserver o) {
         observerList.add(o);
     }
 
     public void notifyObserversMazeChange() throws IOException {
-        for (LabyrintheObserver o : observerList) {
+        for (LabyrinthObserver o : observerList) {
             o.doBecauseMazeChange(getBoardModel().getTile());
         }
     }

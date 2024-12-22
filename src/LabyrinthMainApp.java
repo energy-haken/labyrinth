@@ -1,11 +1,11 @@
-import view.LabyrintheMainWindow;
+import view.LabyrinthMainWindow;
 
 import java.io.IOException;
 
-public class LabyrintheApp {
+public class LabyrinthMainApp {
     public static void main(String[] args) throws IOException {
 
-        new LabyrintheMainWindow();
+        new LabyrinthMainWindow();
 
 
     }

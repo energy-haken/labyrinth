@@ -44,7 +44,8 @@ public class LabyrintheMainWindow extends JFrame{
         setSize(1000,800);
         BufferedImage imageJoueur = ImageIO.read(new File("img/Pion" + m_turn.getJoueurDuTour().getCouleur() +  ".png")) ;
         ImagePanel panelImageJoueur = new ImagePanel(imageJoueur);
-
+        BufferedImage imageObjectif = ImageIO.read(new File("img/Objectifs/" + m_turn.getJoueurDuTour().getCurrentGoal().name() + ".png")) ;
+        ImagePanel panelImageObjectif = new ImagePanel(imageObjectif);
         JPanel mainButton = new JPanel();
         mainButton.setLayout(new GridLayout(2,8));
 
@@ -152,6 +153,7 @@ public class LabyrintheMainWindow extends JFrame{
         objectifPanel.setLayout(new BorderLayout());
         JLabel objectifLabel = new JLabel(m_turn.getJoueurDuTour().getCurrentGoal().name()) ;
         objectifPanel.add(objectifLabel, BorderLayout.EAST) ;
+        objectifPanel.add(panelImageObjectif , BorderLayout.CENTER) ;
         objectifPanel.add(panelImageJoueur , BorderLayout.WEST) ;
 
         mainButton.add(new JPanel());
@@ -204,6 +206,10 @@ public class LabyrintheMainWindow extends JFrame{
                     ImagePanel panelImageJoueur2 = new ImagePanel(imageJoueur2) ;
                     objectifPanel.remove(panelImageJoueur);
                     objectifPanel.add(panelImageJoueur2, BorderLayout.WEST);
+                    BufferedImage imageObjectif2 = ImageIO.read(new File("img/Objectifs/" + m_turn.getJoueurDuTour().getCurrentGoal().name() + ".png")) ;
+                    ImagePanel panelImageObjectif2 = new ImagePanel(imageObjectif2);
+                    objectifPanel.remove(panelImageObjectif);
+                    objectifPanel.add(panelImageObjectif2, BorderLayout.CENTER);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

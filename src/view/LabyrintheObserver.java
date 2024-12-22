@@ -1,16 +1,16 @@
 package view;
 
 import model.Direction;
-import model.Joueur;
-import model.tuiles.Tuile;
+import model.Player;
+import model.tiles.Tile;
 
 import java.io.IOException;
 
 public interface LabyrintheObserver {
-    void updateInsertTuile(Direction direction , int colonne);
-    void updateTournerTuile(Direction direction) ;
-    void updateDeplacerJoueur(Joueur joueur , Direction direction);
+    void updateInsertTile(Direction direction , int colonne);
+    void updateRotateTile(Direction direction) ;
+    void updateMovePlayer(Player player, Direction direction);
 
 
-    public void doBecauseMazeChange(Tuile tile) throws IOException;
+    public void doBecauseMazeChange(Tile tile) throws IOException;
 }

@@ -3,7 +3,6 @@ package view;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -11,40 +10,37 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import helpers.ImageHelper;
+import model.Board;
 import model.Direction;
-import model.Joueur;
-import model.Plateau;
-import model.Tour;
-import model.tuiles.Tuile;
+import model.Player;
+import model.tiles.Tile;
 
 public class PlateauWindow extends JPanel {
-    //charges les images
+    // Load images
     private static final BufferedImage Tpic = loadImage("img/T.png");
     private static final BufferedImage ANGLEpic = loadImage("img/Corner.png");
-    private static final BufferedImage DROITpic = loadImage("img/LINE.png");
+    private static final BufferedImage LINEpic = loadImage("img/LINE.png");
 
-    private JPanel Plateau;
+    private JPanel boardPanel;
     private ArrayList<LabyrintheObserver> observerList = new ArrayList<>();
 
-    private Plateau plateauModel;
+    private Board boardModel;
 
     private JPanel[][] panels;
-    private HashMap<Integer,ImagePanel> imagePanelById = new HashMap<>();
+    private HashMap<Integer, ImagePanel> imagePanelById = new HashMap<>();
 
-
-    public PlateauWindow(Plateau plateau) throws IOException {
+    public PlateauWindow(Board board) throws IOException {
         super();
-        int rows= 7 ;
-        int cols = 7 ;
+        int rows = 7;
+        int cols = 7;
         // Initialize the main panel with a dynamic grid layout
         this.setLayout(new GridLayout(rows, cols));
 
-        plateauModel  = new Plateau();
-
+        boardModel = new Board();
 
         // Create a 2D array for panels
         panels = new JPanel[rows][cols];
-        // Initialize and add all panels to the Plateau
+        // Initialize and add all panels to the board
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 panels[row][col] = new JPanel();
@@ -53,19 +49,18 @@ public class PlateauWindow extends JPanel {
             }
         }
 
-        // Use the plateau object to set up the initial state of the grid
-        List<List<Tuile>> grid = plateauModel.getPlateau();
+        // Use the board object to set up the initial state of the grid
+        List<List<Tile>> grid = boardModel.getBoard();
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
-                Tuile tuile = grid.get(row).get(col);
+                Tile tile = grid.get(row).get(col);
                 int idImage = (row * 7) + col;
-                if (tuile != null) {
-                    imagePanelById.put(idImage, ImagePanel.getImageByTile(tuile));
+                if (tile != null) {
+                    imagePanelById.put(idImage, ImagePanel.getImageByTile(tile));
                     add(imagePanelById.get(idImage));
                 }
             }
         }
-
 
         setVisible(true);
     }
@@ -85,67 +80,66 @@ public class PlateauWindow extends JPanel {
         }
     }
 
-    public model.Plateau getPlateauModel() {
-        return plateauModel;
+    public Board getBoardModel() {
+        return boardModel;
     }
 
-    public void loadPlayers(Joueur joueur) throws IOException {
-        int x = joueur.getTuile().getCoordoneeX();
-    int y = joueur.getTuile().getCoordoneeY();
-    Tuile tuile = plateauModel.getPlateau().get(x).get(y);
-    int idImage = 7*x+y;
-    
-    // Find the existing ImagePanel by idImage
-    ImagePanel existingImagePanel = imagePanelById.get(idImage);
+    public void loadPlayers(Player player) throws IOException {
+        int x = player.getTile().getCoordinateX();
+        int y = player.getTile().getCoordinateY();
+        Tile tile = boardModel.getBoard().get(x).get(y);
+        int idImage = 7 * x + y;
 
-    if (existingImagePanel != null) {
-        // Update the existing ImagePanel with the new image
-        ImagePanel newImagePanel = new ImagePanel(ImageHelper.mergeB(existingImagePanel.getImage(), "img/Pion" + joueur.getCouleur() + ".png"));
-        existingImagePanel.updateImage(newImagePanel);
-        // Revalidate and repaint to ensure the component is properly displayed
-        existingImagePanel.revalidate();
-        existingImagePanel.repaint();
-    } else {
-        System.err.println("No existing ImagePanel found for id: " + idImage);
+        // Find the existing ImagePanel by idImage
+        ImagePanel existingImagePanel = imagePanelById.get(idImage);
+
+        if (existingImagePanel != null) {
+            // Update the existing ImagePanel with the new image
+            ImagePanel newImagePanel = new ImagePanel(ImageHelper.mergeB(existingImagePanel.getImage(), "img/Pion" + player.getColor() + ".png"));
+            existingImagePanel.updateImage(newImagePanel);
+            // Revalidate and repaint to ensure the component is properly displayed
+            existingImagePanel.revalidate();
+            existingImagePanel.repaint();
+        } else {
+            System.err.println("No existing ImagePanel found for id: " + idImage);
+        }
     }
-}
+
     public void updateMaze(Direction direction, int index) throws IOException {
-        if(direction == Direction.NORTH || direction == Direction.SOUTH){
-            for (int i=0;i<=6;i++){
-                int idImage = (i*7)+index;
-                Tuile tuile = plateauModel.getPlateau().get(i).get(index);
-                imagePanelById.get(idImage).updateImage(ImagePanel.getImageByTile(tuile));
+        if (direction == Direction.NORTH || direction == Direction.SOUTH) {
+            for (int i = 0; i <= 6; i++) {
+                int idImage = (i * 7) + index;
+                Tile tile = boardModel.getBoard().get(i).get(index);
+                imagePanelById.get(idImage).updateImage(ImagePanel.getImageByTile(tile));
             }
-        }else {
+        } else {
             for (int i = 0; i <= 6; i++) {
                 int idImage = i + (index * 7);
-                Tuile tuile = plateauModel.getPlateau().get(index).get(i);
-                imagePanelById.get(idImage).updateImage(ImagePanel.getImageByTile(tuile));
-
+                Tile tile = boardModel.getBoard().get(index).get(i);
+                imagePanelById.get(idImage).updateImage(ImagePanel.getImageByTile(tile));
             }
         }
-        for (Joueur joueur : plateauModel.getJoueursDuPlateau()) {
-        loadPlayers(joueur);
-    }
+        for (Player player : boardModel.getPlayersOnBoard()) {
+            loadPlayers(player);
+        }
         notifyObserversMazeChange();
     }
 
     public void updateTileByID(int id) throws IOException {
-        int y = id%7;
-        int x = (id-y)/7;
-        Tuile tuile = plateauModel.getPlateau().get(x).get(y);
+        int y = id % 7;
+        int x = (id - y) / 7;
+        Tile tile = boardModel.getBoard().get(x).get(y);
 
-        imagePanelById.get(id).updateImage(ImagePanel.getImageByTile(tuile));
-
+        imagePanelById.get(id).updateImage(ImagePanel.getImageByTile(tile));
     }
 
-    public void addObserver(LabyrintheObserver o){
+    public void addObserver(LabyrintheObserver o) {
         observerList.add(o);
     }
+
     public void notifyObserversMazeChange() throws IOException {
-        for (LabyrintheObserver o: observerList) {
-            o.doBecauseMazeChange(getPlateauModel().getTuile());
+        for (LabyrintheObserver o : observerList) {
+            o.doBecauseMazeChange(getBoardModel().getTile());
         }
     }
-
 }

@@ -1,20 +1,20 @@
-package model.tuiles;
+package model.tiles;
 
 import model.Direction;
-import model.Objectif;
+import model.Objective;
 
-public class TuileCoin extends Tuile {
+public class TileCorner extends Tile {
 
-    public TuileCoin(boolean fixe, Direction direction, int coordoneeX, int coordoneeY, int name) {
-        super(fixe, Pattern.ANGLE, direction, coordoneeX, coordoneeY, name);
+    public TileCorner(boolean fixe, Direction direction, int coordoneeX, int coordoneeY, int name) {
+        super(fixe, Pattern.CORNER, direction, coordoneeX, coordoneeY, name);
     }
 
-    public TuileCoin(boolean fixe,Direction direction ,int coordoneeX, int coordoneeY, int name, Objectif objectif) {
-        super(fixe, Pattern.ANGLE, direction, coordoneeX, coordoneeY, name, objectif);
+    public TileCorner(boolean fixe, Direction direction , int coordoneeX, int coordoneeY, int name, Objective objective) {
+        super(fixe, Pattern.CORNER, direction, coordoneeX, coordoneeY, name, objective);
     }
 
     @Override
-    public boolean checkSortieTuile(Direction direction) {
+    public boolean checkTileExit(Direction direction) {
         switch (direction) {
             case NORTH:
                 if (this.getDirection() == Direction.SOUTH) {

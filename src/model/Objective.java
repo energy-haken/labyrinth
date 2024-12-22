@@ -1,6 +1,6 @@
 package model;
 
-public enum Objectif {
+public enum Objective {
     PORTE_AMICALE,
     MACHINE_A_CAFE,
     BARBE_DE_Z,

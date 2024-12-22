@@ -5,8 +5,6 @@ import java.io.IOException;
 public class LabyrintheApp {
     public static void main(String[] args) throws IOException {
 
-
-
         //Plateau cUnPlateau = new Background().lancementJeu();
 
         //Background background = new Background() ;
@@ -23,12 +21,8 @@ public class LabyrintheApp {
          */
         
 
-        LabyrintheMainWindow ForPity = new LabyrintheMainWindow();
-        ForPity.getPlateau().printBoard();
-
-
-
-
+        LabyrintheMainWindow mainWindow = new LabyrintheMainWindow();
+        mainWindow.getBoard().printBoard();
 
     }
 }

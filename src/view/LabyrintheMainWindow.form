@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="view.LabyrintheMainWindow">
-  <grid id="27dc6" binding="window" layout-manager="BorderLayout" hgap="0" vgap="0">
+  <grid id="27dc6" binding="windowPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
       <xy x="20" y="20" width="500" height="400"/>
     </constraints>
     <properties/>
     <border type="none"/>
     <children>
-      <component id="83429" class="javax.swing.JButton" binding="finDeTourButton" default-binding="true">
+      <component id="83429" class="javax.swing.JButton" binding="endTurnButton">
         <constraints border-constraint="Center"/>
         <properties>
           <text value="Fin de tour"/>

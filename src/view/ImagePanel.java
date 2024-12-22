@@ -2,8 +2,8 @@ package view;
 
 import helpers.ImageHelper;
 import model.Direction;
-import model.Joueur;
-import model.tuiles.Tuile;
+import model.Player;
+import model.tiles.Tile;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -14,13 +14,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-
-public class ImagePanel extends JPanel implements LabyrintheObserver{
+public class ImagePanel extends JPanel implements LabyrintheObserver {
     private BufferedImage image;
 
     public ImagePanel(BufferedImage image) {
         this.image = image;
-        // Écouteur pour redessiner lors du redimensionnement
+        // Listener to repaint on resize
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -33,7 +32,7 @@ public class ImagePanel extends JPanel implements LabyrintheObserver{
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (image != null) {
-            // Redimensionner l'image pour s'adapter à la taille du panneau
+            // Resize the image to fit the panel size
             int panelWidth = getWidth();
             int panelHeight = getHeight();
             Image scaledImage = image.getScaledInstance(panelWidth, panelHeight, Image.SCALE_SMOOTH);
@@ -41,44 +40,40 @@ public class ImagePanel extends JPanel implements LabyrintheObserver{
         }
     }
 
-
-    public void updateImage(ImagePanel Panel){
-         BufferedImage newImage = Panel.getImage();
+    public void updateImage(ImagePanel panel) {
+        BufferedImage newImage = panel.getImage();
         if (newImage != null) {
             this.image = newImage;
             repaint();
         }
     }
 
-   
-    
-    public static ImagePanel getImageByTile(Tuile tile) throws IOException {
-
+    public static ImagePanel getImageByTile(Tile tile) throws IOException {
         BufferedImage tileImage;
         switch (tile.getPattern()) {
             case T:
-                if (tile.getObjectif() != null) {
-                    tileImage = ImageHelper.merge("img/T.png", "img/Objectifs/" + tile.getObjectif().name() + ".png");
+                if (tile.getObjective() != null) {
+                    tileImage = ImageHelper.merge("img/T.png", "img/Objectives/" + tile.getObjective().name() + ".png");
                 } else {
                     tileImage = loadImage("img/T.png");
                 }
                 break;
-            case ANGLE:
-                if (tile.getObjectif() != null) {
-                    tileImage = ImageHelper.merge("img/Corner.png", "img/Objectifs/" + tile.getObjectif().name() + ".png");
+            case CORNER:
+                if (tile.getObjective() != null) {
+                    tileImage = ImageHelper.merge("img/Corner.png", "img/Objectives/" + tile.getObjective().name() + ".png");
                 } else {
                     tileImage = loadImage("img/Corner.png");
                 }
                 break;
-            case DROIT:
-                if (tile.getObjectif() != null) {
-                    tileImage = ImageHelper.merge("img/LINE.png", "img/Objectifs/" + tile.getObjectif().name() + ".png");
+            case LINE:
+                if (tile.getObjective() != null) {
+                    tileImage = ImageHelper.merge("img/LINE.png", "img/Objectives/" + tile.getObjective().name() + ".png");
                 } else {
                     tileImage = loadImage("img/LINE.png");
                 }
                 break;
             default:
-                tileImage = new BufferedImage(1,1,1);
+                tileImage = new BufferedImage(1, 1, 1);
                 break;
         }
         switch (tile.getDirection()) {
@@ -96,9 +91,9 @@ public class ImagePanel extends JPanel implements LabyrintheObserver{
             default:
                 break;
         }
-        ImagePanel test = new ImagePanel(tileImage);
-        test.setSize(100,100);
-        return test;
+        ImagePanel panel = new ImagePanel(tileImage);
+        panel.setSize(100, 100);
+        return panel;
     }
 
     private static BufferedImage loadImage(String filePath) {
@@ -110,29 +105,27 @@ public class ImagePanel extends JPanel implements LabyrintheObserver{
         }
     }
 
-    public BufferedImage getImage(){
+    public BufferedImage getImage() {
         return this.image;
     }
 
     @Override
-    public void updateInsertTuile(Direction direction, int colonne) {
-
+    public void updateInsertTile(Direction direction, int column) {
+        // Implementation here
     }
 
     @Override
-    public void updateTournerTuile(Direction direction) {
-
+    public void updateRotateTile(Direction direction) {
+        // Implementation here
     }
 
     @Override
-    public void updateDeplacerJoueur(Joueur joueur, Direction direction) {
-
+    public void updateMovePlayer(Player player, Direction direction) {
+        // Implementation here
     }
 
     @Override
-    public void doBecauseMazeChange(Tuile tile) throws IOException {
-         this.updateImage(getImageByTile(tile));
+    public void doBecauseMazeChange(Tile tile) throws IOException {
+        this.updateImage(getImageByTile(tile));
     }
-
-
 }

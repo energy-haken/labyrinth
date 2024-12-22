@@ -1,29 +1,29 @@
-package model.tuiles;
+package model.tiles;
 
 import model.Direction;
-import model.Objectif;
+import model.Objective;
 
-public class TuileLigne extends Tuile{
-    public TuileLigne(boolean fixe, Direction direction, int coordoneeX, int coordoneeY, int name) {
-        super(fixe, Pattern.DROIT, direction, coordoneeX, coordoneeY, name);
+public class TileT extends Tile {
+    public TileT(boolean fixe, Direction direction , int coordoneeX, int coordoneeY, int name) {
+        super(fixe, Pattern.T,direction , coordoneeX, coordoneeY, name);
     }
 
-    public TuileLigne(boolean fixe, Direction direction ,int coordoneeX, int coordoneeY , int name , Objectif objectif) {
-        super(fixe, Pattern.DROIT, direction, coordoneeX, coordoneeY ,name, objectif);
+    public TileT(boolean fixe, Direction direction , int coordoneeX, int coordoneeY , int name , Objective objective) {
+        super(fixe, Pattern.T, direction ,coordoneeX, coordoneeY ,name, objective);
     }
 
     @Override
-    public boolean checkSortieTuile(Direction direction) {
+    public boolean checkTileExit(Direction direction) {
         switch(direction){
             case NORTH :
                 if(this.getDirection() == Direction.SOUTH){
-                    return true;
+                    return false;
                 }
                 else if(this.getDirection() == Direction.WEST){
-                    return false;
+                    return true;
                 }
                 else if(this.getDirection() == Direction.EAST){
-                    return false;
+                    return true;
                 }
                 else{
                     return true;
@@ -31,27 +31,26 @@ public class TuileLigne extends Tuile{
 
             case EAST :
                 if(this.getDirection() == Direction.WEST){
-                    return true;
+                    return false;
                 }
                 else if(this.getDirection() == Direction.NORTH){
-                    return false;
+                    return true;
                 }
                 else if(this.getDirection() == Direction.SOUTH){
-                    return false;
+                    return true;
                 }
                 else{
                     return true;
                 }
-
             case SOUTH :
                 if(this.getDirection() == Direction.NORTH){
-                    return true;
+                    return false;
                 }
                 else if(this.getDirection() == Direction.WEST){
-                    return false;
+                    return true;
                 }
                 else if(this.getDirection() == Direction.EAST){
-                    return false;
+                    return true;
                 }
                 else{
                     return true;
@@ -59,17 +58,18 @@ public class TuileLigne extends Tuile{
 
             case WEST :
                 if(this.getDirection() == Direction.EAST){
-                    return true;
+                    return false;
                 }
                 else if(this.getDirection() == Direction.NORTH){
-                    return false;
+                    return true;
                 }
                 else if(this.getDirection() == Direction.SOUTH){
-                    return false;
+                    return true;
                 }
                 else{
                     return true;
                 }
+
 
         }
         return false;

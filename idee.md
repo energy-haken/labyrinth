@@ -12,7 +12,7 @@
 10) Nettoie le sol de la 106
 11) Va en Léo EXAM
 12) Touche de l'herbe
-13) Est un contact humain (touche un autre joueur)
+13) Est un contact humain (touche un autre player)
 14) Jouer au Echec contre H
 15) Machine a cafe
 16) S'incruster en salle des profs
@@ -20,7 +20,7 @@
 
 ## Objectifs bonus
 
-3) Esquive PPP (case PPP a faire sortir du plateau)
+3) Esquive PPP (case PPP a faire sortir du board)
 4) Fout Ganzarski a la retraire (même principe)
 5) LAN Fonctionelle (Ramener la case Cable en bonne position (Entre 2 cases fixes))
 
@@ -52,6 +52,6 @@
 
 
 - Orientation : 
-Methode dans tuile + plateau 
+Methode dans tile + board 
 Tuile -> Paramêtre = Tuile , Joueurs , Orientation)
-- Le but est de "récreer" la tuile avec une orientation différente
+- Le but est de "récreer" la tile avec une orientation différente

@@ -1,16 +1,16 @@
 package controller;
 
 import model.Direction;
-import model.Plateau;
-import model.Joueur;
+import model.Board;
+import model.Player;
 
 public class LabyrintheController {
-    private Plateau m_plateau;
+    private Board m_board;
     public void modifyPushTuile(Direction direction , int colonne) {
-        this.m_plateau.pousserTuile(direction, colonne);
+        this.m_board.pushTile(direction, colonne);
     }
 
-    public void modifyDeplacerJoueur(Joueur joueur , Direction direction) {
-        this.m_plateau.deplacerJoueur(joueur, direction);
+    public void modifyDeplacerJoueur(Player player, Direction direction) {
+        this.m_board.movePlayer(player, direction);
     }
 }

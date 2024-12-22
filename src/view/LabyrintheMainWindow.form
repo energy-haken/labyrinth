@@ -7,7 +7,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <component id="83429" class="javax.swing.JButton" binding="endTurnButton">
+      <component id="83429" class="javax.swing.JButton" binding="_endTurnButton">
         <constraints border-constraint="Center"/>
         <properties>
           <text value="Fin de tour"/>

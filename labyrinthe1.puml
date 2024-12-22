@@ -155,6 +155,11 @@ package src {
         class LabyrintheMainWindow {
             + <<create>> LabyrintheMainWindow()
             + getBoard() : Board
+            - verifyVictory()
+            - enableButtonMovement()
+            - enableButtonInsert()
+            - disableButtonInsert()
+            - disableButtonMovement()
         }
 
         LabyrintheMainWindow *-> PlateauWindow : <<use>>

@@ -13,13 +13,13 @@ import java.io.File;
 import java.io.IOException;
 
 public class LabyrintheMainWindow extends JFrame {
-    private JButton endTurnButton;
-
+    private JButton _endTurnButton;
     private JButton _upButton = new JButton();
     private JButton _downButton = new JButton();
     private JButton _leftButton = new JButton();
     private JButton _rightButton = new JButton();
-    private JButton _turnButton = new JButton();
+    private JButton _turnClockwiseButton = new JButton();
+    private JButton _turnCounterClockwiseButton = new JButton();
     private ImagePanel _remainingTilePanel;
     private JPanel _centerPanel = new JPanel();
     private JPanel _windowPanel;
@@ -60,6 +60,8 @@ public class LabyrintheMainWindow extends JFrame {
 
         JPanel remainingTilePanelContainer = new JPanel();
         remainingTilePanelContainer.setLayout(new GridLayout(1, 1));
+
+        _endTurnButton.setEnabled(false);
 
         arrowPanel.add(new JPanel());
         arrowPanel.add(_upButton);
@@ -159,13 +161,18 @@ public class LabyrintheMainWindow extends JFrame {
         JPanel goalPanel = new JPanel();
         goalPanel.setLayout(new BorderLayout());
         JLabel goalLabel = new JLabel(_currentTurn.getCurrentPlayer().getCurrentGoal().name());
+
+        JLabel playerGoalAchieved = new JLabel("Over : " + _currentTurn.getCurrentPlayer().getCollectedObjectives());
+        JLabel playerGoalRemained = new JLabel("Remained : " + _currentTurn.getCurrentPlayer().getRemainingObjectives());
         goalPanel.add(goalLabel, BorderLayout.EAST);
         goalPanel.add(goalImagePanel, BorderLayout.CENTER);
         goalPanel.add(playerImagePanel, BorderLayout.WEST);
+        goalPanel.add(playerGoalAchieved, BorderLayout.NORTH) ;
+        goalPanel.add(playerGoalRemained, BorderLayout.SOUTH);
 
         mainButtonPanel.add(new JPanel());
-        mainButtonPanel.add(_turnButton);
-        mainButtonPanel.add(new JPanel());
+        mainButtonPanel.add(_turnClockwiseButton);
+        mainButtonPanel.add(_turnCounterClockwiseButton);
         mainButtonPanel.add(new JPanel());
         mainButtonPanel.add(new JPanel());
         mainButtonPanel.add(new JPanel());
@@ -180,9 +187,10 @@ public class LabyrintheMainWindow extends JFrame {
         mainButtonPanel.add(arrowPanel);
         mainButtonPanel.add(new JPanel());
         mainButtonPanel.add(goalPanel);
-        _turnButton.setText("Rotate Tile");
+        _turnClockwiseButton.setText("->");
+        _turnCounterClockwiseButton.setText("<-");
         mainButtonPanel.add(new JPanel());
-        _turnButton.addActionListener(new ActionListener() {
+        _turnClockwiseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 switch (getBoard().getTile().getDirection()) {
@@ -199,7 +207,25 @@ public class LabyrintheMainWindow extends JFrame {
             }
         });
 
-        mainButtonPanel.add(endTurnButton);
+        _turnCounterClockwiseButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                switch (getBoard().getTile().getDirection()) {
+                    case NORTH -> controller.modifyRotateTile(Direction.WEST);
+                    case EAST -> controller.modifyRotateTile(Direction.NORTH);
+                    case SOUTH -> controller.modifyRotateTile(Direction.EAST);
+                    case WEST -> controller.modifyRotateTile(Direction.SOUTH);
+                }
+                try {
+                    _plateauWindow.notifyObserversMazeChange();
+                }
+                catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        mainButtonPanel.add(_endTurnButton);
 
         // The differents buttons to insert the tile
 
@@ -239,6 +265,7 @@ public class LabyrintheMainWindow extends JFrame {
                 _plateauWindow.updateMaze(Direction.SOUTH, 1);
                 disableButtonsInsert();
                 enableButtonsMovement();
+                _endTurnButton.setEnabled(true);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -251,6 +278,7 @@ public class LabyrintheMainWindow extends JFrame {
                 _plateauWindow.updateMaze(Direction.SOUTH, 3);
                 disableButtonsInsert();
                 enableButtonsMovement();
+                _endTurnButton.setEnabled(true);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -263,6 +291,7 @@ public class LabyrintheMainWindow extends JFrame {
                 _plateauWindow.updateMaze(Direction.SOUTH, 5);
                 disableButtonsInsert();
                 enableButtonsMovement();
+                _endTurnButton.setEnabled(true);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -282,6 +311,7 @@ public class LabyrintheMainWindow extends JFrame {
                     _plateauWindow.updateMaze(Direction.NORTH, 1);
                     disableButtonsInsert();
                     enableButtonsMovement();
+                    _endTurnButton.setEnabled(true);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -297,6 +327,7 @@ public class LabyrintheMainWindow extends JFrame {
                     _plateauWindow.updateMaze(Direction.NORTH, 3);
                     disableButtonsInsert();
                     enableButtonsMovement();
+                    _endTurnButton.setEnabled(true);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -312,6 +343,7 @@ public class LabyrintheMainWindow extends JFrame {
                     _plateauWindow.updateMaze(Direction.NORTH, 5);
                     disableButtonsInsert();
                     enableButtonsMovement();
+                    _endTurnButton.setEnabled(true);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -332,6 +364,7 @@ public class LabyrintheMainWindow extends JFrame {
                     _plateauWindow.updateMaze(Direction.WEST, 1);
                     disableButtonsInsert();
                     enableButtonsMovement();
+                    _endTurnButton.setEnabled(true);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -347,6 +380,7 @@ public class LabyrintheMainWindow extends JFrame {
                     _plateauWindow.updateMaze(Direction.WEST, 3);
                     disableButtonsInsert();
                     enableButtonsMovement();
+                    _endTurnButton.setEnabled(true);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -362,6 +396,7 @@ public class LabyrintheMainWindow extends JFrame {
                     _plateauWindow.updateMaze(Direction.WEST, 5);
                     disableButtonsInsert();
                     enableButtonsMovement();
+                    _endTurnButton.setEnabled(true);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -382,6 +417,7 @@ public class LabyrintheMainWindow extends JFrame {
                     _plateauWindow.updateMaze(Direction.EAST, 1);
                     disableButtonsInsert();
                     enableButtonsMovement();
+                    _endTurnButton.setEnabled(true);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -397,6 +433,7 @@ public class LabyrintheMainWindow extends JFrame {
                     _plateauWindow.updateMaze(Direction.EAST, 3);
                     disableButtonsInsert();
                     enableButtonsMovement();
+                    _endTurnButton.setEnabled(true);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -412,6 +449,7 @@ public class LabyrintheMainWindow extends JFrame {
                     _plateauWindow.updateMaze(Direction.EAST, 5);
                     disableButtonsInsert();
                     enableButtonsMovement();
+                    _endTurnButton.setEnabled(true);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -453,7 +491,7 @@ public class LabyrintheMainWindow extends JFrame {
 
 
         // What happened when changing turn
-        endTurnButton.addActionListener(actionEvent -> {
+        _endTurnButton.addActionListener(actionEvent -> {
             _currentTurn.nextTurn();
             goalLabel.setText(_currentTurn.getCurrentPlayer().getCurrentGoal().name());
             try {
@@ -466,6 +504,7 @@ public class LabyrintheMainWindow extends JFrame {
                 ImagePanel goalImagePanel2 = new ImagePanel(goalImage2);
                 goalPanel.remove(goalImagePanel);
                 goalPanel.add(goalImagePanel2, BorderLayout.CENTER);
+                _endTurnButton.setEnabled(false);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

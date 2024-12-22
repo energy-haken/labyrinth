@@ -37,7 +37,9 @@ public class Player {
             _objectiveList.remove(0);
             _remainingObjectives -= 1;
             _collectedObjectives += 1;
+
         }
+
     }
 
     /**

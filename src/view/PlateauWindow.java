@@ -142,4 +142,5 @@ public class PlateauWindow extends JPanel {
             o.doBecauseMazeChange(getBoardModel().getTile());
         }
     }
+
 }

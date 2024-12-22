@@ -197,9 +197,7 @@ public class Board {
             if(player.getTile().getCoordinateX()==-1){
                 player.setTile(_extraTile);
             }
-            if(player.verifyObjective()){
                 player.validateObjective();
-            }
         }
         _extraTile = outgoingTile;
         return outgoingTile;
@@ -350,9 +348,7 @@ public class Board {
                     }
                     break;
             }
-            if(player.verifyObjective()){
                 player.validateObjective();
-            }
         }
     }
 

@@ -19,7 +19,7 @@ public class Turn {
 
     public Player nextTurn() {
         _id++;
-        _currentPlayer.verifyObjective();
+        _currentPlayer.validateObjective();
         _currentPlayer = _playerList.get(_id % 4);
         return _currentPlayer;
     }

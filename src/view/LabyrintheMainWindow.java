@@ -470,6 +470,7 @@ public class LabyrintheMainWindow extends JFrame {
                 throw new RuntimeException(e);
             }
             // Re enable the buttons
+            verifyVictory();
             enableButtonsInsert();
             disableButtonsMovement();
         });
@@ -538,5 +539,25 @@ public class LabyrintheMainWindow extends JFrame {
         _downButton.setEnabled(true) ;
         _leftButton.setEnabled(true) ;
         _rightButton.setEnabled(true) ;
+    }
+
+    private void verifyVictory(){
+        for (Player player : getBoard().getPlayersOnBoard()) {
+            if(player.getRemainingObjectives()==0){
+                JPanel victoryPanel = new JPanel();
+                victoryPanel.setLayout(new BorderLayout());
+
+                JLabel label = new JLabel("Victoire du pion "+ player.getColor(), SwingConstants.CENTER);
+                label.setFont(new Font("Arial", Font.BOLD, 24));
+                victoryPanel.add(label, BorderLayout.NORTH);
+
+                ImageIcon imageIcon = new ImageIcon("img/Pion" + _currentTurn.getCurrentPlayer().getColor() + ".png");
+                JLabel imageLabel = new JLabel(imageIcon);
+                imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                victoryPanel.add(imageLabel, BorderLayout.CENTER);
+
+                setContentPane(victoryPanel);
+            }
+        }
     }
 }

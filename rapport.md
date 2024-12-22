@@ -42,7 +42,7 @@
 - [ ] Non fait
 
 8 - La **détection de la fin du tour d'un player**
-- [x] Fait
+- [ ] Fait
 
 9 - La **détection de la fin de partie** lorsqu'un player a trouvé tous ses objectifs et est revenu à sa position de départ
 - [ ] Non fait

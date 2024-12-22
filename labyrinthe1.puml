@@ -176,6 +176,7 @@ package src {
             PlateauWindow o-> Player : <<use>>
             PlateauWindow o-> Direction : <<use>>
             PlateauWindow o-> ImagePanel : <<use>>
+
         class ImagePanel implements LabyrintheObserver{
             - _image : BufferedImage
             + ImagePanel(image : BufferedImage)
@@ -189,7 +190,7 @@ package src {
             + updateMovePlayer(player : Player : direction : Direction)
             + updateRotateTile(direction : Direction)
         }
-
+            ImagePanel o-> ImageHelper : <<use>>
         interface LabyrintheObserver{
             + doBecauseMazeChange(tile : Tile)
             + updateInsertTile(direction : Direction , column : Integer)

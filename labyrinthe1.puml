@@ -1,0 +1,209 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+skinparam style strictuml
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+hide enum methods
+
+package src {
+    class LabyrintheApp {
+        static main(args : String[])
+    }
+
+    LabyrintheApp *-> view.LabyrintheMainWindow : <Instanciate>
+    package controller {
+        class LabyrintheController {
+            + modifyMovePlayer(player : Player , direction : Direction)
+            + modifyPushTile(direction : Direction , column : Integer)
+            + modifyRotateTile(direction : Direction)
+        }
+    }
+
+    package helpers {
+        class ImageHelper {
+            + static merge(backgroundPath : String, foregroundPaths : String) : BufferedImage
+            + static mergeB(background : BufferedImage, foreground : BufferedImage) : BufferedImage
+            + static rotate(original : BufferedImage, angle : double) : BufferedImage
+            + static rotateClockwise(original : BufferedImage) : BufferedImage
+            + static rotateCounterClockwise(original : BufferedImage) : BufferedImage
+        }
+    }
+
+    package model {
+        class Board {
+            + <<create>> Board()
+            + pushTile(direction : Direction, column : Integer) : Tile
+            + getTile() : Tile
+            + getBoard() : Tile[][]
+            + getPlayer() : Player
+            + getPlayerOnBoard() : Player[]
+            + printBoard()
+            - checkDirection() : Direction
+            - checkPattern() : Pattern
+            - checkObjective() : Boolean
+            + movePlayer(player : Player, direction : Direction)
+        }
+        Board "1" *--> "\n _board \n 49" tiles.Tile : has
+        Board "1" *--> "\n _extraTile \n 1" tiles.Tile : has extra
+        Board *--> "_players \n 4" Player : has
+        Board o-> Direction : use
+
+        enum Direction {
+        EAST
+        NORTH
+        SOUTH
+        WEST
+        }
+
+        package tiles {
+            abstract class Tile <<abstract>> {
+                - _fixed : Boolean
+                - _pattern : Pattern
+                - _coordinateX : Integer
+                - _coordinateY : Integer
+                - _name : Integer
+                + <<create>> Tile(fixed: Boolean, pattern : Pattern, direction : Direction, coordinateX : Integer, coordinateY : Integer, name : Integer)
+                + <<create>> Tile(fixed: Boolean, pattern : Pattern, direction : Direction, coordinateX : Integer, coordinateY : Integer, name : Integer, objective : Objective)
+                + getObjective() : Objective
+                + getDirection() : Direction
+                + getCoordinateX() : Integer
+                + getCoordinateY() : Integer
+                + getName() : Integer
+                + isFixed() : Boolean
+                + abstract checkTileExit(direction : Direction) : Boolean
+                + rotateTile(direction : Direction)
+            }
+        Tile "1" o--> "objective \n 0/1" .src.model.Objective : has
+        Tile *--> "_pattern \n 1" Pattern : is type
+        Tile o-> "_direction \n 1" Direction : has one
+
+            class TileCorner extends Tile {
+                + <<create>> TileCorner(fixed: Boolean, direction : Direction, coordinateX : Integer, coordinateY : Integer, name : Integer)
+                + <<create>> TileCorner(fixed: Boolean, direction : Direction, coordinateX : Integer, coordinateY : Integer, name : Integer, objective : Objective)
+                + checkTileExit(direction : Direction) : Boolean
+            }
+
+            class TileLine extends Tile {
+                + <<create>> TileLine(fixed: Boolean, direction : Direction, coordinateX : Integer, coordinateY : Integer, name : Integer)
+                + <<create>> TileLine(fixed: Boolean, direction : Direction, coordinateX : Integer, coordinateY : Integer, name : Integer, objective : Objective)
+                + checkTileExit(direction : Direction) : Boolean
+            }
+
+            class TileT extends Tile {
+                + <<create>> TileT(fixed: Boolean, direction : Direction, coordinateX : Integer, coordinateY : Integer, name : Integer)
+                + <<create>> TileT(fixed: Boolean, direction : Direction, coordinateX : Integer, coordinateY : Integer, name : Integer, objective : Objective)
+                + checkTileExit(direction : Direction) : Boolean
+            }
+
+
+            enum Pattern {
+                CORNER
+                T
+                LINE
+            }
+        }
+
+        enum Objective <<enumeration>> {
+            PORTE_AMICALE
+            W
+            BARBE_DE_Z
+            MACHINE_A_CAFE
+            LEO_EXAM
+            MOULINETTE
+            PPP
+            RDS
+            STAGE
+            GANZARSKI
+            ECHEC_CONTRE_H
+            HERBE
+            ...
+        }
+
+        class Player {
+            - _remainingObjectives : Integer
+            - _collectedObjectives : Integer
+            - _color : String
+            - _firstCoX : Integer
+            - _firstCoY
+            + <<create>> Player(tile : Tile, color : String, objectives : Objective[])
+            + verifyObjective() : Boolean
+            + getCollectedObjectives() : Integer
+            + getRemainingObjectives() : Integer
+            + getCurrentGoal() : Objective
+            + getTile() : Tile
+            + getColor() : String
+            + setTile(tile : Tile)
+            + validateObjective()
+        }
+
+        Player "1" *--> " _objectiveList \n 0..*" Objective : has
+        Player "1" o--> " _tile \n 1" Tile : is on
+
+
+        class Turn{
+        - _id : Integer
+        + <<create>> Turn(players : Player[])
+        + getCurrentPlayer() : Player
+        + nextTurn() : Player
+        }
+
+        Turn "1" o-> " _currentPlayer \n 1" Player : is the turn of >
+        Turn "1" o-> "_playerList \n 4" Player : player playings
+
+    }
+
+    package view {
+        class LabyrintheMainWindow {
+            + <<create>> LabyrintheMainWindow()
+            + getBoard() : Board
+            - verifyVictory()
+            - enableButtonMovement()
+            - enableButtonInsert()
+            - disableButtonInsert()
+            - disableButtonMovement()
+        }
+
+        LabyrintheMainWindow *-> PlateauWindow : <<use>>
+        LabyrintheMainWindow o-> ImagePanel : <<use>>
+        LabyrintheMainWindow *-> LabyrintheController : <<use>>
+
+        class PlateauWindow {
+            + <<create>> PlateauWindow(board : Board)
+            + getBoardModel() : Board
+            + loadImage(path : String) : BufferedImage
+            + loadPlayers(player : Player)
+            + updateMaze(direction : Direction, index : Integer)
+            + updateTileByID(id : Integer)
+            + notifyObserversMazeChange()
+
+        }
+
+            PlateauWindow *-> Board : <<use>>
+            PlateauWindow o-> Player : <<use>>
+            PlateauWindow o-> Direction : <<use>>
+            PlateauWindow o-> ImagePanel : <<use>>
+
+        class ImagePanel implements LabyrintheObserver{
+            - _image : BufferedImage
+            + ImagePanel(image : BufferedImage)
+            + doBecauseMazeChange(tile : Tile()
+            + getImage() : BufferedImage
+            + getImageByTile(tile : Tile) : ImagePanel
+            + loadImage(path : String) : BufferedImage
+            + paintComponent(g : Graphics)
+            + updateImage(panel : ImagePanel)
+            + updateInsertTile(direction Direction , column : Integer)
+            + updateMovePlayer(player : Player : direction : Direction)
+            + updateRotateTile(direction : Direction)
+        }
+            ImagePanel o-> ImageHelper : <<use>>
+        interface LabyrintheObserver{
+            + doBecauseMazeChange(tile : Tile)
+            + updateInsertTile(direction : Direction , column : Integer)
+            + updateMovePlayer(player : Player , direction : Direction)
+            + updateRotateTile(direction : Direction)
+        }
+    }
+}
+@enduml

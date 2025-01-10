@@ -69,14 +69,14 @@ Vous devez modéliser et implémenter les fonctionalités ci-dessous.
 
 5 - Le **déplacement des pions case par case**
 
-6 - Le **déplacement d'une ligne ou colonne du plateau** par la tuile supplémentaire :
+6 - Le **déplacement d'une ligne ou colonne du plateau** par la tile supplémentaire :
 
 - Niveau 1 : Toutes les lignes et colonnes
 - Niveau 2 : Uniquement les lignes et colonnes impaires
-- Niveau 3 : En gérant le passage d'un joueur éjecté au côté opposé de la ligne/colonne actuelle
+- Niveau 3 : En gérant le passage d'un joueur  éjecté au côté opposé de la ligne/colonne actuelle
 - Niveau 4 : En interdisant le déplacement inverse du précédent
 
-7 - La **détection d'un objectif atteint** par un joueur et le passage à l'objectif suivant
+7 - La **détection d'un objective atteint** par un joueur et le passage à l'objective suivant
 
 8 - La **détection de la fin du tour d'un joueur**
 
@@ -96,26 +96,26 @@ Votre application doit proposer 2 écrans :
 
 L'écran principal doit afficher :
 
-- le plateau de 7 par 7 avec les 49 tuiles, les 24 objectifs et les pions de chaque joueur
-- La tuile supplémentaire actuelle
-- Pour chaque joueur :
-  - son objectif actuel
+- le board de 7 par 7 avec les 49 tuiles, les 24 objectifs et les pions de chaque player
+- La tile supplémentaire actuelle
+- Pour chaque player :
+  - son objective actuel
   - le nombre d'objectifs déjà récupérés
   - le nombre d'objectifs restants
 
-À son tour, **un joueur doit pouvoir réaliser les actions suivantes** :
+À son tour, **un player doit pouvoir réaliser les actions suivantes** :
 
-- Pousser une ligne ou colonne avec la tuile supplémentaire
+- Pousser une ligne ou colonne avec la tile supplémentaire
 - Se déplacer de case en case sur les tuiles voisines où le déplacement est possible.
 
-Vous avez à votre disposition le fichier [`ImageHelper.java`](helpers/ImageHelper.java) pour manipuler les images, notamment :
+Vous avez à votre disposition le fichier [`ImageHelper.java`](src/helpers/ImageHelper.java) pour manipuler les images, notamment :
 
 - combiner plusieurs images en une seule
 - appliquer une rotation de 90 degrés à une image
 
 ***Bonus 1***
 
-À son tour, le joueur peut faire **tourner la tuile supplémentaire** par pas de 90 degrés dans le sens horaire ou anti-horaire avant de l'utiliser pour pousser une ligne ou colonne.
+À son tour, le player peut faire **tourner la tile supplémentaire** par pas de 90 degrés dans le sens horaire ou anti-horaire avant de l'utiliser pour pousser une ligne ou colonne.
 
 ### Écran de fin de partie
 

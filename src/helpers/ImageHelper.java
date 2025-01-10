@@ -1,3 +1,5 @@
+package helpers;
+
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 import java.awt.AlphaComposite;
@@ -32,6 +34,19 @@ public class ImageHelper {
 		return mergedImage;
 	}
 
+	public static BufferedImage mergeB(BufferedImage background, String... foregrounds ) throws IOException {
+		BufferedImage mergedImage = new BufferedImage( background.getWidth(), background.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2d = mergedImage.createGraphics();
+		g2d.drawImage(background, 0, 0, null);
+		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
+		for ( String path : foregrounds ) {
+			BufferedImage image2 = ImageIO.read(new File(path));
+			g2d.drawImage(image2, 0, 0, null);
+		}
+		g2d.dispose();
+		return mergedImage;
+	}
+
 	/**
 	 *  Rotate an original image from the center by a defined angle.
 	 *  The original image MUST HAVE the same width and height.
@@ -57,7 +72,7 @@ public class ImageHelper {
 	 * @param original is the input image to rotate
 	 * @return a new image representing the original image rotated by 90 degrees from its center.
 	 */
-	public static BufferedImage rotateClockwise( final BufferedImage original ) throws IllegalArgumentException {
+	public static BufferedImage rotateClockwise( final BufferedImage original ) {
 		return rotate( original, 0.5*Math.PI );
 	}
 
@@ -67,7 +82,7 @@ public class ImageHelper {
 	 * @param original is the input image to rotate
 	 * @return a new image representing the original image rotated by 90 degrees from its center.
 	 */
-	public static BufferedImage rotateCounterClockwise( final BufferedImage original ) throws IllegalArgumentException {
+	public static BufferedImage rotateCounterClockwise( final BufferedImage original ) {
 		return rotate( original, 1.5*Math.PI );
 	}
 }
